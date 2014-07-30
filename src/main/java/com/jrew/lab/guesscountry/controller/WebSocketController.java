@@ -1,12 +1,18 @@
 package com.jrew.lab.guesscountry.controller;
 
+import com.jrew.lab.guesscountry.service.question.QuestionAnswerHandbook;
+import com.jrew.lab.guesscountry.service.socket.WebSocketSessionStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+import java.util.stream.Collectors;
 
 /**
  * Created by Kazak_VV on 30.07.2014.
@@ -14,12 +20,20 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 @Controller
 public class WebSocketController extends TextWebSocketHandler {
 
+    /** **/
     private Logger logger = LoggerFactory.getLogger(WebSocketController.class);
+
+    /** **/
+    @Autowired
+    private WebSocketSessionStorage webSocketSessionStorage;
+
+    @Autowired
+    private QuestionAnswerHandbook questionAnswerHandbook;
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         logger.debug("Connection has been established. Session id = {}", session.getId());
-        super.afterConnectionEstablished(session);
+        webSocketSessionStorage.storeSession(session);
     }
 
     @Override
@@ -31,6 +45,6 @@ public class WebSocketController extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         logger.debug("Connection has been closed. Session id = {}", session.getId());
-        super.afterConnectionClosed(session, status);
+        webSocketSessionStorage.releaseSession(session);
     }
 }

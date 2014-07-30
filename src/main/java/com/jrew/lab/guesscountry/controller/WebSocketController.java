@@ -24,9 +24,6 @@ public class WebSocketController extends TextWebSocketHandler {
     @Autowired
     private WebSocketSessionStorage webSocketSessionStorage;
 
-    @Autowired
-    private QuestionAnswerHandbook questionAnswerHandbook;
-
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         logger.debug("Connection has been established. Session id = {}", session.getId());

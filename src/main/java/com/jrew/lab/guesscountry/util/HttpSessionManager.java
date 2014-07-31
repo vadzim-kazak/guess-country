@@ -35,6 +35,7 @@ public class HttpSessionManager {
 
             return newPlayer;
         } else {
+
             return (Player) player;
         }
     }

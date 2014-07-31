@@ -2,7 +2,6 @@ package com.jrew.lab.guesscountry.controller;
 
 import com.jrew.lab.guesscountry.model.player.Player;
 import com.jrew.lab.guesscountry.util.HttpSessionManager;
-import com.sun.org.glassfish.gmbal.ParameterNames;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

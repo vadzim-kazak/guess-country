@@ -55,10 +55,7 @@
 </head>
 <body>
 
-    <input id="message" type="text" />
-    <input type="button" value="send" onclick="sendMessage()" />
-    <br/>
-    <span id="response"></span>
+   <h3>Map page</h3>
 
 </body>
 </html>

@@ -7,6 +7,7 @@ import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+import org.springframework.web.socket.server.HandshakeInterceptor;
 
 /**
  * Created by Kazak_VV on 30.07.2014.
@@ -18,8 +19,14 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Autowired
     private WebSocketHandler socketHandler;
 
+    @Autowired
+    private HandshakeInterceptor handshakeInterceptor;
+
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
-        webSocketHandlerRegistry.addHandler(socketHandler, "/websocket");
+
+        webSocketHandlerRegistry.addHandler(socketHandler, "/websocket")
+                                .addInterceptors(handshakeInterceptor);
+
     }
 }

@@ -11,12 +11,6 @@ import javax.annotation.PostConstruct;
 public class GameSettingsImpl implements GameSettings {
 
     /** **/
-    public enum GameMode {SINGLE, DUEL};
-
-    /** **/
-    public enum GameType {CITIES, FLAGS};
-
-    /** **/
     private GameMode gameMode;
 
     /** **/

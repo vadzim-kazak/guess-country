@@ -3,7 +3,7 @@ package com.jrew.lab.guesscountry.service.game.factory.builder.mode;
 import com.jrew.lab.guesscountry.model.player.Player;
 import com.jrew.lab.guesscountry.model.settings.GameSettings;
 import com.jrew.lab.guesscountry.service.game.Game;
-import com.jrew.lab.guesscountry.service.game.GameReadyEvent;
+import com.jrew.lab.guesscountry.service.game.event.GameReadyEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -55,6 +55,10 @@ public class DuelGameModeBuilder extends AbstractGameModeBuilder {
     private void completeGameCreation(Player secondPlayer, Game heldGame){
         logger.debug("Second player {} has been connected to game. Game is ready to start.", secondPlayer.getName());
         heldGame.addPlayer(secondPlayer);
+
+        //Remove game from held games list
+        heldGames.remove(secondPlayer.getGameSettings());
+
         getApplicationEventPublisher().publishEvent(new GameReadyEvent(heldGame));
     }
 

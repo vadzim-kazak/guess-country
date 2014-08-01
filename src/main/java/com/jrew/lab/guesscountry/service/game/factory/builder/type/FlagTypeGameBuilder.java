@@ -11,12 +11,8 @@ import org.springframework.stereotype.Component;
 @Component(value = "FLAGS")
 public class FlagTypeGameBuilder implements GameTypeBuilder {
 
-    /** **/
-    @Autowired
-    private Game game;
-
     @Override
     public Game createGame(GameSettings gameSettings) {
-        return game;
+        return null;
     }
 }

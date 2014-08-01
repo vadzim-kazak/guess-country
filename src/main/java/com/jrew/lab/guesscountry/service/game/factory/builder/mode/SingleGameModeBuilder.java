@@ -2,7 +2,7 @@ package com.jrew.lab.guesscountry.service.game.factory.builder.mode;
 
 import com.jrew.lab.guesscountry.model.player.Player;
 import com.jrew.lab.guesscountry.service.game.Game;
-import com.jrew.lab.guesscountry.service.game.GameReadyEvent;
+import com.jrew.lab.guesscountry.service.game.event.GameReadyEvent;
 import org.springframework.stereotype.Component;
 
 /**

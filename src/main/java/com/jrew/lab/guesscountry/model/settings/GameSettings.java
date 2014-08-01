@@ -5,11 +5,17 @@ package com.jrew.lab.guesscountry.model.settings;
  */
 public interface GameSettings {
 
-    GameSettingsImpl.GameMode getGameMode();
+    /** **/
+    public enum GameMode {SINGLE, DUEL};
 
-    void setGameMode(GameSettingsImpl.GameMode gameMode);
+    /** **/
+    public enum GameType {CITIES, FLAGS};
 
-    GameSettingsImpl.GameType getGameType();
+    GameMode getGameMode();
 
-    void setGameType(GameSettingsImpl.GameType gameType);
+    void setGameMode(GameMode gameMode);
+
+    GameType getGameType();
+
+    void setGameType(GameType gameType);
 }

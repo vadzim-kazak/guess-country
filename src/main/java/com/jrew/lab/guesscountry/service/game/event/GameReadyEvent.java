@@ -1,5 +1,6 @@
-package com.jrew.lab.guesscountry.service.game;
+package com.jrew.lab.guesscountry.service.game.event;
 
+import com.jrew.lab.guesscountry.service.game.Game;
 import org.springframework.context.ApplicationEvent;
 
 /**

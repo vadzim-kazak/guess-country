@@ -32,7 +32,6 @@ public class PlayerImpl implements Player {
 
     @PostConstruct
     private void applyDefaultSettings() {
-        System.out.println("Player#applyDefaultSettings");
         locale = "en";
     }
 

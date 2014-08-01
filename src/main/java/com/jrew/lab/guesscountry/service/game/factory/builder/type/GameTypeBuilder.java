@@ -1,6 +1,7 @@
 package com.jrew.lab.guesscountry.service.game.factory.builder.type;
 
 import com.jrew.lab.guesscountry.model.player.Player;
+import com.jrew.lab.guesscountry.model.settings.GameSettings;
 import com.jrew.lab.guesscountry.service.game.Game;
 
 /**
@@ -10,9 +11,9 @@ public interface GameTypeBuilder {
 
     /**
      *
-     * @param player
-     * @return
+     *
+     * @param gameSettings@return
      */
-    public Game createGame(Player player);
+    public Game createGame(GameSettings gameSettings);
 
 }

@@ -1,8 +1,9 @@
 package com.jrew.lab.guesscountry.service.game;
 
 import com.jrew.lab.guesscountry.model.player.Player;
-import com.jrew.lab.guesscountry.model.settings.GameSettings;
 import com.jrew.lab.guesscountry.service.game.factory.GameFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class GameServerImpl implements GameServer {
 
     /** **/
+    private Logger logger = LoggerFactory.getLogger(GameServerImpl.class);
+
+    /** **/
     @Autowired
     private GameFactory gameFactory;
 
@@ -26,6 +30,7 @@ public class GameServerImpl implements GameServer {
     @Override
     public void handlePlayerConnection(Player player) {
        playersStorage.put(player.getId(), player);
+       prepareGame(player);
     }
 
     @Override
@@ -34,9 +39,13 @@ public class GameServerImpl implements GameServer {
     }
 
     @Override
-    public void startGame(Player player) {
-        // Future start...
-        //Future<Game> ... gameFactory.createGame(player);
-        // game.play....
+    public void prepareGame(Player player) {
+        gameFactory.buildGame(player);
+    }
+
+    @Override
+    public void onApplicationEvent(GameReadyEvent gameReadyEvent) {
+        Game game = (Game) gameReadyEvent.getSource();
+        logger.debug("Game ready event has been received by game server...");
     }
 }

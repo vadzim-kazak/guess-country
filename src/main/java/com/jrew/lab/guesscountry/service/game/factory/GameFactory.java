@@ -13,6 +13,6 @@ public interface GameFactory {
      * @param player
      * @return
      */
-    public Game createGame(Player player);
+    public void buildGame(Player player);
 
 }

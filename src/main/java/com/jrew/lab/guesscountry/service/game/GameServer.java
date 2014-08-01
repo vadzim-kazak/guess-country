@@ -1,11 +1,12 @@
 package com.jrew.lab.guesscountry.service.game;
 
 import com.jrew.lab.guesscountry.model.player.Player;
+import org.springframework.context.ApplicationListener;
 
 /**
  * Created by Kazak_VV on 30.07.2014.
  */
-public interface GameServer {
+public interface GameServer extends ApplicationListener<GameReadyEvent> {
 
     /**
      *
@@ -23,6 +24,6 @@ public interface GameServer {
      *
      * @param player
      */
-    public void startGame(Player player);
+    public void prepareGame(Player player);
 
 }

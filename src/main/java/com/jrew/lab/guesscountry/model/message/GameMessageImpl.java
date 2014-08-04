@@ -18,6 +18,9 @@ public class GameMessageImpl implements GameMessage {
     /** **/
     private Type type;
 
+    /** **/
+    private String message;
+
     @Override
     public void setPlayer(Player player) {
         this.player = player;
@@ -36,5 +39,15 @@ public class GameMessageImpl implements GameMessage {
     @Override
     public Type getType() {
         return type;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
+
+    @Override
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

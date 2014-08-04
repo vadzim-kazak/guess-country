@@ -1,5 +1,6 @@
 package com.jrew.lab.guesscountry.service.game.helper;
 
+import com.jrew.lab.guesscountry.model.LocalizedQuestionAnswer;
 import com.jrew.lab.guesscountry.model.player.Player;
 
 import java.util.List;
@@ -9,5 +10,28 @@ import java.util.List;
  */
 public interface RoundProcessor {
 
-    public void sendQuestion(List<Player> players);
+    /**
+     *
+     * @return
+     */
+    public boolean hasNextQuestionAnswer();
+
+    /**
+     *
+     * @return
+     */
+    public LocalizedQuestionAnswer nextQuestionAnswer();
+
+
+    /**
+     *
+     * @return
+     */
+    public LocalizedQuestionAnswer currentQuestionAnswer();
+
+    /**
+     *
+     * @param questionAnswers
+     */
+    public void setQuestionAnswers(List<LocalizedQuestionAnswer> questionAnswers);
 }

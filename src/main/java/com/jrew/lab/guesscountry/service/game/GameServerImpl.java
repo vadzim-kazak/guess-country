@@ -1,13 +1,14 @@
 package com.jrew.lab.guesscountry.service.game;
 
+import com.jrew.lab.guesscountry.model.message.GameMessage;
+import com.jrew.lab.guesscountry.model.message.GameMessageImpl;
 import com.jrew.lab.guesscountry.model.player.Player;
-import com.jrew.lab.guesscountry.service.game.event.GameReadyEvent;
 import com.jrew.lab.guesscountry.service.game.factory.GameFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
-import org.springframework.web.socket.TextMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,10 @@ public class GameServerImpl implements GameServer {
 
     /** **/
     @Autowired
+    private ApplicationContext applicationContext;
+
+    /** **/
+    @Autowired
     private GameFactory gameFactory;
 
     /** **/
@@ -36,28 +41,33 @@ public class GameServerImpl implements GameServer {
 
     @Override
     public void handlePlayerConnection(Player player) {
+
        playersStorage.put(player.getId(), player);
-       prepareGame(player);
+
+       gameFactory.buildGame(player, gameReadyEvent -> {
+
+           logger.debug("Game ready event has been received by game server...");
+           Game game = (Game) gameReadyEvent.getSource();
+           activeGames.add(game);
+           game.start();
+       });
     }
 
     @Override
     public void handlePlayerDisconnection(String playerId) {}
 
     @Override
-    public void prepareGame(Player player) {
-        gameFactory.buildGame(player);
+    public void handlePlayerMessage(String playerId, String message) {
+
+        activeGames.stream().filter(game -> game.hasPlayer(playerId)).forEach(game -> {
+
+            GameMessage gameMessage = applicationContext.getBean(GameMessage.class);
+            gameMessage.setType(GameMessage.Type.ANSWER);
+            gameMessage.setPlayer(playersStorage.get(playerId));
+            gameMessage.setMessage(message);
+
+            game.handleMessage(gameMessage);
+        });
     }
 
-    @Override
-    public void handlePlayerMessage(String playerId, TextMessage message) {}
-
-    @Override
-    public void onApplicationEvent(GameReadyEvent gameReadyEvent) {
-
-        Game game = (Game) gameReadyEvent.getSource();
-        activeGames.add(game);
-        logger.debug("Game ready event has been received by game server...");
-
-        game.start();
-    }
 }

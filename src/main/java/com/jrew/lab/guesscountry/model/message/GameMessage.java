@@ -7,7 +7,8 @@ import com.jrew.lab.guesscountry.model.player.Player;
  */
 public interface GameMessage {
 
-    enum Type {QUESTION, ANSWER}
+    /** **/
+    enum Type {QUESTION, ANSWER, CHAT_MESSAGE}
 
     /**
      *
@@ -32,5 +33,17 @@ public interface GameMessage {
      * @return
      */
     public Type getType();
+
+    /**
+     *
+     * @return
+     */
+    public String getMessage();
+
+    /**
+     *
+     * @param message
+     */
+    public void setMessage(String message);
 
 }

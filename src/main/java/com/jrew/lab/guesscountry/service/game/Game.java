@@ -1,20 +1,16 @@
 package com.jrew.lab.guesscountry.service.game;
 
+import com.jrew.lab.guesscountry.model.LocalizedQuestionAnswer;
 import com.jrew.lab.guesscountry.model.message.GameMessage;
 import com.jrew.lab.guesscountry.model.player.Player;
-import com.jrew.lab.guesscountry.service.game.event.GameMessageEvent;
 import com.jrew.lab.guesscountry.service.game.helper.RoundProcessor;
-import org.springframework.context.ApplicationListener;
+
+import java.util.List;
 
 /**
  * Created by Kazak_VV on 31.07.2014.
  */
-public interface Game extends ApplicationListener<GameMessageEvent> {
-
-    /**
-     *
-     */
-    public void start();
+public interface Game {
 
     /**
      *
@@ -25,12 +21,24 @@ public interface Game extends ApplicationListener<GameMessageEvent> {
     /**
      *
      * @param playerId
-     * @param message
+     * @return
      */
-    public void processMessage(String playerId, GameMessage message);
+    public boolean hasPlayer(String playerId);
 
     /**
      *
+     */
+    public void start();
+
+    /**
+     *
+     * @param message
+     */
+    public void handleMessage(GameMessage message);
+
+    /**
+     *
+     * @param roundProcessor
      */
     public void setRoundProcessor(RoundProcessor roundProcessor);
 }

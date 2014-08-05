@@ -5,22 +5,10 @@ import com.jrew.lab.guesscountry.model.player.Player;
 /**
  * Created by Kazak_VV on 01.08.2014.
  */
-public interface GameMessage {
+public interface GameMessage<T> {
 
     /** **/
-    enum Type {QUESTION, ANSWER, CHAT_MESSAGE}
-
-    /**
-     *
-     * @param player
-     */
-    public void setPlayer(Player player);
-
-    /**
-     *
-     * @return
-     */
-    public Player getPlayer();
+    enum Type {QUESTION, ANSWER, RESULT, CHAT_MESSAGE, HINT_REQUEST, HINT_RESPONSE}
 
     /**
      *
@@ -38,12 +26,12 @@ public interface GameMessage {
      *
      * @return
      */
-    public String getMessage();
+    public T getPayload();
 
     /**
      *
-     * @param message
+     * @param payload
      */
-    public void setMessage(String message);
+    public void setPayload(T payload);
 
 }

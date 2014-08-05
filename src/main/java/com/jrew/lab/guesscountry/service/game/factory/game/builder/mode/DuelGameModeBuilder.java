@@ -1,4 +1,4 @@
-package com.jrew.lab.guesscountry.service.game.factory.builder.mode;
+package com.jrew.lab.guesscountry.service.game.factory.game.builder.mode;
 
 import com.jrew.lab.guesscountry.model.player.Player;
 import com.jrew.lab.guesscountry.model.settings.GameSettings;

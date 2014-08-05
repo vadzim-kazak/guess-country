@@ -1,4 +1,4 @@
-package com.jrew.lab.guesscountry.service.game.factory;
+package com.jrew.lab.guesscountry.service.game.factory.game;
 
 import com.jrew.lab.guesscountry.model.player.Player;
 import com.jrew.lab.guesscountry.service.game.Game;

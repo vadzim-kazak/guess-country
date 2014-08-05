@@ -1,10 +1,10 @@
-package com.jrew.lab.guesscountry.service.game.factory.builder.mode;
+package com.jrew.lab.guesscountry.service.game.factory.game.builder.mode;
 
 import com.jrew.lab.guesscountry.model.player.Player;
 import com.jrew.lab.guesscountry.model.settings.GameSettings;
 import com.jrew.lab.guesscountry.model.settings.GameSettingsImpl;
 import com.jrew.lab.guesscountry.service.game.Game;
-import com.jrew.lab.guesscountry.service.game.factory.builder.type.GameTypeBuilder;
+import com.jrew.lab.guesscountry.service.game.factory.game.builder.type.GameTypeBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 

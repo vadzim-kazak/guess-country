@@ -1,8 +1,7 @@
-package com.jrew.lab.guesscountry.service.game.factory.builder.type;
+package com.jrew.lab.guesscountry.service.game.factory.game.builder.type;
 
 import com.jrew.lab.guesscountry.model.settings.GameSettings;
 import com.jrew.lab.guesscountry.service.game.Game;
-import com.jrew.lab.guesscountry.service.game.GameImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,6 @@ public class CitiesTypeGameBuilder implements GameTypeBuilder {
     @Override
     public Game createGame(GameSettings gameSettings) {
         logger.debug("Create game inside of CitiesTypeGameBuilder#buildGame method...");
-        return applicationContext.getBean(GameImpl.class);
+        return applicationContext.getBean(Game.class);
     }
 }

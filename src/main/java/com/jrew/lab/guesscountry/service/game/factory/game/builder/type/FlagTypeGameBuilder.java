@@ -1,8 +1,7 @@
-package com.jrew.lab.guesscountry.service.game.factory.builder.type;
+package com.jrew.lab.guesscountry.service.game.factory.game.builder.type;
 
 import com.jrew.lab.guesscountry.model.settings.GameSettings;
 import com.jrew.lab.guesscountry.service.game.Game;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**

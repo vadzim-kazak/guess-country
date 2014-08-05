@@ -14,6 +14,22 @@ public interface Game {
 
     /**
      *
+     */
+    public void start();
+
+    /**
+     *
+     */
+    public void nextRound();
+
+    /**
+     *
+     * @return
+     */
+    public LocalizedQuestionAnswer getQuestionAnswer();
+
+    /**
+     *
      * @param player
      */
     public void addPlayer(Player player);
@@ -27,8 +43,9 @@ public interface Game {
 
     /**
      *
+     * @return
      */
-    public void start();
+    public List<Player> getPlayers();
 
     /**
      *
@@ -36,9 +53,5 @@ public interface Game {
      */
     public void handleMessage(GameMessage message);
 
-    /**
-     *
-     * @param roundProcessor
-     */
-    public void setRoundProcessor(RoundProcessor roundProcessor);
+
 }

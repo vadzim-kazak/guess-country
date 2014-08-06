@@ -22,9 +22,6 @@ public class HttpSessionManager {
         String PLAYER_KEY = "player";
     }
 
-    @Autowired
-    private ApplicationContext applicationContext;
-
     /**
      *
      * @param session

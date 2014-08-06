@@ -41,9 +41,17 @@
             }
         }
 
-        function sendMessage() {
-            var message = $('#message').val();
-            socket.send(JSON.stringify({ 'message': message }));
+        /**
+         *
+         */
+        function sendAnswer() {
+
+            var message = {
+                type: "answer",
+                answer: $('#answer').val()
+            }
+
+            socket.send(JSON.stringify(message));
         }
 
         $( document ).ready(function() {
@@ -56,6 +64,10 @@
 <body>
 
    <h3>Map page</h3>
+   <div id="response"></div>
+   <br/>
+   Answer: <input type="text" id="answer" /><input type="button" value="send" onclick="sendAnswer()" />
+
 
 </body>
 </html>

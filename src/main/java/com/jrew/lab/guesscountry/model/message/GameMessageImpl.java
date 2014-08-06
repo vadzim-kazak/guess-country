@@ -13,12 +13,12 @@ public class GameMessageImpl<T> implements GameMessage<T> {
 
     @Override
     public void setType(Type type) {
-
+        this.type = type;
     }
 
     @Override
     public Type getType() {
-        return null;
+        return type;
     }
 
     @Override

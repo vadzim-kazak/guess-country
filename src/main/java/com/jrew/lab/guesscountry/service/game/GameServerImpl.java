@@ -61,8 +61,8 @@ public class GameServerImpl implements GameServer {
 
         Optional<Game> gameOptional = activeGames.stream().filter(game -> game.hasPlayer(playerId)).findFirst();
         gameOptional.ifPresent(game -> {
-            Optional<GameMessage> gameMessageOptional = gameMessageFactory.buildMessage(message, playersStorage.get(playerId));
-            gameMessageOptional.ifPresent(gameMessage -> game.handleMessage(gameMessage));
+            GameMessage gameMessage = gameMessageFactory.buildMessage(message, playersStorage.get(playerId));
+            game.handleMessage(gameMessage);
         });
     }
 

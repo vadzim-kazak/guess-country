@@ -1,9 +1,8 @@
 package com.jrew.lab.guesscountry.service.game;
 
-import com.jrew.lab.guesscountry.model.LocalizedQuestionAnswer;
+import com.jrew.lab.guesscountry.model.questionanswer.LocalizedQuestionAnswer;
 import com.jrew.lab.guesscountry.model.message.GameMessage;
 import com.jrew.lab.guesscountry.model.player.Player;
-import com.jrew.lab.guesscountry.service.game.helper.RoundProcessor;
 
 import java.util.List;
 

@@ -1,16 +1,12 @@
 package com.jrew.lab.guesscountry.service.game.helper;
 
-import com.jrew.lab.guesscountry.model.LocalizedQuestionAnswer;
-import com.jrew.lab.guesscountry.model.player.Player;
-import com.jrew.lab.guesscountry.service.game.messagehandler.GameMessageHandler;
+import com.jrew.lab.guesscountry.model.questionanswer.LocalizedQuestionAnswer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 /**
  * Created by Kazak_VV on 04.08.2014.

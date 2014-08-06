@@ -1,7 +1,6 @@
 package com.jrew.lab.guesscountry.service.game.helper;
 
-import com.jrew.lab.guesscountry.model.LocalizedQuestionAnswer;
-import com.jrew.lab.guesscountry.model.player.Player;
+import com.jrew.lab.guesscountry.model.questionanswer.LocalizedQuestionAnswer;
 
 import java.util.List;
 

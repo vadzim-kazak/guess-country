@@ -1,6 +1,6 @@
 package com.jrew.lab.guesscountry.service.game.messagehandler;
 
-import com.jrew.lab.guesscountry.model.LocalizedQuestionAnswer;
+import com.jrew.lab.guesscountry.model.questionanswer.LocalizedQuestionAnswer;
 import com.jrew.lab.guesscountry.model.message.GameMessage;
 import com.jrew.lab.guesscountry.model.message.payload.AnswerPayload;
 import com.jrew.lab.guesscountry.model.message.payload.ResultPayload;
@@ -16,7 +16,8 @@ import java.util.function.Consumer;
 /**
  * Created by Kazak_VV on 04.08.2014.
  */
-@Component(value = "ANSWER")
+@Component
+@MessageHandlerType(type = GameMessage.Type.ANSWER)
 public class AnswerGameMessageHandler implements GameMessageHandler<AnswerPayload> {
 
     /** **/

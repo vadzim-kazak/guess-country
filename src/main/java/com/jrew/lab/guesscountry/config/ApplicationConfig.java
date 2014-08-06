@@ -3,6 +3,7 @@ package com.jrew.lab.guesscountry.config;
 import com.jrew.lab.guesscountry.model.message.GameMessage;
 import com.jrew.lab.guesscountry.model.message.GameMessageImpl;
 import com.jrew.lab.guesscountry.model.message.payload.AnswerPayload;
+import com.jrew.lab.guesscountry.model.message.payload.CountdownPayload;
 import com.jrew.lab.guesscountry.model.message.payload.QuestionPayload;
 import com.jrew.lab.guesscountry.model.message.payload.ResultPayload;
 import com.jrew.lab.guesscountry.model.player.Player;
@@ -31,6 +32,9 @@ public class ApplicationConfig {
 
     @Autowired
     private ResultPayload resultPayload;
+
+    @Autowired
+    private CountdownPayload countdownPayload;
 
     @Bean
     @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
@@ -76,5 +80,13 @@ public class ApplicationConfig {
         return resultGameMessage;
     }
 
+    @Bean(name = "COUNTDOWN")
+    @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
+    public GameMessage getCountdownGameMessage() {
 
+        GameMessage<CountdownPayload> countdownGameMessage = new GameMessageImpl<>();
+        countdownGameMessage.setType(GameMessage.Type.COUNTDOWN);
+        countdownGameMessage.setPayload(countdownPayload);
+        return countdownGameMessage;
+    }
 }

@@ -1,20 +1,20 @@
 package com.jrew.lab.guesscountry.service.game.messagehandler;
 
-import com.jrew.lab.guesscountry.model.LocalizedQuestionAnswer;
+import com.jrew.lab.guesscountry.model.questionanswer.LocalizedQuestionAnswer;
 import com.jrew.lab.guesscountry.model.message.GameMessage;
 import com.jrew.lab.guesscountry.model.message.payload.QuestionPayload;
 import com.jrew.lab.guesscountry.service.game.Game;
 import com.jrew.lab.guesscountry.service.socket.WebSocketSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.socket.TextMessage;
 
 import java.util.Optional;
 
 /**
  * Created by Kazak_VV on 04.08.2014.
  */
-@Component(value = "QUESTION")
+@Component
+@MessageHandlerType(type = GameMessage.Type.QUESTION)
 public class QuestionGameMessageHandler implements GameMessageHandler<QuestionPayload> {
 
     /** **/
@@ -24,8 +24,9 @@ public class QuestionGameMessageHandler implements GameMessageHandler<QuestionPa
     @Override
     public void handleMessage(GameMessage<QuestionPayload> message, Game game) {
 
+        LocalizedQuestionAnswer questionAnswer = game.getQuestionAnswer();
         game.getPlayers().stream().forEach(player -> {
-            LocalizedQuestionAnswer questionAnswer = game.getQuestionAnswer();
+
             Optional<String> optionalQuestion = questionAnswer.getQuestion(player.getLocale());
             optionalQuestion.ifPresent(question -> {
 

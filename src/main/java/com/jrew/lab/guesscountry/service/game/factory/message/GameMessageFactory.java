@@ -23,6 +23,6 @@ public interface GameMessageFactory {
      * @param player
      * @return
      */
-    public Optional<GameMessage> buildMessage(String payload, Player player);
+    public GameMessage buildMessage(String payload, Player player);
 
 }

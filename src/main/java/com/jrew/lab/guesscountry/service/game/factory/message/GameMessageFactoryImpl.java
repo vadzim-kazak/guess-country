@@ -12,6 +12,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
@@ -39,8 +40,8 @@ public class GameMessageFactoryImpl implements GameMessageFactory {
     private ApplicationContext applicationContext;
 
     /** **/
-    @Autowired
-    private Map<String, GameMessageBuilder> messageBuilders;
+    @Resource(name = "messageBuilders")
+    private Map<GameMessage.Type, GameMessageBuilder> messageBuilders;
 
     /** **/
     private ObjectMapper mapper;
@@ -57,7 +58,7 @@ public class GameMessageFactoryImpl implements GameMessageFactory {
     }
 
     @Override
-    public Optional<GameMessage> buildMessage(String payload, Player player) {
+    public GameMessage buildMessage(String payload, Player player) {
 
         try {
             JsonNode payloadJson = mapper.readTree(payload);
@@ -65,16 +66,15 @@ public class GameMessageFactoryImpl implements GameMessageFactory {
             if (payloadJson.has(PayloadKeys.TYPE_KEY)) {
 
                 JsonNode typeKey = payloadJson.get(PayloadKeys.TYPE_KEY);
-                String messageType = typeKey.textValue();
+                String messageType = typeKey.textValue().toUpperCase();
 
-                return Optional.of(messageBuilders.get(messageType).build(payloadJson, player));
+                return messageBuilders.get(GameMessage.Type.valueOf(messageType)).build(payloadJson, player);
             }
-
 
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }
 
-        return Optional.empty();
+        return null;
     }
 }

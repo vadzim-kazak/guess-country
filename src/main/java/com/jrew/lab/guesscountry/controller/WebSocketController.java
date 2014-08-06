@@ -34,7 +34,7 @@ public class WebSocketController extends TextWebSocketHandler {
     @Override
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
         logger.debug("Following message for session id = {} has been received: {}", session.getId(), message.getPayload().toString());
-        super.handleMessage(session, message);
+        gameServer.handlePlayerMessage(session.getId(), message.getPayload().toString());
     }
 
     @Override

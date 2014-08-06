@@ -25,19 +25,21 @@ public class HttpSessionManager {
     @Autowired
     private ApplicationContext applicationContext;
 
+    /**
+     *
+     * @param session
+     * @return
+     */
     public Player getPlayer(HttpSession session) {
+        return (Player) session.getAttribute(SessionKey.PLAYER_KEY);
+    }
 
-        Object player = session.getAttribute(SessionKey.PLAYER_KEY);
-        if (player == null) {
-
-            Player newPlayer = applicationContext.getBean(Player.class);
-            session.setAttribute(SessionKey.PLAYER_KEY, newPlayer);
-
-            return newPlayer;
-        } else {
-
-            return (Player) player;
-        }
+    /**
+     *
+     * @param session
+     */
+    public void setPlayer(HttpSession session, Player player) {
+        session.setAttribute(SessionKey.PLAYER_KEY, player);
     }
 
 }

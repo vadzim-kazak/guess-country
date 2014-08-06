@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
  * Created by Kazak_VV on 05.08.2014.
  */
 @Component
+@MessageBuilderType(type = GameMessage.Type.ANSWER)
 public class AnswerGameMessageBuilder implements GameMessageBuilder<AnswerPayload> {
 
     /**

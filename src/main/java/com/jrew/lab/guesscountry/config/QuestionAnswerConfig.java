@@ -1,13 +1,10 @@
 package com.jrew.lab.guesscountry.config;
 
-import com.jrew.lab.guesscountry.model.CityLocalizedQuestionAnswer;
-import com.jrew.lab.guesscountry.model.CityQuestionAnswer;
-import com.jrew.lab.guesscountry.model.LocalizedQuestionAnswer;
-import com.jrew.lab.guesscountry.model.QuestionAnswer;
-import org.springframework.beans.factory.config.BeanDefinition;
+import com.jrew.lab.guesscountry.model.questionanswer.CityLocalizedQuestionAnswer;
+import com.jrew.lab.guesscountry.model.questionanswer.CityQuestionAnswer;
+import com.jrew.lab.guesscountry.model.questionanswer.QuestionAnswer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +39,7 @@ public class QuestionAnswerConfig {
     // Question 2
     @Bean
     public QuestionAnswer question2_en() {
-        return new CityQuestionAnswer("Moscow", "Russian");
+        return new CityQuestionAnswer("Moscow", "Russia");
     }
 
     @Bean

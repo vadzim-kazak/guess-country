@@ -1,4 +1,4 @@
-package com.jrew.lab.guesscountry.model;
+package com.jrew.lab.guesscountry.model.questionanswer;
 
 import java.util.Locale;
 

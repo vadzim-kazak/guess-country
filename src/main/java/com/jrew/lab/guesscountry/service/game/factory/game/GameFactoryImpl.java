@@ -18,7 +18,7 @@ import java.util.function.Consumer;
 public class GameFactoryImpl implements GameFactory {
 
     @Autowired
-    private Map<String, GameModeBuilder> buildersStorage;
+    private Map<String, GameModeBuilder> builders;
 
     /** **/
     private Consumer<GameReadyEvent> gameReadyHandler;
@@ -28,7 +28,7 @@ public class GameFactoryImpl implements GameFactory {
 
         GameSettings gameSettings = player.getGameSettings();
         GameSettingsImpl.GameMode gameMode = gameSettings.getGameMode();
-        buildersStorage.get(gameMode.toString()).buildGame(player);
+        builders.get(gameMode.toString()).buildGame(player);
 
         this.gameReadyHandler = gameReadyHandler;
     }

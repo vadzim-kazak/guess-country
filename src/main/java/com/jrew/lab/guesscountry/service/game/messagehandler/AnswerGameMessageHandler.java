@@ -61,6 +61,9 @@ public class AnswerGameMessageHandler implements GameMessageHandler<AnswerPayloa
         }, resultMessage);
 
         if(isAnswerCorrect) {
+            // Increment scores counter
+            answerOwner.setScores(answerOwner.getScores() + 1);
+
             game.nextRound();
         }
     }

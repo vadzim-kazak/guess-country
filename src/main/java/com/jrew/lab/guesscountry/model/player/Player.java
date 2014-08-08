@@ -8,23 +8,27 @@ import org.springframework.web.socket.WebSocketSession;
  */
 public interface Player {
 
-    String getId();
+    public String getId();
 
-    void setId(String id);
+    public void setId(String id);
 
-    String getName();
+    public String getName();
 
-    void setName(String name);
+    public void setName(String name);
 
-    String getLocale();
+    public String getLocale();
 
-    void setLocale(String locale);
+    public void setLocale(String locale);
 
-    GameSettings getGameSettings();
+    public GameSettings getGameSettings();
 
-    void setGameSettings(GameSettings gameSettings);
+    public void setGameSettings(GameSettings gameSettings);
 
-    void setWebSocketSession(WebSocketSession webSocketSession);
+    public void setWebSocketSession(WebSocketSession webSocketSession);
 
-    WebSocketSession getWebSocketSession();
+    public WebSocketSession getWebSocketSession();
+
+    public int getScores();
+
+    public void setScores(int scores);
 }

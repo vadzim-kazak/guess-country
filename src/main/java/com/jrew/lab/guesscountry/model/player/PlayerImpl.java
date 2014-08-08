@@ -27,6 +27,9 @@ public class PlayerImpl implements Player {
     /** **/
     private WebSocketSession webSocketSession;
 
+    /** **/
+    private int scores;
+
     /**
      *
      */
@@ -117,6 +120,16 @@ public class PlayerImpl implements Player {
     @Override
     public WebSocketSession getWebSocketSession() {
         return webSocketSession;
+    }
+
+    @Override
+    public int getScores() {
+        return scores;
+    }
+
+    @Override
+    public void setScores(int scores) {
+        this.scores = scores;
     }
 
     @Override

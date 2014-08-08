@@ -5,6 +5,7 @@ import com.jrew.lab.guesscountry.model.message.payload.CountdownPayload;
 import com.jrew.lab.guesscountry.service.game.Game;
 import com.jrew.lab.guesscountry.service.game.factory.message.GameMessageFactory;
 import com.jrew.lab.guesscountry.service.game.messagehandler.GameMessageHandler;
+import com.jrew.lab.guesscountry.service.game.messagehandler.MessageHandlerProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -24,8 +25,8 @@ public class CountDownHelperImpl implements CountDownHelper {
     private Game game;
 
     /** **/
-    @Resource(name = "messageHandlers")
-    private Map<GameMessage.Type, GameMessageHandler> messageHandlers;
+    @Autowired
+    MessageHandlerProvider messageHandlerProvider;
 
     /** **/
     @Autowired
@@ -46,7 +47,7 @@ public class CountDownHelperImpl implements CountDownHelper {
 
                 if (nextRoundPause <= COUNTDOWN_THRESHOLD) {
                     payload.setSeconds(nextRoundPause);
-                    messageHandlers.get(GameMessage.Type.COUNTDOWN).handleMessage(gameMessage, game);
+                    messageHandlerProvider.handleMessage(gameMessage, game);
                 }
 
                 nextRoundPause--;

@@ -2,21 +2,18 @@ package com.jrew.lab.guesscountry.service.game;
 
 import com.jrew.lab.guesscountry.model.questionanswer.LocalizedQuestionAnswer;
 import com.jrew.lab.guesscountry.model.message.GameMessage;
-import com.jrew.lab.guesscountry.model.message.payload.CountdownPayload;
 import com.jrew.lab.guesscountry.model.player.Player;
 import com.jrew.lab.guesscountry.service.game.factory.message.GameMessageFactory;
 import com.jrew.lab.guesscountry.service.game.helper.CountDownHelper;
-import com.jrew.lab.guesscountry.service.game.messagehandler.GameMessageHandler;
+import com.jrew.lab.guesscountry.service.game.messagehandler.MessageHandlerProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -37,21 +34,24 @@ public class GameImpl implements Game {
     private int currentQuestionAnswerNumber = -1;
 
     /** **/
-    @Resource(name = "messageHandlers")
-    private Map<GameMessage.Type, GameMessageHandler> messageHandlers;
+    @Autowired
+    MessageHandlerProvider messageHandlerProvider;
 
     /** **/
     @Autowired
     private GameMessageFactory gameMessageFactory;
 
+    /** **/
     @Autowired
     private CountDownHelper countDownHelper;
 
+    /**
+     *
+     */
     @PostConstruct
     private void init() {
         countDownHelper.setGame(this);
     }
-
 
     @Override
     public void start() {
@@ -64,7 +64,6 @@ public class GameImpl implements Game {
         if (currentQuestionAnswerNumber < questionAnswers.size()) {
             countDownHelper.performCountDown(() -> proceedNextRound());
         } else {
-
           // finish game here
         }
     }
@@ -76,7 +75,7 @@ public class GameImpl implements Game {
 
         currentQuestionAnswerNumber++;
         GameMessage gameMessage = gameMessageFactory.buildMessage(GameMessage.Type.QUESTION);
-        messageHandlers.get(GameMessage.Type.QUESTION).handleMessage(gameMessage, this);
+        messageHandlerProvider.handleMessage(gameMessage, this);
     }
 
 

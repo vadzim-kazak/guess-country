@@ -33,11 +33,9 @@ public class WebSocketSenderImpl implements WebSocketSender {
     @Override
     public <T> void sendMessage(GameMessage<T> gameMessage, WebSocketSession webSocketSession) {
 
-        T payload = gameMessage.getPayload();
-
         try {
 
-            String jsonMessage = mapper.writeValueAsString(payload);
+            String jsonMessage = mapper.writeValueAsString(gameMessage);
             webSocketSession.sendMessage(new TextMessage(jsonMessage));
 
         } catch (JsonProcessingException exception) {

@@ -8,6 +8,8 @@ import com.jrew.lab.guesscountry.model.player.Player;
 import com.jrew.lab.guesscountry.service.game.Game;
 import com.jrew.lab.guesscountry.service.game.factory.message.GameMessageFactory;
 import com.jrew.lab.guesscountry.service.socket.WebSocketSender;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +21,9 @@ import java.util.function.Consumer;
 @Component
 @MessageHandlerType(type = GameMessage.Type.ANSWER)
 public class AnswerGameMessageHandler implements GameMessageHandler<AnswerPayload> {
+
+    /** **/
+    private Logger logger = LoggerFactory.getLogger(AnswerGameMessageHandler.class);
 
     /** **/
     @Autowired
@@ -36,14 +41,15 @@ public class AnswerGameMessageHandler implements GameMessageHandler<AnswerPayloa
 
         LocalizedQuestionAnswer questionAnswer = game.getQuestionAnswer();
         boolean isAnswerCorrect = questionAnswer.checkAnswer(payload.getAnswer(), answerOwner.getLocale());
+        logger.debug("Player {} provided {} answer", answerOwner.getId(), isAnswerCorrect);
 
         GameMessage<ResultPayload> resultMessage = createResultMessage(payload);
 
         sendResultMessageToPlayers(gameMessage -> {
 
-            gameMessage.getPayload().setAnswerOwner(isAnswerCorrect);
+            gameMessage.getPayload().setRightAnswer(isAnswerCorrect);
             game.getPlayers().stream().forEach(player -> {
-                if (!player.getId().equalsIgnoreCase(answerOwner.getId())) {
+                if (!player.equals(answerOwner)) {
                     gameMessage.getPayload().setAnswerOwner(false);
                 } else {
                     gameMessage.getPayload().setAnswerOwner(true);

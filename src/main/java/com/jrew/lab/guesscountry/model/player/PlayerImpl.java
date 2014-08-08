@@ -1,6 +1,8 @@
 package com.jrew.lab.guesscountry.model.player;
 
 import com.jrew.lab.guesscountry.model.settings.GameSettings;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.web.socket.WebSocketSession;
 
 import javax.annotation.PostConstruct;
@@ -115,5 +117,32 @@ public class PlayerImpl implements Player {
     @Override
     public WebSocketSession getWebSocketSession() {
         return webSocketSession;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return new HashCodeBuilder(18, 32) // two randomly chosen prime numbers
+                .append(id)
+                .append(name)
+                .append(locale)
+                .toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+
+        if (object == null || !(object instanceof Player)) {
+            return false;
+        }
+
+        if (object == this) {
+            return true;
+        }
+
+        Player anotherPlayer = (Player) object;
+        return new EqualsBuilder()
+                .append(id, anotherPlayer.getId())
+                .isEquals();
     }
 }

@@ -30,10 +30,13 @@
 
                 socket.onmessage = function (evt)
                 {
-                    var received_msg = evt.data;
-                    console.log(received_msg);
-                    console.log('message received!');
-                    $('#response').text(received_msg);
+                    var receivedData = $.parseJSON(evt.data);
+
+                    if(receivedData.type == 'COUNTDOWN') {
+                        $('#countdown').text(JSON.stringify(receivedData.payload));
+                    } else {
+                        $('#response').text(JSON.stringify(receivedData.payload));
+                    }
                 }
 
             } else {
@@ -67,7 +70,8 @@
    <div id="response"></div>
    <br/>
    Answer: <input type="text" id="answer" /><input type="button" value="send" onclick="sendAnswer()" />
-
+   <br/>
+   <div id="countdown"></div>
 
 </body>
 </html>

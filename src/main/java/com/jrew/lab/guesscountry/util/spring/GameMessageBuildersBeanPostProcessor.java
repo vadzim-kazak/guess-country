@@ -29,7 +29,6 @@ public class GameMessageBuildersBeanPostProcessor implements BeanPostProcessor {
     @Override
     public Object postProcessAfterInitialization(Object bean, String s) throws BeansException {
 
-        System.out.println(s);
         Class<?> beanClass = bean.getClass();
         if (beanClass.isAnnotationPresent(MessageBuilderType.class)) {
             MessageBuilderType messageBuilderType = beanClass.getAnnotation(MessageBuilderType.class);

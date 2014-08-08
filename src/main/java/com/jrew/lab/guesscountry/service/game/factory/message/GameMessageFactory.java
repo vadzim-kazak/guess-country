@@ -15,7 +15,7 @@ public interface GameMessageFactory {
      * @param type
      * @return
      */
-    public GameMessage buildMessage(GameMessage.Type type);
+    public GameMessage buildServerMessage(GameMessage.Type type);
 
     /**
      *
@@ -23,6 +23,6 @@ public interface GameMessageFactory {
      * @param player
      * @return
      */
-    public GameMessage buildMessage(String payload, Player player);
+    public GameMessage buildClientMessage(String payload, Player player);
 
 }

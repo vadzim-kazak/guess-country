@@ -135,7 +135,7 @@ public class PlayerImpl implements Player {
     @Override
     public int hashCode() {
 
-        return new HashCodeBuilder(18, 32) // two randomly chosen prime numbers
+        return new HashCodeBuilder(19, 33) // two randomly chosen prime numbers
                 .append(id)
                 .append(name)
                 .append(locale)

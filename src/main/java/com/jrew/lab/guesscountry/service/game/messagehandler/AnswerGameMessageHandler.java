@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
@@ -39,32 +40,44 @@ public class AnswerGameMessageHandler implements GameMessageHandler<AnswerPayloa
         AnswerPayload payload = message.getPayload();
         Player answerOwner = payload.getPlayer();
 
-        LocalizedQuestionAnswer questionAnswer = game.getQuestionAnswer();
-        boolean isAnswerCorrect = questionAnswer.checkAnswer(payload.getAnswer(), answerOwner.getLocale());
-        logger.debug("Player {} provided {} answer", answerOwner.getId(), isAnswerCorrect);
+        if (game.checkAnswerPermission(answerOwner)) {
 
-        GameMessage<ResultPayload> resultMessage = createResultMessage(payload);
+            game.logAnswerAttempt(answerOwner);
 
-        sendResultMessageToPlayers(gameMessage -> {
+            LocalizedQuestionAnswer questionAnswer = game.getQuestionAnswer();
+            boolean isAnswerCorrect = questionAnswer.checkAnswer(payload.getAnswer(), answerOwner.getLocale());
+            logger.debug("Player {} provided {} answer", answerOwner.getId(), isAnswerCorrect);
 
-            gameMessage.getPayload().setRightAnswer(isAnswerCorrect);
-            game.getPlayers().stream().forEach(player -> {
-                if (!player.equals(answerOwner)) {
-                    gameMessage.getPayload().setAnswerOwner(false);
-                } else {
-                    gameMessage.getPayload().setAnswerOwner(true);
+            GameMessage<ResultPayload> resultMessage = createResultMessage(payload);
+
+            sendResultMessageToPlayers(gameMessage -> {
+
+                gameMessage.getPayload().setRightAnswer(isAnswerCorrect);
+                game.getPlayers().stream().forEach(player -> {
+                    if (!player.equals(answerOwner)) {
+                        gameMessage.getPayload().setAnswerOwner(false);
+                    } else {
+                        gameMessage.getPayload().setAnswerOwner(true);
+                    }
+
+                    webSocketSender.sendMessage(gameMessage, player.getWebSocketSession());
+                });
+
+            }, resultMessage);
+
+            if(isAnswerCorrect) {
+                // Increment scores counter
+                answerOwner.setScores(answerOwner.getScores() + 1);
+
+                game.nextRound();
+            } else {
+
+                Optional<Player> playerOptional = game.getPlayers().stream()
+                                                      .filter(player -> game.checkAnswerPermission(player)).findAny();
+                if (!playerOptional.isPresent()) {
+                    game.nextRound();
                 }
-
-                webSocketSender.sendMessage(gameMessage, player.getWebSocketSession());
-            });
-
-        }, resultMessage);
-
-        if(isAnswerCorrect) {
-            // Increment scores counter
-            answerOwner.setScores(answerOwner.getScores() + 1);
-
-            game.nextRound();
+            }
         }
     }
 
@@ -77,7 +90,7 @@ public class AnswerGameMessageHandler implements GameMessageHandler<AnswerPayloa
 
         Player player = payload.getPlayer();
 
-        GameMessage<ResultPayload> resultMessage = gameMessageFactory.buildMessage(GameMessage.Type.RESULT);
+        GameMessage<ResultPayload> resultMessage = gameMessageFactory.buildServerMessage(GameMessage.Type.RESULT);
         ResultPayload resultPayload = resultMessage.getPayload();
         resultPayload.setAnswer(payload.getAnswer());
         resultPayload.setPlayerName(player.getName());

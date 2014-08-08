@@ -52,13 +52,13 @@ public class GameMessageFactoryImpl implements GameMessageFactory {
     }
 
     @Override
-    public GameMessage buildMessage(GameMessage.Type type) {
+    public GameMessage buildServerMessage(GameMessage.Type type) {
 
         return (GameMessage) applicationContext.getBean(type.toString());
     }
 
     @Override
-    public GameMessage buildMessage(String payload, Player player) {
+    public GameMessage buildClientMessage(String payload, Player player) {
 
         try {
             JsonNode payloadJson = mapper.readTree(payload);

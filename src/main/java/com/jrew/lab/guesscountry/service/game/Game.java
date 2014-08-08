@@ -30,6 +30,19 @@ public interface Game {
     /**
      *
      * @param player
+     * @return
+     */
+    public boolean checkAnswerPermission(Player player);
+
+    /**
+     *
+     * @param player
+     */
+    public void logAnswerAttempt(Player player);
+
+    /**
+     *
+     * @param player
      */
     public void addPlayer(Player player);
 

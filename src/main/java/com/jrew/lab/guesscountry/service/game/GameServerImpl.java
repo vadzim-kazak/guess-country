@@ -4,11 +4,13 @@ import com.jrew.lab.guesscountry.model.message.GameMessage;
 import com.jrew.lab.guesscountry.model.player.Player;
 import com.jrew.lab.guesscountry.service.game.factory.game.GameFactory;
 import com.jrew.lab.guesscountry.service.game.factory.message.GameMessageFactory;
+import com.jrew.lab.guesscountry.service.game.messagehandler.GameMessageHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +34,10 @@ public class GameServerImpl implements GameServer {
     /** **/
     @Autowired
     GameMessageFactory gameMessageFactory;
+
+    /** **/
+    @Resource(name = "messageHandlers")
+    private Map<GameMessage.Type, GameMessageHandler> messageHandlers;
 
     /** **/
     private Map<String, Player> playersStorage = new ConcurrentHashMap<>();
@@ -62,7 +68,7 @@ public class GameServerImpl implements GameServer {
         Optional<Game> gameOptional = activeGames.stream().filter(game -> game.hasPlayer(playerId)).findFirst();
         gameOptional.ifPresent(game -> {
             GameMessage gameMessage = gameMessageFactory.buildMessage(message, playersStorage.get(playerId));
-            game.handleMessage(gameMessage);
+            messageHandlers.get(gameMessage.getType()).handleMessage(gameMessage, game);
         });
     }
 

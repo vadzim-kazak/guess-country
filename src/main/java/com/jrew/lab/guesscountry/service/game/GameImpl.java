@@ -5,12 +5,14 @@ import com.jrew.lab.guesscountry.model.message.GameMessage;
 import com.jrew.lab.guesscountry.model.message.payload.CountdownPayload;
 import com.jrew.lab.guesscountry.model.player.Player;
 import com.jrew.lab.guesscountry.service.game.factory.message.GameMessageFactory;
+import com.jrew.lab.guesscountry.service.game.helper.CountDownHelper;
 import com.jrew.lab.guesscountry.service.game.messagehandler.GameMessageHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,36 +42,15 @@ public class GameImpl implements Game {
 
     /** **/
     @Autowired
-    GameMessageFactory gameMessageFactory;
+    private GameMessageFactory gameMessageFactory;
 
-    /** **/
-    private Runnable nextQuestionCountdownRunnable = () -> {
+    @Autowired
+    private CountDownHelper countDownHelper;
 
-        int nextRoundPause = 8;
-        int COUNTDOWN_THRESHOLD = 5;
-
-        GameMessage<CountdownPayload> gameMessage = gameMessageFactory.buildMessage(GameMessage.Type.COUNTDOWN);
-        CountdownPayload payload = gameMessage.getPayload();
-
-        while (nextRoundPause >= 1) {
-
-            if (nextRoundPause <= COUNTDOWN_THRESHOLD) {
-                payload.setSeconds(nextRoundPause);
-                GameImpl.this.handleMessage(gameMessage);
-            }
-
-            nextRoundPause--;
-
-            try {
-                Thread.currentThread().sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        GameImpl.this.proceedNextRound();
-    };
-
+    @PostConstruct
+    private void init() {
+        countDownHelper.setGame(this);
+    }
 
 
     @Override
@@ -81,7 +62,7 @@ public class GameImpl implements Game {
     public void nextRound() {
 
         if (currentQuestionAnswerNumber < questionAnswers.size()) {
-            new Thread(nextQuestionCountdownRunnable).start();
+            countDownHelper.performCountDown(() -> proceedNextRound());
         } else {
 
           // finish game here
@@ -102,11 +83,6 @@ public class GameImpl implements Game {
     @Override
     public LocalizedQuestionAnswer getQuestionAnswer() {
         return questionAnswers.get(currentQuestionAnswerNumber);
-    }
-
-    @Override
-    public void handleMessage(GameMessage message) {
-        messageHandlers.get(message.getType()).handleMessage(message, this);
     }
 
     @Override

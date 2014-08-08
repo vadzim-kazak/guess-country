@@ -46,11 +46,4 @@ public interface Game {
      */
     public List<Player> getPlayers();
 
-    /**
-     *
-     * @param message
-     */
-    public void handleMessage(GameMessage message);
-
-
 }

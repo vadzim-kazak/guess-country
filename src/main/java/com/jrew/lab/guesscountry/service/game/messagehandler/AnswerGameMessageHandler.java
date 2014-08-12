@@ -7,6 +7,7 @@ import com.jrew.lab.guesscountry.model.message.payload.ResultPayload;
 import com.jrew.lab.guesscountry.model.player.Player;
 import com.jrew.lab.guesscountry.service.game.Game;
 import com.jrew.lab.guesscountry.service.game.factory.message.GameMessageFactory;
+import com.jrew.lab.guesscountry.service.game.messagehandler.helper.AnswerCounter;
 import com.jrew.lab.guesscountry.service.socket.WebSocketSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,15 +35,19 @@ public class AnswerGameMessageHandler implements GameMessageHandler<AnswerPayloa
     @Autowired
     private WebSocketSender webSocketSender;
 
+    /** **/
+    @Autowired
+    private AnswerCounter answerCounter;
+
     @Override
     public void handleMessage(GameMessage<AnswerPayload> message, Game game) {
 
         AnswerPayload payload = message.getPayload();
         Player answerOwner = payload.getPlayer();
 
-        if (game.checkAnswerPermission(answerOwner)) {
+        if (answerCounter.canAnswer(answerOwner, game)) {
 
-            game.logAnswerAttempt(answerOwner);
+            answerCounter.countAnswer(answerOwner, game);
 
             LocalizedQuestionAnswer questionAnswer = game.getQuestionAnswer();
             boolean isAnswerCorrect = questionAnswer.checkAnswer(payload.getAnswer(), answerOwner.getLocale());
@@ -68,13 +73,14 @@ public class AnswerGameMessageHandler implements GameMessageHandler<AnswerPayloa
             if(isAnswerCorrect) {
                 // Increment scores counter
                 answerOwner.setScores(answerOwner.getScores() + 1);
-
+                answerCounter.reset(game);
                 game.nextRound();
             } else {
 
                 Optional<Player> playerOptional = game.getPlayers().stream()
-                                                      .filter(player -> game.checkAnswerPermission(player)).findAny();
+                                                      .filter(player -> answerCounter.canAnswer(player, game)).findAny();
                 if (!playerOptional.isPresent()) {
+                    answerCounter.reset(game);
                     game.nextRound();
                 }
             }

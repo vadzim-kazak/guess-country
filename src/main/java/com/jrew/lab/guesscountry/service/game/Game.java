@@ -1,15 +1,21 @@
 package com.jrew.lab.guesscountry.service.game;
 
-import com.jrew.lab.guesscountry.model.questionanswer.LocalizedQuestionAnswer;
-import com.jrew.lab.guesscountry.model.message.GameMessage;
 import com.jrew.lab.guesscountry.model.player.Player;
+import com.jrew.lab.guesscountry.model.questionanswer.LocalizedQuestionAnswer;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Kazak_VV on 31.07.2014.
  */
 public interface Game {
+
+    /**
+     *
+     * @return
+     */
+    public String getId();
 
     /**
      *
@@ -26,19 +32,6 @@ public interface Game {
      * @return
      */
     public LocalizedQuestionAnswer getQuestionAnswer();
-
-    /**
-     *
-     * @param player
-     * @return
-     */
-    public boolean checkAnswerPermission(Player player);
-
-    /**
-     *
-     * @param player
-     */
-    public void logAnswerAttempt(Player player);
 
     /**
      *

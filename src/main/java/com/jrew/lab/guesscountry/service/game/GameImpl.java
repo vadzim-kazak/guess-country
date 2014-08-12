@@ -1,19 +1,24 @@
 package com.jrew.lab.guesscountry.service.game;
 
-import com.jrew.lab.guesscountry.model.message.payload.CountdownPayload;
-import com.jrew.lab.guesscountry.model.questionanswer.LocalizedQuestionAnswer;
 import com.jrew.lab.guesscountry.model.message.GameMessage;
+import com.jrew.lab.guesscountry.model.message.payload.CountdownPayload;
 import com.jrew.lab.guesscountry.model.player.Player;
+import com.jrew.lab.guesscountry.model.questionanswer.LocalizedQuestionAnswer;
 import com.jrew.lab.guesscountry.service.game.factory.message.GameMessageFactory;
 import com.jrew.lab.guesscountry.service.game.helper.CountdownManager;
 import com.jrew.lab.guesscountry.service.game.messagehandler.MessageHandlerProvider;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Created by Kazak_VV on 01.08.2014.
@@ -23,10 +28,10 @@ import java.util.*;
 public class GameImpl implements Game {
 
     /** **/
-    private List<Player> players = new ArrayList<>();
+    private String id;
 
     /** **/
-    private Map<Player, Integer> answersLog = new HashMap<>();
+    private List<Player> players = new ArrayList<>();
 
     /** **/
     @Autowired
@@ -45,7 +50,12 @@ public class GameImpl implements Game {
     private CountdownManager countdownManager;
 
     /** **/
-    private int currentQuestionAnswerNumber = 0;
+    private int currentQuestionAnswerNumber = -1;
+
+    @PostConstruct
+    private void init() {
+        id = UUID.randomUUID().toString();
+    }
 
     @Override
     public void start() {
@@ -55,6 +65,7 @@ public class GameImpl implements Game {
     @Override
     public void nextRound() {
 
+        currentQuestionAnswerNumber++;
         if (currentQuestionAnswerNumber < questionAnswers.size()) {
 
             countdownManager.stopAnswerCountdown();
@@ -79,8 +90,6 @@ public class GameImpl implements Game {
      */
     private void proceedNextRound() {
 
-        answersLog.clear();
-
         GameMessage gameMessage = gameMessageFactory.buildServerMessage(GameMessage.Type.QUESTION);
         messageHandlerProvider.handleMessage(gameMessage, this);
 
@@ -94,28 +103,6 @@ public class GameImpl implements Game {
                 () -> nextRound()
         );
 
-        currentQuestionAnswerNumber++;
-    }
-
-    @Override
-    public boolean checkAnswerPermission(Player player) {
-
-        if (answersLog.containsKey(player)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    @Override
-    public void logAnswerAttempt(Player player) {
-
-        if (answersLog.containsKey(player)) {
-            Integer answerAttempts = answersLog.get(player);
-            answersLog.put(player, ++answerAttempts);
-        } else {
-            answersLog.put(player, Integer.valueOf(1));
-        }
     }
 
     @Override
@@ -139,5 +126,35 @@ public class GameImpl implements Game {
     @Override
     public List<Player> getPlayers() {
         return players;
+    }
+
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return new HashCodeBuilder(21, 35) // two randomly chosen prime numbers
+                .append(getId())
+                .toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+
+        if (object == null || !(object instanceof Game)) {
+            return false;
+        }
+
+        if (object == this) {
+            return true;
+        }
+
+        Game anotherGame = (Game) object;
+        return new EqualsBuilder()
+                .append(getId(), anotherGame.getId())
+                .isEquals();
     }
 }

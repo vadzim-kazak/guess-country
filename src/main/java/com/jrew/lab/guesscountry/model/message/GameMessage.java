@@ -8,7 +8,32 @@ import com.jrew.lab.guesscountry.model.player.Player;
 public interface GameMessage<T> {
 
     /** **/
-    enum Type {QUESTION, ANSWER, RESULT, CHAT_MESSAGE, COUNTDOWN, GAME_FINISHED}
+    enum Type {
+
+        /** **/
+        QUESTION,
+
+        /** **/
+        ANSWER,
+
+        /** **/
+        RESULT,
+
+        /** **/
+        CHAT_MESSAGE,
+
+        /** **/
+        COUNTDOWN,
+
+        /** **/
+        WAITING_FOR_OTHER_PLAYER,
+
+        /** **/
+        START_GAME,
+
+        /** **/
+        GAME_FINISHED
+    }
 
     /**
      *

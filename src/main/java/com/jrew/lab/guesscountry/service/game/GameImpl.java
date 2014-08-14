@@ -81,7 +81,10 @@ public class GameImpl implements Game {
             );
 
         } else {
-          // finish game here
+            countdownManager.stopAnswerCountdown();
+            // finish game here
+            GameMessage message = gameMessageFactory.buildServerMessage(GameMessage.Type.GAME_FINISHED);
+            messageHandlerProvider.handleMessage(message, this);
         }
     }
 

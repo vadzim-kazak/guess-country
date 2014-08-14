@@ -2,10 +2,7 @@ package com.jrew.lab.guesscountry.config;
 
 import com.jrew.lab.guesscountry.model.message.GameMessage;
 import com.jrew.lab.guesscountry.model.message.GameMessageImpl;
-import com.jrew.lab.guesscountry.model.message.payload.AnswerPayload;
-import com.jrew.lab.guesscountry.model.message.payload.CountdownPayload;
-import com.jrew.lab.guesscountry.model.message.payload.QuestionPayload;
-import com.jrew.lab.guesscountry.model.message.payload.ResultPayload;
+import com.jrew.lab.guesscountry.model.message.payload.*;
 import com.jrew.lab.guesscountry.model.player.Player;
 import com.jrew.lab.guesscountry.model.player.PlayerImpl;
 import com.jrew.lab.guesscountry.model.settings.GameSettings;
@@ -28,13 +25,16 @@ public class ApplicationConfig {
     private AnswerPayload answerPayload;
 
     @Autowired
-    private QuestionPayload questionPayload;
+    private StringPayload stringPayload;
 
     @Autowired
     private ResultPayload resultPayload;
 
     @Autowired
     private CountdownPayload countdownPayload;
+
+    @Autowired
+    private GameFinishedPayload gameFinishedPayload;
 
     @Bean
     @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
@@ -52,11 +52,11 @@ public class ApplicationConfig {
 
     @Bean(name = "QUESTION")
     @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
-    public GameMessage<QuestionPayload> getQuestionGameMessage() {
+    public GameMessage<StringPayload> getQuestionGameMessage() {
 
-        GameMessage<QuestionPayload> questionGameMessage = new GameMessageImpl<>();
+        GameMessage<StringPayload> questionGameMessage = new GameMessageImpl<>();
         questionGameMessage.setType(GameMessage.Type.QUESTION);
-        questionGameMessage.setPayload(questionPayload);
+        questionGameMessage.setPayload(stringPayload);
         return questionGameMessage;
     }
 
@@ -88,5 +88,39 @@ public class ApplicationConfig {
         countdownGameMessage.setType(GameMessage.Type.COUNTDOWN);
         countdownGameMessage.setPayload(countdownPayload);
         return countdownGameMessage;
+    }
+
+    @Bean(name = "WAITING_FOR_OTHER_PLAYER")
+    @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
+    public GameMessage<StringPayload> getWaitingGameMessage() {
+
+        GameMessage<StringPayload> waitingGameMessage = new GameMessageImpl<>();
+        waitingGameMessage.setType(GameMessage.Type.WAITING_FOR_OTHER_PLAYER);
+        stringPayload.setMessage("Waiting for second player connection...");
+        waitingGameMessage.setPayload(stringPayload);
+        return waitingGameMessage;
+    }
+
+    @Bean(name = "START_GAME")
+    @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
+    public GameMessage<StringPayload> getStartGameMessage() {
+
+        GameMessage<StringPayload> startGameMessage = new GameMessageImpl<>();
+        startGameMessage.setType(GameMessage.Type.START_GAME);
+        stringPayload.setMessage("Starting game...");
+        startGameMessage.setPayload(stringPayload);
+        return startGameMessage;
+    }
+
+
+    @Bean(name = "GAME_FINISHED")
+    @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
+    public GameMessage<GameFinishedPayload> getGameFinishedMessage() {
+
+        GameMessage<GameFinishedPayload> gameFinishedMessage = new GameMessageImpl<>();
+        gameFinishedMessage.setType(GameMessage.Type.GAME_FINISHED);
+        gameFinishedPayload.setMessage("Game finished...");
+        gameFinishedMessage.setPayload(gameFinishedPayload);
+        return gameFinishedMessage;
     }
 }

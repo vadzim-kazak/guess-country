@@ -1,11 +1,15 @@
 package com.jrew.lab.guesscountry.service.game.factory.game.builder.mode;
 
+import com.jrew.lab.guesscountry.model.message.GameMessage;
 import com.jrew.lab.guesscountry.model.player.Player;
 import com.jrew.lab.guesscountry.model.settings.GameSettings;
 import com.jrew.lab.guesscountry.service.game.Game;
 import com.jrew.lab.guesscountry.service.game.event.GameReadyEvent;
+import com.jrew.lab.guesscountry.service.game.factory.message.GameMessageFactory;
+import com.jrew.lab.guesscountry.service.game.messagehandler.MessageHandlerProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -18,19 +22,27 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DuelGameModeBuilder extends AbstractGameModeBuilder {
 
     /** **/
+    @Autowired
+    private MessageHandlerProvider messageHandlerProvider;
+
+    /** **/
+    @Autowired
+    private GameMessageFactory gameMessageFactory;
+
+    /** **/
     private Logger logger = LoggerFactory.getLogger(DuelGameModeBuilder.class);
 
     /** **/
-    private Map<GameSettings, Game> heldGames = new ConcurrentHashMap<>();
+    private Map<GameSettings, Game> awaitingGames = new ConcurrentHashMap<>();
 
     @Override
     public void buildGame(Player player) {
 
         GameSettings gameSettings = player.getGameSettings();
-        if (heldGames.containsKey(gameSettings)) {
+        if (awaitingGames.containsKey(gameSettings)) {
 
             // Someone is waiting for second player connection to start game
-            completeGameCreation(player, heldGames.get(gameSettings));
+            completeGameCreation(player, awaitingGames.get(gameSettings));
 
         } else {
 
@@ -43,8 +55,11 @@ public class DuelGameModeBuilder extends AbstractGameModeBuilder {
 
         // Hold game until second player connected
         GameSettings gameSettings = player.getGameSettings();
-        heldGames.put(gameSettings, game);
+        awaitingGames.put(gameSettings, game);
         logger.debug("Player {} is waiting for other player connection...", player.getName());
+
+        GameMessage gameMessage = gameMessageFactory.buildServerMessage(GameMessage.Type.WAITING_FOR_OTHER_PLAYER);
+        messageHandlerProvider.handleMessage(gameMessage, game);
     }
 
     /**
@@ -57,7 +72,7 @@ public class DuelGameModeBuilder extends AbstractGameModeBuilder {
         heldGame.addPlayer(secondPlayer);
 
         //Remove game from held games list
-        heldGames.remove(secondPlayer.getGameSettings());
+        awaitingGames.remove(secondPlayer.getGameSettings());
 
         getApplicationEventPublisher().publishEvent(new GameReadyEvent(heldGame));
     }

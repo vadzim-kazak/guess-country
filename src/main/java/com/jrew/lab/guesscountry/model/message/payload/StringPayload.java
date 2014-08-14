@@ -9,24 +9,24 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-public class QuestionPayload {
+public class StringPayload {
 
     /** **/
-    private String question;
+    private String message;
 
     /**
      *
      * @return
      */
-    public String getQuestion() {
-        return question;
+    public String getMessage() {
+        return message;
     }
 
     /**
      *
-     * @param question
+     * @param message
      */
-    public void setQuestion(String question) {
-        this.question = question;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

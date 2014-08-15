@@ -20,6 +20,9 @@ public class GameFinishedPayload {
     public static class PlayerResult {
 
         /** **/
+        private String id;
+
+        /** **/
         private String playerName;
 
         /** **/
@@ -30,6 +33,22 @@ public class GameFinishedPayload {
 
         /** **/
         private boolean isWinner;
+
+        /**
+         *
+         * @return
+         */
+        public String getId() {
+            return id;
+        }
+
+        /**
+         *
+         * @param id
+         */
+        public void setId(String id) {
+            this.id = id;
+        }
 
         /**
          *
@@ -100,6 +119,9 @@ public class GameFinishedPayload {
     private String message;
 
     /** **/
+    private boolean isDraw;
+
+    /** **/
     private List<PlayerResult> playersResult = new ArrayList<>();
 
     /**
@@ -126,4 +148,27 @@ public class GameFinishedPayload {
         return playersResult;
     }
 
+    /**
+     *
+     * @return
+     */
+    public boolean isDraw() {
+        return isDraw;
+    }
+
+    /**
+     *
+     * @param isDraw
+     */
+    public void setDraw(boolean isDraw) {
+        this.isDraw = isDraw;
+    }
+
+    /**
+     *
+     * @param playersResult
+     */
+    public void setPlayersResult(List<PlayerResult> playersResult) {
+        this.playersResult = playersResult;
+    }
 }

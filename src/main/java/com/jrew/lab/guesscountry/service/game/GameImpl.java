@@ -2,6 +2,7 @@ package com.jrew.lab.guesscountry.service.game;
 
 import com.jrew.lab.guesscountry.model.message.GameMessage;
 import com.jrew.lab.guesscountry.model.message.payload.CountdownPayload;
+import com.jrew.lab.guesscountry.model.message.payload.ResultPayload;
 import com.jrew.lab.guesscountry.model.player.Player;
 import com.jrew.lab.guesscountry.model.questionanswer.LocalizedQuestionAnswer;
 import com.jrew.lab.guesscountry.service.game.factory.message.GameMessageFactory;
@@ -103,7 +104,12 @@ public class GameImpl implements Game {
                     payload.setSeconds(counter);
                     messageHandlerProvider.handleMessage(countdownMessage, this);
                 },
-                () -> nextRound()
+                () -> {
+                    // 1) Send right answer to all players
+
+                    // 2) Proceed to next round
+                    nextRound();
+                }
         );
 
     }

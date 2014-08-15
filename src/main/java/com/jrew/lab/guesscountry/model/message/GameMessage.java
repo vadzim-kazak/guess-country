@@ -32,7 +32,10 @@ public interface GameMessage<T> {
         START_GAME,
 
         /** **/
-        GAME_FINISHED
+        GAME_FINISHED,
+
+        /** **/
+        ANSWER_TIMEOUT
     }
 
     /**

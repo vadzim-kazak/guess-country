@@ -1,10 +1,11 @@
 package com.jrew.lab.guesscountry.service.game;
 
 import com.jrew.lab.guesscountry.model.message.GameMessage;
+import com.jrew.lab.guesscountry.model.message.payload.PlayerLeftPayload;
 import com.jrew.lab.guesscountry.model.player.Player;
-import com.jrew.lab.guesscountry.service.game.factory.game.GameFactory;
-import com.jrew.lab.guesscountry.service.game.factory.message.GameMessageFactory;
-import com.jrew.lab.guesscountry.service.game.messagehandler.MessageHandlerProvider;
+import com.jrew.lab.guesscountry.service.game.factory.GameFactory;
+import com.jrew.lab.guesscountry.service.message.factory.GameMessageFactory;
+import com.jrew.lab.guesscountry.service.message.handler.MessageHandlerProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,15 +56,29 @@ public class GameServerImpl implements GameServer {
            Game game = (Game) gameReadyEvent.getSource();
            activeGames.add(game);
 
-           GameMessage gameMessage = gameMessageFactory.buildServerMessage(GameMessage.Type.START_GAME);
-           messageHandlerProvider.handleMessage(gameMessage, game);
+           messageHandlerProvider.handleMessage(GameMessage.Type.START_GAME, game);
 
            game.start();
        });
     }
 
     @Override
-    public void handlePlayerDisconnection(String playerId) {}
+    public void handlePlayerDisconnection(String playerId) {
+
+        Optional<Game> gameOptional = activeGames.stream().filter(game -> game.hasPlayer(playerId)).findFirst();
+        gameOptional.ifPresent(game -> {
+            GameMessage<PlayerLeftPayload> gameMessage = gameMessageFactory.buildServerMessage(GameMessage.Type.PLAYER_LEFT);
+            PlayerLeftPayload payload = gameMessage.getPayload();
+            payload.setPlayerId(playerId);
+            payload.setFinishGameEvent(() -> {
+                logger.debug("Finishing game...");
+                activeGames.remove(game);
+            });
+            messageHandlerProvider.handleMessage(gameMessage, game);
+        });
+
+        playersStorage.remove(playerId);
+    }
 
     @Override
     public void handlePlayerMessage(String playerId, String message) {

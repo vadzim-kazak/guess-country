@@ -48,8 +48,19 @@ public interface Game {
 
     /**
      *
+     * @param player
+     */
+    public void removePlayer(Player player);
+
+    /**
+     *
      * @return
      */
     public List<Player> getPlayers();
+
+    /**
+     *
+     */
+    public void finish();
 
 }

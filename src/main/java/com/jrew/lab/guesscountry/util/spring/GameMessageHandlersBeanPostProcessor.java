@@ -1,8 +1,8 @@
 package com.jrew.lab.guesscountry.util.spring;
 
 import com.jrew.lab.guesscountry.model.message.GameMessage;
-import com.jrew.lab.guesscountry.service.game.messagehandler.GameMessageHandler;
-import com.jrew.lab.guesscountry.service.game.messagehandler.MessageHandlerType;
+import com.jrew.lab.guesscountry.service.message.handler.GameMessageHandler;
+import com.jrew.lab.guesscountry.service.message.handler.MessageHandlerType;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 

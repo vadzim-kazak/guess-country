@@ -1,5 +1,6 @@
 package com.jrew.lab.guesscountry.model.message.payload;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jrew.lab.guesscountry.model.player.Player;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 public class AnswerPayload {
 
     /** **/
+    @JsonIgnore
     private Player player;
 
     /** **/

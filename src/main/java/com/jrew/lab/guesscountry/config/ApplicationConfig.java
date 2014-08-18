@@ -36,6 +36,12 @@ public class ApplicationConfig {
     @Autowired
     private GameFinishedPayload gameFinishedPayload;
 
+    @Autowired
+    private AnswerTimeoutPayload answerTimeoutPayload;
+
+    @Autowired
+    private PlayerLeftPayload playerLeftPayload;
+
     @Bean
     @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
     public Player getPlayer() {
@@ -122,5 +128,27 @@ public class ApplicationConfig {
         gameFinishedPayload.setMessage("Game finished...");
         gameFinishedMessage.setPayload(gameFinishedPayload);
         return gameFinishedMessage;
+    }
+
+    @Bean(name = "ANSWER_TIMEOUT")
+    @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
+    public GameMessage<AnswerTimeoutPayload> getAnswerTimeoutMessage() {
+
+        GameMessage<AnswerTimeoutPayload> answerTimeoutMessage = new GameMessageImpl<>();
+        answerTimeoutMessage.setType(GameMessage.Type.ANSWER_TIMEOUT);
+        answerTimeoutPayload.setMessage("Answer timeout...");
+        answerTimeoutMessage.setPayload(answerTimeoutPayload);
+        return answerTimeoutMessage;
+    }
+
+    @Bean(name = "PLAYER_LEFT")
+    @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
+    public GameMessage<PlayerLeftPayload> getPlayerLeftMessage() {
+
+        GameMessage<PlayerLeftPayload> playerLeftMessage = new GameMessageImpl<>();
+        playerLeftMessage.setType(GameMessage.Type.PLAYER_LEFT);
+        playerLeftPayload.setMessage("Another player has left the game...");
+        playerLeftMessage.setPayload(playerLeftPayload);
+        return playerLeftMessage;
     }
 }

@@ -35,7 +35,10 @@ public interface GameMessage<T> {
         GAME_FINISHED,
 
         /** **/
-        ANSWER_TIMEOUT
+        ANSWER_TIMEOUT,
+
+        /** **/
+        PLAYER_LEFT
     }
 
     /**

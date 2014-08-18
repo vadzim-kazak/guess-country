@@ -2,12 +2,11 @@ package com.jrew.lab.guesscountry.service.game;
 
 import com.jrew.lab.guesscountry.model.message.GameMessage;
 import com.jrew.lab.guesscountry.model.message.payload.CountdownPayload;
-import com.jrew.lab.guesscountry.model.message.payload.ResultPayload;
 import com.jrew.lab.guesscountry.model.player.Player;
 import com.jrew.lab.guesscountry.model.questionanswer.LocalizedQuestionAnswer;
-import com.jrew.lab.guesscountry.service.game.factory.message.GameMessageFactory;
 import com.jrew.lab.guesscountry.service.game.helper.CountdownManager;
-import com.jrew.lab.guesscountry.service.game.messagehandler.MessageHandlerProvider;
+import com.jrew.lab.guesscountry.service.message.factory.GameMessageFactory;
+import com.jrew.lab.guesscountry.service.message.handler.MessageHandlerProvider;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,8 +83,7 @@ public class GameImpl implements Game {
         } else {
             countdownManager.stopAnswerCountdown();
             // finish game here
-            GameMessage message = gameMessageFactory.buildServerMessage(GameMessage.Type.GAME_FINISHED);
-            messageHandlerProvider.handleMessage(message, this);
+            messageHandlerProvider.handleMessage(GameMessage.Type.GAME_FINISHED, this);
         }
     }
 
@@ -106,7 +104,7 @@ public class GameImpl implements Game {
                 },
                 () -> {
                     // 1) Send right answer to all players
-
+                    messageHandlerProvider.handleMessage(GameMessage.Type.ANSWER_TIMEOUT, this);
                     // 2) Proceed to next round
                     nextRound();
                 }
@@ -120,8 +118,18 @@ public class GameImpl implements Game {
     }
 
     @Override
+    public void finish() {
+        countdownManager.stopAnswerCountdown();
+    }
+
+    @Override
     public void addPlayer(Player player) {
         players.add(player);
+    }
+
+    @Override
+    public void removePlayer(Player player) {
+        players.remove(player);
     }
 
     @Override

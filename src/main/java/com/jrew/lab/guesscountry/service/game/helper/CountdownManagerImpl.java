@@ -1,13 +1,7 @@
 package com.jrew.lab.guesscountry.service.game.helper;
 
-import com.jrew.lab.guesscountry.model.message.GameMessage;
-import com.jrew.lab.guesscountry.model.message.payload.CountdownPayload;
-import com.jrew.lab.guesscountry.service.game.Game;
-import com.jrew.lab.guesscountry.service.game.factory.message.GameMessageFactory;
-import com.jrew.lab.guesscountry.service.game.messagehandler.MessageHandlerProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;

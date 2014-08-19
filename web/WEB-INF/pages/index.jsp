@@ -9,15 +9,95 @@
 <html>
 <head>
     <title>Guess country</title>
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css" media="screen">
+    <script src="${pageContext.request.contextPath}/resources/js/jquery-2.1.1.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+
+        .page-header.clear-bottom {
+            border-bottom: none;
+        }
+
+    </style>
+
 </head>
 <body>
 
-    <form action="${pageContext.request.contextPath}/play" method="post">
+    <!-- Navbar -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="navbar navbar-default">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#"></a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        Please enter your name: <input name="playerName" type="text" /></br>
-        <input type="submit" value="Play" />
+    <div class="container">
 
-    </form>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="page-header clear-bottom">
+                    <h1>Guess Country</h1>
+                    <p class="lead">A small map related game.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8">
+
+                <div class="well bs-component">
+
+                    <form action="${pageContext.request.contextPath}/play" method="post" class="form-horizontal">
+                        <fieldset>
+                            <legend>Game settings</legend>
+
+                            <!-- Player name -->
+                            <div class="form-group">
+                                <label for="playerName" class="col-lg-2 control-label">Your name:</label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="playerName" name="playerName" placeholder="Please enter your name here...">
+                                </div>
+                            </div>
+
+                            <!-- Game type -->
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Game mode:</label>
+                                <div class="col-lg-10">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="gameMode" value="Single" checked="">
+                                            Single
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="gameMode" value="Duel">
+                                            Duel
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Play button -->
+                            <div class="form-group">
+                                <div class="col-lg-10 col-lg-offset-2">
+                                    <button type="submit" class="btn btn-success">Play</button>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
 
 </body>
 </html>

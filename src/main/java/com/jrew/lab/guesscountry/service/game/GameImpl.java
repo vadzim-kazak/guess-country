@@ -92,8 +92,7 @@ public class GameImpl implements Game {
      */
     private void proceedNextRound() {
 
-        GameMessage gameMessage = gameMessageFactory.buildServerMessage(GameMessage.Type.QUESTION);
-        messageHandlerProvider.handleMessage(gameMessage, this);
+        messageHandlerProvider.handleMessage(GameMessage.Type.QUESTION, this);
 
         GameMessage<CountdownPayload> countdownMessage = gameMessageFactory.buildServerMessage(GameMessage.Type.COUNTDOWN);
         CountdownPayload payload = countdownMessage.getPayload();

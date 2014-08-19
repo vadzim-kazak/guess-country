@@ -35,10 +35,33 @@
                 center: new google.maps.LatLng(50, 0),
                 zoom: 4
             };
+
             var map = new google.maps.Map(document.getElementById("map-canvas"),
                     mapOptions);
+
+            google.maps.event.addListener(map, 'click', function(event) {
+                //alert(JSON.stringify(event.latLng));
+
+                //
+                var reverseGeocodingUrl = 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCTDpNd2DNFRN6SDOMmJ0aW0aLx0MYp2yU' +
+                        '&result_type=country&latlng=';
+                //40.714224,-73.961452;
+                var fullUrl = reverseGeocodingUrl + event.latLng.lat() + ',' + event.latLng.lng();
+                $.get( fullUrl, function(data) {
+
+                    var country = data.results[0].address_components[0].long_name;
+                    var message = {
+                        type: "answer",
+                        answer: country
+                    }
+                    socket.send(JSON.stringify(message));
+                });
+            });
         }
+
         google.maps.event.addDomListener(window, 'load', initialize);
+
+
 
 
         function connect() {
@@ -79,12 +102,7 @@
          */
         function sendAnswer() {
 
-            var message = {
-                type: "answer",
-                answer: $('#answer').val()
-            }
 
-            socket.send(JSON.stringify(message));
         }
 
         $( document ).ready(function() {

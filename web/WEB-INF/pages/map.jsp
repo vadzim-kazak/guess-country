@@ -22,18 +22,101 @@
             height: 96%;
         }
 
+        .modal-dialog {
+            padding-top: 20%;
+        }
+
+        .alert.no-bottom-margin {
+            margin-bottom: 0;
+        }
+
     </style>
 
     <script src="${pageContext.request.contextPath}/resources/js/jquery-2.1.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTDpNd2DNFRN6SDOMmJ0aW0aLx0MYp2yU"></script>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/richmarker-compiled.js"></script>
     <script type="text/javascript">
 
         function initialize() {
+
+            var mapStyle = [
+                {
+                    "featureType": "road",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "landscape",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "color": "#dddddd"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road",
+                    "elementType": "labels",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "transit",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    featureType: "administrative.country",
+                    elementType: "labels",
+                    stylers: [
+                        { visibility: "off" }
+                    ]
+                },
+                {
+                    featureType: "administrative.locality",
+                    elementType: "labels",
+                    stylers: [
+                        { visibility: "off" }
+                    ]
+                },
+                {
+                    featureType: "administrative.province",
+                    elementType: "labels",
+                    stylers: [
+                        { visibility: "off" }
+                    ]
+                }
+            ]
+
+
+
             var mapOptions = {
                 center: new google.maps.LatLng(50, 0),
-                zoom: 4
+                zoom: 4,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                styles: mapStyle
             };
 
             var map = new google.maps.Map(document.getElementById("map-canvas"),
@@ -45,7 +128,6 @@
                 //
                 var reverseGeocodingUrl = 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCTDpNd2DNFRN6SDOMmJ0aW0aLx0MYp2yU' +
                         '&result_type=country&latlng=';
-                //40.714224,-73.961452;
                 var fullUrl = reverseGeocodingUrl + event.latLng.lat() + ',' + event.latLng.lng();
                 $.get( fullUrl, function(data) {
 
@@ -55,14 +137,21 @@
                         answer: country
                     }
                     socket.send(JSON.stringify(message));
+
+                    var countryCenter = data.results[0].geometry.location;
+
+                    map.panTo(countryCenter);
+                    new RichMarker({
+                        position: new google.maps.LatLng(countryCenter.lat, countryCenter.lng),
+                        map: map,
+                        draggable: false,
+                        content: '<div>' + country + '</div>'
+                    });
                 });
             });
         }
 
         google.maps.event.addDomListener(window, 'load', initialize);
-
-
-
 
         function connect() {
             if ('WebSocket' in window){
@@ -84,10 +173,20 @@
                     var receivedData = $.parseJSON(evt.data);
 
                     if(receivedData.type == 'COUNTDOWN') {
+                        hideWaitingModal();
                         $('#countdown').text(JSON.stringify(receivedData.payload.seconds));
+
                     } else if(receivedData.type == 'QUESTION') {
+
+                        hideWaitingModal();
                         $('#question').text(JSON.stringify(receivedData.payload.message));
+
+                    } else if(receivedData.type == 'WAITING_FOR_OTHER_PLAYER') {
+
+                        displayWaitingModal(receivedData.payload.message);
+
                     } else {
+
                         $('#response').text(JSON.stringify(receivedData.payload));
                     }
                 }
@@ -95,6 +194,19 @@
             } else {
                 console.log('Websocket not supported');
             }
+        }
+
+        function displayWaitingModal(message) {
+            $('#waitingMessage').text(message);
+            $('#waitingForOtherPlayerModal').modal({
+                show: true,
+                backdrop: 'static',
+                keyboard: false
+            });
+        }
+
+        function hideWaitingModal() {
+            $('#waitingForOtherPlayerModal').modal('hide');
         }
 
         /**
@@ -149,6 +261,30 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 map-height" id="map-canvas">
+            </div>
+        </div>
+    </div>
+
+    <!--Waiting fow other player modal... -->
+    <div class="modal fade" id="waitingForOtherPlayerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <div class="container-fluid">
+
+                        <div class="row alert no-bottom-margin alert-success">
+                            <div class="col-lg-2">
+                                <img src="${pageContext.request.contextPath}/resources/img/ajax-loader.gif">
+                            </div>
+                            <div class="col-lg-10">
+                                <span id="waitingMessage"></span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -11,8 +11,8 @@
     <title>Guess country</title>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css" media="screen">
-    <script src="${pageContext.request.contextPath}/resources/js/jquery-2.1.1.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/module/bootstrap.min.js"></script>
 
     <style type="text/css">
 

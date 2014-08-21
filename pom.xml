@@ -92,6 +92,13 @@
             <version>3.3.2</version>
         </dependency>
 
+        <!-- LatLng support -->
+        <dependency>
+            <groupId>com.javadocmd</groupId>
+            <artifactId>simplelatlng</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+
     </dependencies>
 
 

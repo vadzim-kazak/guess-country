@@ -1,5 +1,6 @@
 package com.jrew.lab.guesscountry.model.message.payload;
 
+import com.javadocmd.simplelatlng.LatLng;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,9 @@ public class ResultPayload {
 
     /** **/
     private boolean isAnswerOwner;
+
+    /** **/
+    private LatLng latLng;
 
     /**
      *
@@ -85,5 +89,21 @@ public class ResultPayload {
      */
     public void setAnswerOwner(boolean isAnswerOwner) {
         this.isAnswerOwner = isAnswerOwner;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public LatLng getLatLng() {
+        return latLng;
+    }
+
+    /**
+     *
+     * @param latLng
+     */
+    public void setLatLng(LatLng latLng) {
+        this.latLng = latLng;
     }
 }

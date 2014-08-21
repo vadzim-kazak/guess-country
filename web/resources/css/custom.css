@@ -1,0 +1,27 @@
+.navbar.no-bottom-margin {
+    margin-bottom: 0;
+}
+
+.map-height {
+    height: 96%;
+}
+
+.modal-dialog {
+    padding-top: 20%;
+}
+
+.alert.no-bottom-margin {
+    margin-bottom: 0;
+}
+
+.right-answer {
+    background: lawngreen;
+    border: 2px solid #fff;
+    padding: 3px;
+}
+
+.wrong-answer {
+    background: red;
+    border: 2px solid #fff;
+    padding: 3px;
+}

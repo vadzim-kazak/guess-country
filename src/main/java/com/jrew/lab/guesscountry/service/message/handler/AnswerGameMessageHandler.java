@@ -100,6 +100,7 @@ public class AnswerGameMessageHandler implements GameMessageHandler<AnswerPayloa
         ResultPayload resultPayload = resultMessage.getPayload();
         resultPayload.setAnswer(payload.getAnswer());
         resultPayload.setPlayerName(player.getName());
+        resultPayload.setLatLng(payload.getLatLng());
 
         return resultMessage;
     }

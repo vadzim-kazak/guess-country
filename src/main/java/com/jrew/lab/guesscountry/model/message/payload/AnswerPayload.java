@@ -1,6 +1,7 @@
 package com.jrew.lab.guesscountry.model.message.payload;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.javadocmd.simplelatlng.LatLng;
 import com.jrew.lab.guesscountry.model.player.Player;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -19,6 +20,9 @@ public class AnswerPayload {
 
     /** **/
     private String answer;
+
+    /** **/
+    private LatLng latLng;
 
     /**
      *
@@ -50,5 +54,21 @@ public class AnswerPayload {
      */
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public LatLng getLatLng() {
+        return latLng;
+    }
+
+    /**
+     *
+     * @param latLng
+     */
+    public void setLatLng(LatLng latLng) {
+        this.latLng = latLng;
     }
 }

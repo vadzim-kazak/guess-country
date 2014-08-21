@@ -1,12 +1,14 @@
 /**
  * Created by Kazak_VV on 21.08.2014.
  */
-define(['jquery', 'modules/google-maps', 'richmarker', 'bootstrap'], function($, map, RichMarker) {
+define(['jquery', 'modules/google-maps', 'richmarker', 'bootstrap'], function($, map) {
 
     /**
      *
      */
     var MessageHandlersProvider = function() {
+
+        var marker;
 
         /**
          *

@@ -23,7 +23,7 @@ require.config({
     }
 });
 
-require( ['jquery', 'modules/web-socket'],
+require( ['jquery', 'modules/web-socket-storage'],
 
-    function($, socket) {}
+    function($) {}
 );

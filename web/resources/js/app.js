@@ -7,7 +7,8 @@ require.config({
         'async': 'plugin/async',
         'google-maps-loader': 'modules/google-maps-loader',
         'richmarker': 'modules/richmarker.min',
-        'bootstrap': 'modules/bootstrap.min'
+        'bootstrap': 'modules/bootstrap.min',
+        'knob': 'plugin/jquery.knob.min'
     },
     shim: {
         'google-maps-loader': {
@@ -19,11 +20,26 @@ require.config({
         'bootstrap': {
             deps: ['jquery'],
             exports: '$.fn.popover'
+        },
+        'knob': {
+            deps: ['jquery']
         }
     }
 });
 
-require( ['jquery', 'modules/web-socket-storage'],
+require( ['jquery', 'modules/web-socket-storage', 'knob'],
 
-    function($) {}
+    function($) {
+
+        $(document).ready(function() {
+
+            $("#countdown").knob({
+                'width':"100",
+                'fgColor': "#d7ebf5",
+                'thickness': "0.3"
+            });
+
+        });
+
+    }
 );

@@ -50,7 +50,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="navbar-text">Scores:</li>
-                <li class="navbar-text">Countdown: <span id="countdown"></span></li>
+                <li class="navbar-text"><input type="text" id="countdown"></li>
             </ul>
         </div>
     </div>
@@ -71,7 +71,7 @@
                 <div class="modal-body">
                     <div class="container-fluid">
 
-                        <div class="row alert no-bottom-margin alert-success">
+                        <div class="row alert no-bottom-margin alert-info">
                             <div class="col-lg-2">
                                 <img src="${pageContext.request.contextPath}/resources/img/ajax-loader.gif">
                             </div>

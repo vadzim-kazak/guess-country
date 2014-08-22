@@ -38,7 +38,8 @@ define(['jquery', 'modules/google-maps', 'richmarker', 'bootstrap'], function($,
          */
         var handleCountdownMessage = function(payload) {
             hideWaitingModal();
-            $('#countdown').text(JSON.stringify(payload.seconds));
+            $("#countdown").val(JSON.stringify(payload.seconds))
+                .trigger('change');
         }
 
         /**

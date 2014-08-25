@@ -27,17 +27,11 @@ require.config({
     }
 });
 
-require( ['jquery', 'modules/web-socket-storage', 'knob'],
+require( ['jquery', 'modules/web-socket-storage'],
 
     function($) {
 
         $(document).ready(function() {
-
-            $("#countdown").knob({
-                'width':"100",
-                'fgColor': "#d7ebf5",
-                'thickness': "0.3"
-            });
 
         });
 

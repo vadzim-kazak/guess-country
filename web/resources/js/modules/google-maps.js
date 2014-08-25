@@ -1,8 +1,9 @@
 /**
  * Created by Kazak_VV on 21.08.2014.
  */
-define(['jquery','google-maps-loader', 'modules/google-maps-style'],
-    function($, GoogleMapsLoader, mapStyle) {
+define(['jquery','google-maps-loader', 'modules/google-maps-style', 'modules/map-controls/countdown-counter',
+        'modules/map-controls/question-placeholder', 'modules/map-controls/scores'],
+    function($, GoogleMapsLoader, mapStyle, countdownCounter, questionPlaceholder, scores) {
 
         var mapOptions = {
             center: new google.maps.LatLng(50, 0),
@@ -20,6 +21,10 @@ define(['jquery','google-maps-loader', 'modules/google-maps-style'],
         google.maps.event.addListener(map, 'click', function(event) {
             handleMapClickEvent(map, event);
         });
+
+        map.controls[google.maps.ControlPosition.RIGHT_TOP].push(countdownCounter.getControl());
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(questionPlaceholder.getControl());
+        map.controls[google.maps.ControlPosition.RIGHT_TOP].push(scores.getControl());
 
         var webSocketStorage = null;
 

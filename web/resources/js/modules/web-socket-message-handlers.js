@@ -1,7 +1,8 @@
 /**
  * Created by Kazak_VV on 21.08.2014.
  */
-define(['jquery', 'modules/google-maps', 'richmarker', 'bootstrap'], function($, map) {
+define(['jquery', 'modules/google-maps', 'modules/map-controls/countdown-counter', 'modules/map-controls/question-placeholder',
+    'modules/map-controls/scores', 'richmarker', 'bootstrap'], function($, map, countdownCounter, questionPlaceholder, scores) {
 
     /**
      *
@@ -38,8 +39,7 @@ define(['jquery', 'modules/google-maps', 'richmarker', 'bootstrap'], function($,
          */
         var handleCountdownMessage = function(payload) {
             hideWaitingModal();
-            $("#countdown").val(JSON.stringify(payload.seconds))
-                .trigger('change');
+            countdownCounter.displayValue(JSON.stringify(payload.seconds));
         }
 
         /**
@@ -48,7 +48,8 @@ define(['jquery', 'modules/google-maps', 'richmarker', 'bootstrap'], function($,
          */
         var handleQuestionMessage = function(payload) {
             hideWaitingModal();
-            $('#question').text(JSON.stringify(payload.message));
+            scores.show();
+            questionPlaceholder.showQuestion(payload.message);
         }
 
         /**

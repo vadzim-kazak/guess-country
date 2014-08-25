@@ -24,37 +24,6 @@
 </head>
 <body>
 
-    <!--
-
-   <h3>Map page</h3>
-   <div id="response"></div>
-   <br/>
-   Answer: <input type="text" id="answer" /><input type="button" value="send" onclick="sendAnswer()" />
-   <br/>
-   <div id="countdown"></div>
-   !-->
-
-    <!-- Navbar -->
-    <div class="navbar no-bottom-margin navbar-default">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Guess country</a>
-        </div>
-        <div class="navbar-collapse collapse navbar-responsive-collapse">
-            <ul class="nav navbar-nav">
-                <li class="navbar-text">Question: <span id="question"></span></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="navbar-text">Scores:</li>
-                <li class="navbar-text"><input type="text" id="countdown"></li>
-            </ul>
-        </div>
-    </div>
-
     <!-- Map -->
     <div class="container-fluid">
         <div class="row">
@@ -86,7 +55,6 @@
             </div>
         </div>
     </div>
-
 
 </body>
 </html>

@@ -27,6 +27,9 @@ public class ResultPayload {
     /** **/
     private LatLng latLng;
 
+    /** **/
+    private int scores;
+
     /**
      *
      * @return
@@ -105,5 +108,21 @@ public class ResultPayload {
      */
     public void setLatLng(LatLng latLng) {
         this.latLng = latLng;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getScores() {
+        return scores;
+    }
+
+    /**
+     *
+     * @param scores
+     */
+    public void setScores(int scores) {
+        this.scores = scores;
     }
 }

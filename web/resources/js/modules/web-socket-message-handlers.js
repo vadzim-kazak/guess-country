@@ -86,8 +86,6 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
             waitingOther.show();
         }
 
-        var marker;
-
         /**
          *
          * @param payload
@@ -115,8 +113,13 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
                 map: map,
                 draggable: false,
                 flat: true,
+                anchor: RichMarkerPosition.MIDDLE,
                 content: markerContent
             });
+
+            if (payload.answerOwner && payload.rightAnswer) {
+                scores.updateScores(payload.scores);
+            }
         }
 
         /**

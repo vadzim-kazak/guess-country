@@ -42,18 +42,23 @@ public class AnswerGameMessageHandler implements GameMessageHandler<AnswerPayloa
     @Override
     public void handleMessage(GameMessage<AnswerPayload> message, Game game) {
 
-        AnswerPayload payload = message.getPayload();
-        Player answerOwner = payload.getPlayer();
+        AnswerPayload answerPayload = message.getPayload();
+        Player answerOwner = answerPayload.getPlayer();
 
         if (answerCounter.canAnswer(answerOwner, game)) {
 
             answerCounter.countAnswer(answerOwner, game);
 
             LocalizedQuestionAnswer questionAnswer = game.getQuestionAnswer();
-            boolean isAnswerCorrect = questionAnswer.checkAnswer(payload.getAnswer(), answerOwner.getLocale());
+            boolean isAnswerCorrect = questionAnswer.checkAnswer(answerPayload.getAnswer(), answerOwner.getLocale());
             logger.debug("Player {} provided {} answer", answerOwner.getId(), isAnswerCorrect);
 
-            GameMessage<ResultPayload> resultMessage = createResultMessage(payload);
+            if (isAnswerCorrect) {
+                // Increment scores counter
+                answerOwner.setScores(answerOwner.getScores() + 1);
+            }
+
+            GameMessage<ResultPayload> resultMessage = createResultMessage(answerPayload);
 
             sendResultMessageToPlayers(gameMessage -> {
 
@@ -71,8 +76,6 @@ public class AnswerGameMessageHandler implements GameMessageHandler<AnswerPayloa
             }, resultMessage);
 
             if(isAnswerCorrect) {
-                // Increment scores counter
-                answerOwner.setScores(answerOwner.getScores() + 1);
                 answerCounter.reset(game);
                 game.nextRound();
             } else {
@@ -89,18 +92,19 @@ public class AnswerGameMessageHandler implements GameMessageHandler<AnswerPayloa
 
     /**
      *
-     * @param payload
+     * @param answerPayload
      * @return
      */
-    private GameMessage<ResultPayload> createResultMessage(AnswerPayload payload) {
+    private GameMessage<ResultPayload> createResultMessage(AnswerPayload answerPayload) {
 
-        Player player = payload.getPlayer();
+        Player player = answerPayload.getPlayer();
 
         GameMessage<ResultPayload> resultMessage = gameMessageFactory.buildServerMessage(GameMessage.Type.RESULT);
         ResultPayload resultPayload = resultMessage.getPayload();
-        resultPayload.setAnswer(payload.getAnswer());
+        resultPayload.setAnswer(answerPayload.getAnswer());
         resultPayload.setPlayerName(player.getName());
-        resultPayload.setLatLng(payload.getLatLng());
+        resultPayload.setLatLng(answerPayload.getLatLng());
+        resultPayload.setScores(answerPayload.getPlayer().getScores());
 
         return resultMessage;
     }

@@ -50,7 +50,7 @@ define(['jquery','google-maps-loader', 'modules/google-maps-style', 'modules/map
 
                 $.get(fullUrl, function(data) {
 
-                    var country = data.results[0].address_components[0].long_name;
+                    var country = data.results[0].address_components[0].short_name;
                     var countryCenter = data.results[0].geometry.location;
 
                     var message = {

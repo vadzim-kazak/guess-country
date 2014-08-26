@@ -4,7 +4,7 @@
 define(['jquery', 'modules/web-socket-message-handlers'], function($, messageHandlersProvider) {
 
     /** **/
-    var hostAddress = 'ws://localhost:8080/guesscountry/websocket';
+    var hostAddress = 'ws://192.168.0.102:8080/guesscountry/websocket';
 
     var WebSocketStorage = function () {
 

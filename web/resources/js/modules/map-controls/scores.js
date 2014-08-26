@@ -21,7 +21,7 @@ define(['jquery'], function($) {
         });
         controlDiv.addClass('custom-controls-hidden');
 
-        var scores =  $('<div/>', {
+        var scoresContainer =  $('<div/>', {
             css: {
                 'color': textColor,
                 'font-size': '150%'
@@ -29,7 +29,7 @@ define(['jquery'], function($) {
             text: 'Scores: 0'
         });
 
-        controlDiv.append(scores);
+        controlDiv.append(scoresContainer);
 
         this.hide = function() {
             controlDiv.addClass('custom-controls-hidden');
@@ -40,7 +40,7 @@ define(['jquery'], function($) {
         }
 
         this.updateScores = function(value) {
-            scores.text('Scores: ' + value);
+            scoresContainer.text('Scores: ' + value);
         }
 
         this.getControl = function() {

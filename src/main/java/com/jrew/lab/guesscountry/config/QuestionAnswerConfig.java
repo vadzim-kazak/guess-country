@@ -1,7 +1,7 @@
 package com.jrew.lab.guesscountry.config;
 
-import com.jrew.lab.guesscountry.model.questionanswer.CityLocalizedQuestionAnswer;
-import com.jrew.lab.guesscountry.model.questionanswer.CityQuestionAnswer;
+import com.jrew.lab.guesscountry.model.questionanswer.CountryLocalizedQuestionAnswer;
+import com.jrew.lab.guesscountry.model.questionanswer.CountryQuestionAnswer;
 import com.jrew.lab.guesscountry.model.questionanswer.QuestionAnswer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,84 +18,116 @@ public class QuestionAnswerConfig {
     // Question 1
     @Bean
     public QuestionAnswer question1_en() {
-        return new CityQuestionAnswer("Minsk", "Belarus");
+        return new CountryQuestionAnswer("Belarus", "Belarus");
     }
 
     @Bean
-    public QuestionAnswer question1_ru() {
-        return new CityQuestionAnswer("Минск", "Беларусь");
-    }
-
-    @Bean
-    public CityLocalizedQuestionAnswer question1_localized() {
+    public CountryLocalizedQuestionAnswer question1_localized() {
 
         Map<String, QuestionAnswer> qaStorage = new HashMap<>();
         qaStorage.put("en", question1_en());
-        qaStorage.put("ru", question1_ru());
-        return new CityLocalizedQuestionAnswer(qaStorage);
+        return new CountryLocalizedQuestionAnswer(qaStorage);
     }
 
 
     // Question 2
     @Bean
     public QuestionAnswer question2_en() {
-        return new CityQuestionAnswer("Moscow", "Russia");
+        return new CountryQuestionAnswer("Russia", "Russia");
     }
 
     @Bean
-    public QuestionAnswer question2_ru() {
-        return new CityQuestionAnswer("Москва", "Россия");
-    }
-
-    @Bean
-    public CityLocalizedQuestionAnswer question2_localized() {
+    public CountryLocalizedQuestionAnswer question2_localized() {
 
         Map<String, QuestionAnswer> qaStorage = new HashMap<>();
         qaStorage.put("en", question2_en());
-        qaStorage.put("ru", question2_ru());
-        return new CityLocalizedQuestionAnswer(qaStorage);
+        return new CountryLocalizedQuestionAnswer(qaStorage);
     }
 
 
     // Question 3
     @Bean
     public QuestionAnswer question3_en() {
-        return new CityQuestionAnswer("Kiev", "Ukraine");
+        return new CountryQuestionAnswer("Ukraine", "Ukraine");
     }
 
     @Bean
-    public QuestionAnswer question3_ru() {
-        return new CityQuestionAnswer("Киев", "Украина");
-    }
-
-    @Bean
-    public CityLocalizedQuestionAnswer question3_localized() {
+    public CountryLocalizedQuestionAnswer question3_localized() {
 
         Map<String, QuestionAnswer> qaStorage = new HashMap<>();
         qaStorage.put("en", question3_en());
-        qaStorage.put("ru", question3_ru());
-        return new CityLocalizedQuestionAnswer(qaStorage);
+        return new CountryLocalizedQuestionAnswer(qaStorage);
     }
 
 
     // Question 4
     @Bean
     public QuestionAnswer question4_en() {
-        return new CityQuestionAnswer("Tbilisi", "Georgia");
+        return new CountryQuestionAnswer("Georgia", "Georgia");
     }
 
     @Bean
-    public QuestionAnswer question4_ru() {
-        return new CityQuestionAnswer("Тбилиси", "Украина");
-    }
-
-    @Bean
-    public CityLocalizedQuestionAnswer question4_localized() {
+    public CountryLocalizedQuestionAnswer question4_localized() {
 
         Map<String, QuestionAnswer> qaStorage = new HashMap<>();
         qaStorage.put("en", question4_en());
-        qaStorage.put("ru", question4_ru());
-        return new CityLocalizedQuestionAnswer(qaStorage);
+        return new CountryLocalizedQuestionAnswer(qaStorage);
+    }
+
+    // Question 5
+    @Bean
+    public QuestionAnswer question5_en() {
+        return new CountryQuestionAnswer("Poland", "Poland");
+    }
+
+    @Bean
+    public CountryLocalizedQuestionAnswer question5_localized() {
+
+        Map<String, QuestionAnswer> qaStorage = new HashMap<>();
+        qaStorage.put("en", question5_en());
+        return new CountryLocalizedQuestionAnswer(qaStorage);
+    }
+
+    // Question 6
+    @Bean
+    public QuestionAnswer question6_en() {
+        return new CountryQuestionAnswer("Netherlands", "The Netherlands");
+    }
+
+    @Bean
+    public CountryLocalizedQuestionAnswer question6_localized() {
+
+        Map<String, QuestionAnswer> qaStorage = new HashMap<>();
+        qaStorage.put("en", question6_en());
+        return new CountryLocalizedQuestionAnswer(qaStorage);
+    }
+
+    // Question 7
+    @Bean
+    public QuestionAnswer question7_en() {
+        return new CountryQuestionAnswer("Australia", "Australia");
+    }
+
+    @Bean
+    public CountryLocalizedQuestionAnswer question7_localized() {
+
+        Map<String, QuestionAnswer> qaStorage = new HashMap<>();
+        qaStorage.put("en", question7_en());
+        return new CountryLocalizedQuestionAnswer(qaStorage);
+    }
+
+    // Question 8
+    @Bean
+    public QuestionAnswer question8_en() {
+        return new CountryQuestionAnswer("Vietnam", "Vietnam");
+    }
+
+    @Bean
+    public CountryLocalizedQuestionAnswer question8_localized() {
+
+        Map<String, QuestionAnswer> qaStorage = new HashMap<>();
+        qaStorage.put("en", question8_en());
+        return new CountryLocalizedQuestionAnswer(qaStorage);
     }
 
 }

@@ -9,7 +9,7 @@ public interface GameSettings {
     public enum GameMode {SINGLE, DUEL};
 
     /** **/
-    public enum GameType {CITIES, FLAGS};
+    public enum GameType {COUNTRY, FLAGS};
 
     GameMode getGameMode();
 

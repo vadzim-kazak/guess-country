@@ -32,29 +32,5 @@
         </div>
     </div>
 
-    <!--Waiting fow other player modal... -->
-    <div class="modal fade" id="waitingForOtherPlayerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-body">
-                    <div class="container-fluid">
-
-                        <div class="row alert no-bottom-margin alert-info">
-                            <div class="col-lg-2">
-                                <img src="${pageContext.request.contextPath}/resources/img/ajax-loader.gif">
-                            </div>
-                            <div class="col-lg-10">
-                                <span id="waitingMessage"></span>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </body>
 </html>

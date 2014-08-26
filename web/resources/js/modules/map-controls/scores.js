@@ -3,34 +3,40 @@
  */
 define(['jquery'], function($) {
 
-    var Scores = function () {
+    var ScoresControl = function () {
 
         // Singletone
-        if (Scores.prototype._singletonInstance) {
-            return Scores.prototype._singletonInstance;
+        if (ScoresControl.prototype._singletonInstance) {
+            return ScoresControl.prototype._singletonInstance;
         }
-        Scores.prototype._singletonInstance = this;
+        ScoresControl.prototype._singletonInstance = this;
 
         var textColor = "#5876a1";
 
-        var controlDiv = $('<div></div>');
-        controlDiv.css({ 'marginTop': '10px', 'marginRight': '5px'});
+        var controlDiv = $('<div/>', {
+            css: {
+                marginTop: '10px',
+                marginRight: '15px'
+            }
+        });
+        controlDiv.addClass('custom-controls-hidden');
 
         var scores =  $('<div/>', {
+            css: {
+                'color': textColor,
+                'font-size': '150%'
+            },
+            text: 'Scores: 0'
         });
 
-        scores.text('Scores: 0');
-        scores.css({ 'color': textColor, 'font-size': '150%', 'marginTop': '80px', 'marginRight': '10px' });
-
         controlDiv.append(scores);
-        controlDiv.hide();
 
         this.hide = function() {
-            controlDiv.hide();
+            controlDiv.addClass('custom-controls-hidden');
         }
 
         this.show = function() {
-            controlDiv.show();
+            controlDiv.removeClass('custom-controls-hidden');
         }
 
         this.updateScores = function(value) {
@@ -42,6 +48,5 @@ define(['jquery'], function($) {
         }
     }
 
-
-    return new Scores();
+    return new ScoresControl();
 });

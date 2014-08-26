@@ -27,8 +27,6 @@ public class CountdownManagerImpl implements CountdownManager {
     @Override
     public void startQuestionCountdown(IntConsumer onTickAction, Runnable onFinishAction) {
 
-
-
         final int BEFORE_COUNTDOWN_PAUSE = 1;
         final int COUNTDOWN_DURATION = 3;
 
@@ -36,7 +34,7 @@ public class CountdownManagerImpl implements CountdownManager {
 
             int countdownCounter = BEFORE_COUNTDOWN_PAUSE + COUNTDOWN_DURATION;
 
-            while (countdownCounter >= 1) {
+            while (countdownCounter >= 0) {
 
                 if (countdownCounter <= COUNTDOWN_DURATION) {
                     onTickAction.accept(countdownCounter);
@@ -68,7 +66,7 @@ public class CountdownManagerImpl implements CountdownManager {
 
             int countdownCounter = GET_ANSWER_DURATION;
 
-            while (countdownCounter >= 1 && continueAnswerCountdown) {
+            while (countdownCounter >= 0 && continueAnswerCountdown) {
 
                 onTickAction.accept(countdownCounter);
 

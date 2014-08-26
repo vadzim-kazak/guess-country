@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
 /**
  * Created by Kazak_VV on 31.07.2014.
  */
-@Component(value = "CITIES")
-public class CitiesTypeGameBuilder implements GameTypeBuilder {
+@Component(value = "COUNTRY")
+public class CountryTypeGameBuilder implements GameTypeBuilder {
 
     /** **/
-    private Logger logger = LoggerFactory.getLogger(CitiesTypeGameBuilder.class);
+    private Logger logger = LoggerFactory.getLogger(CountryTypeGameBuilder.class);
 
     /** **/
     @Autowired

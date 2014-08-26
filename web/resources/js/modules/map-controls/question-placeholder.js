@@ -4,17 +4,18 @@
 define(['jquery'], function($) {
 
 
-    var QuestionPlaceholder = function () {
+    var QuestionPlaceholderControl = function () {
 
         // Singletone
-        if (QuestionPlaceholder.prototype._singletonInstance) {
-            return QuestionPlaceholder.prototype._singletonInstance;
+        if (QuestionPlaceholderControl.prototype._singletonInstance) {
+            return QuestionPlaceholderControl.prototype._singletonInstance;
         }
-        QuestionPlaceholder.prototype._singletonInstance = this;
+        QuestionPlaceholderControl.prototype._singletonInstance = this;
 
         var textColor = "#5876a1";
 
         var controlDiv = $('<div></div>');
+        controlDiv.addClass('custom-controls-hidden');
 
         var questionPlaceholder =  $('<div/>', {
             id: 'questionPlaceholder'
@@ -23,15 +24,14 @@ define(['jquery'], function($) {
         questionPlaceholder.css({ 'color': textColor, 'font-size': '250%' });
 
         controlDiv.append(questionPlaceholder);
-        controlDiv.hide();
 
         this.showQuestion = function (question) {
-            controlDiv.show();
+            controlDiv.removeClass('custom-controls-hidden');
             questionPlaceholder.text('<?> ' + question);
         }
 
         this.hide = function() {
-            controlDiv.hide();
+            controlDiv.addClass('custom-controls-hidden');
         }
 
         this.getControl = function() {
@@ -39,5 +39,5 @@ define(['jquery'], function($) {
         }
     }
 
-    return new QuestionPlaceholder();
+    return new QuestionPlaceholderControl();
 });

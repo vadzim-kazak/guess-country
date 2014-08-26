@@ -11,8 +11,23 @@ import org.springframework.stereotype.Component;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class CountdownPayload {
 
+    /**
+     *
+     */
+    public enum CountdownType {
+
+        /** **/
+        PREPARE_TO_QUESTION,
+
+        /** **/
+        QUESTION_TIMEOUT
+    };
+
     /** **/
     private int seconds;
+
+    /** **/
+    private CountdownType type;
 
     /**
      *
@@ -28,5 +43,21 @@ public class CountdownPayload {
      */
     public void setSeconds(int seconds) {
         this.seconds = seconds;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public CountdownType getType() {
+        return type;
+    }
+
+    /**
+     *
+     * @param type
+     */
+    public void setType(CountdownType type) {
+        this.type = type;
     }
 }

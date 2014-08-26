@@ -15,10 +15,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by Kazak_VV on 01.08.2014.
@@ -55,6 +52,7 @@ public class GameImpl implements Game {
     @PostConstruct
     private void init() {
         id = UUID.randomUUID().toString();
+        Collections.shuffle(questionAnswers);
     }
 
     @Override
@@ -75,6 +73,7 @@ public class GameImpl implements Game {
 
             countdownManager.startQuestionCountdown(counter -> {
                     payload.setSeconds(counter);
+                    payload.setType(CountdownPayload.CountdownType.PREPARE_TO_QUESTION);
                     messageHandlerProvider.handleMessage(gameMessage, this);
                 },
                 () -> proceedNextRound()
@@ -99,6 +98,7 @@ public class GameImpl implements Game {
 
         countdownManager.startAnswerCountdown(counter -> {
                     payload.setSeconds(counter);
+                    payload.setType(CountdownPayload.CountdownType.QUESTION_TIMEOUT);
                     messageHandlerProvider.handleMessage(countdownMessage, this);
                 },
                 () -> {

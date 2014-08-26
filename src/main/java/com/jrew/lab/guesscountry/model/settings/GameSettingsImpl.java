@@ -24,7 +24,7 @@ public class GameSettingsImpl implements GameSettings {
     @PostConstruct
     private void applyDefaultSettings() {
         gameMode = GameMode.DUEL;
-        gameType = GameType.CITIES;
+        gameType = GameType.COUNTRY;
     }
 
     /**

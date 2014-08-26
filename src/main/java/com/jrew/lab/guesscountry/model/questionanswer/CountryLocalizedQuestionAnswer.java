@@ -8,7 +8,7 @@ import java.util.function.BiFunction;
 /**
  * Created by Kazak_VV on 30.07.2014.
  */
-public class CityLocalizedQuestionAnswer implements LocalizedQuestionAnswer {
+public class CountryLocalizedQuestionAnswer implements LocalizedQuestionAnswer {
 
     /** **/
     private Map<String, QuestionAnswer> questionAnswerStorage = new HashMap<>();
@@ -28,7 +28,7 @@ public class CityLocalizedQuestionAnswer implements LocalizedQuestionAnswer {
      *
      * @param questionAnswerStorage
      */
-    public CityLocalizedQuestionAnswer(Map<String, QuestionAnswer> questionAnswerStorage) {
+    public CountryLocalizedQuestionAnswer(Map<String, QuestionAnswer> questionAnswerStorage) {
         this.questionAnswerStorage = questionAnswerStorage;
     }
 

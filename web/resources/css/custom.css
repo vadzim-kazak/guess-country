@@ -25,3 +25,12 @@
     border: 2px solid #fff;
     padding: 3px;
 }
+
+.custom-controls-hidden {
+    visibility : hidden;
+}
+
+.waiting-others-label {
+    color: #5876a1;
+    font-size: 300%;
+}

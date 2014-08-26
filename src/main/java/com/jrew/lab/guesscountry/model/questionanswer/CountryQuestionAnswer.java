@@ -5,30 +5,30 @@ import java.util.function.Predicate;
 /**
  * Created by Kazak_VV on 30.07.2014.
  */
-public class CityQuestionAnswer implements QuestionAnswer {
+public class CountryQuestionAnswer implements QuestionAnswer {
 
     /** **/
-    private String cityName;
+    private String countryName;
 
     /** **/
-    private String cityCountry;
+    private String countryCode;
 
     /** **/
-    private Predicate<String> checkAnswerMethod = answer -> cityCountry.equalsIgnoreCase(answer);
+    private Predicate<String> checkAnswerMethod = answer -> countryCode.equalsIgnoreCase(answer);
 
     /**
      *
-     * @param cityName
-     * @param cityCountry
+     * @param countryName
+     * @param countryCode
      */
-    public CityQuestionAnswer(String cityName, String cityCountry) {
-        this.cityName = cityName;
-        this.cityCountry = cityCountry;
+    public CountryQuestionAnswer(String countryName, String countryCode) {
+        this.countryName = countryName;
+        this.countryCode = countryCode;
     }
 
     @Override
     public String getQuestion() {
-        return cityName;
+        return countryName;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class CityQuestionAnswer implements QuestionAnswer {
 
     @Override
     public String getAnswer() {
-        return cityCountry;
+        return countryCode;
     }
 
     /**

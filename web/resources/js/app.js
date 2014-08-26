@@ -5,10 +5,12 @@
 require.config({
     paths: {
         'async': 'plugin/async',
+        'text': 'plugin/text',
         'google-maps-loader': 'modules/google-maps-loader',
         'richmarker': 'modules/richmarker.min',
         'bootstrap': 'modules/bootstrap.min',
-        'knob': 'plugin/jquery.knob.min'
+        'knob': 'plugin/jquery.knob.min',
+        'Mustache': 'plugin/mustache'
     },
     shim: {
         'google-maps-loader': {
@@ -34,6 +36,5 @@ require( ['jquery', 'modules/web-socket-storage'],
         $(document).ready(function() {
 
         });
-
     }
 );

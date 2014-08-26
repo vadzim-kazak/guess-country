@@ -1,8 +1,10 @@
 /**
  * Created by Kazak_VV on 21.08.2014.
  */
-define(['jquery', 'modules/google-maps', 'modules/map-controls/countdown-counter', 'modules/map-controls/question-placeholder',
-    'modules/map-controls/scores', 'richmarker', 'bootstrap'], function($, map, countdownCounter, questionPlaceholder, scores) {
+define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-countdown', 'modules/map-controls/question-placeholder',
+    'modules/map-controls/scores', 'modules/map-controls/question-prepare-countdown', 'modules/map-controls/waiting-other-player',
+    'text!../../templates/right-answer-marker.html', 'text!../../templates/wrong-answer-marker.html', 'richmarker', 'bootstrap'],
+    function($, map, timeoutCountdown, questionPlaceholder, scores, prepareCountdown, waitingOther, rightMarkerContent, wrongMarkerContent) {
 
     /**
      *
@@ -38,8 +40,25 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/countdown-counter
          * @param payload
          */
         var handleCountdownMessage = function(payload) {
-            hideWaitingModal();
-            countdownCounter.displayValue(JSON.stringify(payload.seconds));
+            waitingOther.hide();
+
+            if (payload.type == 'PREPARE_TO_QUESTION') {
+
+                // 1) Hide all other controls
+                hideHUD();
+
+                // 2) Hide answer marker
+                if (typeof marker !== 'undefined') {
+                    marker.setMap(null);
+                }
+
+                // 3) Display prepare to question countdown
+                prepareCountdown.displayValue(payload.seconds);
+
+            } else if (payload.type == 'QUESTION_TIMEOUT') {
+                prepareCountdown.hide();
+                timeoutCountdown.displayValue(payload.seconds);
+            }
         }
 
         /**
@@ -47,9 +66,8 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/countdown-counter
          * @param payload
          */
         var handleQuestionMessage = function(payload) {
-            hideWaitingModal();
-            scores.show();
             questionPlaceholder.showQuestion(payload.message);
+            scores.show();
         }
 
         /**
@@ -65,28 +83,10 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/countdown-counter
          * @param payload
          */
         var handleWaitingOtherPlayerMessage = function(payload) {
-            displayWaitingModal(payload.message);
+            waitingOther.show();
         }
 
-        /**
-         *
-         * @param message
-         */
-        var displayWaitingModal = function(message) {
-            $('#waitingMessage').text(message);
-            $('#waitingForOtherPlayerModal').modal({
-                show: true,
-                backdrop: 'static',
-                keyboard: false
-            });
-        }
-
-        /**
-         *
-         */
-        var hideWaitingModal = function() {
-            $('#waitingForOtherPlayerModal').modal('hide');
-        }
+        var marker;
 
         /**
          *
@@ -95,19 +95,17 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/countdown-counter
         var handleAnswerResult = function(payload) {
 
             var answerPosition =  new google.maps.LatLng(payload.latLng.latitude, payload.latLng.longitude);
-            var countryName = payload.answer;
 
-            var markerStyle;
+            var markerContent;
             if (payload.rightAnswer) {
-                markerStyle = "right-answer ";
+                markerContent = rightMarkerContent;
             } else {
-                markerStyle = "wrong-answer ";
+                markerContent = wrongMarkerContent;
             }
-
-            var markerContent = '<div class="' + markerStyle + '">' + countryName + '</div>';
 
             map.panTo(answerPosition);
 
+            //Hide answer marker
             if (typeof marker !== 'undefined') {
                 marker.setMap(null);
             }
@@ -116,8 +114,20 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/countdown-counter
                 position: answerPosition,
                 map: map,
                 draggable: false,
+                flat: true,
                 content: markerContent
             });
+        }
+
+        /**
+         *
+         */
+        function hideHUD() {
+
+            timeoutCountdown.hide();
+            scores.hide();
+            questionPlaceholder.hide();
+
         }
 
     }

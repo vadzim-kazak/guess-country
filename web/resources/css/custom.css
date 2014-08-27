@@ -34,3 +34,14 @@
     color: #5876a1;
     font-size: 300%;
 }
+
+.result-game-label {
+    color: #5876a1;
+    font-size: 300%;
+}
+
+.result-status-label {
+    color: #5876a1;
+    font-size: 200%;
+    margin-top: 15px;
+}

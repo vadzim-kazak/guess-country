@@ -21,27 +21,6 @@ import org.springframework.context.annotation.Scope;
 @ComponentScan(basePackages = "com.jrew.lab.guesscountry")
 public class ApplicationConfig {
 
-    @Autowired
-    private AnswerPayload answerPayload;
-
-    @Autowired
-    private StringPayload stringPayload;
-
-    @Autowired
-    private ResultPayload resultPayload;
-
-    @Autowired
-    private CountdownPayload countdownPayload;
-
-    @Autowired
-    private GameFinishedPayload gameFinishedPayload;
-
-    @Autowired
-    private AnswerTimeoutPayload answerTimeoutPayload;
-
-    @Autowired
-    private PlayerLeftPayload playerLeftPayload;
-
     @Bean
     @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
     public Player getPlayer() {
@@ -58,7 +37,8 @@ public class ApplicationConfig {
 
     @Bean(name = "QUESTION")
     @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
-    public GameMessage<StringPayload> getQuestionGameMessage() {
+    @Autowired
+    public GameMessage<StringPayload> getQuestionGameMessage(StringPayload stringPayload) {
 
         GameMessage<StringPayload> questionGameMessage = new GameMessageImpl<>();
         questionGameMessage.setType(GameMessage.Type.QUESTION);
@@ -68,7 +48,8 @@ public class ApplicationConfig {
 
     @Bean(name = "ANSWER")
     @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
-    public GameMessage getAnswerGameMessage() {
+    @Autowired
+    public GameMessage getAnswerGameMessage(AnswerPayload answerPayload) {
 
         GameMessage<AnswerPayload> answerGameMessage = new GameMessageImpl<>();
         answerGameMessage.setType(GameMessage.Type.ANSWER);
@@ -78,7 +59,8 @@ public class ApplicationConfig {
 
     @Bean(name = "RESULT")
     @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
-    public GameMessage getResultGameMessage() {
+    @Autowired
+    public GameMessage getResultGameMessage(ResultPayload resultPayload) {
 
         GameMessage<ResultPayload> resultGameMessage = new GameMessageImpl<>();
         resultGameMessage.setType(GameMessage.Type.RESULT);
@@ -88,7 +70,8 @@ public class ApplicationConfig {
 
     @Bean(name = "COUNTDOWN")
     @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
-    public GameMessage getCountdownGameMessage() {
+    @Autowired
+    public GameMessage getCountdownGameMessage(CountdownPayload countdownPayload) {
 
         GameMessage<CountdownPayload> countdownGameMessage = new GameMessageImpl<>();
         countdownGameMessage.setType(GameMessage.Type.COUNTDOWN);
@@ -98,7 +81,8 @@ public class ApplicationConfig {
 
     @Bean(name = "WAITING_FOR_OTHER_PLAYER")
     @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
-    public GameMessage<StringPayload> getWaitingGameMessage() {
+    @Autowired
+    public GameMessage<StringPayload> getWaitingGameMessage(StringPayload stringPayload) {
 
         GameMessage<StringPayload> waitingGameMessage = new GameMessageImpl<>();
         waitingGameMessage.setType(GameMessage.Type.WAITING_FOR_OTHER_PLAYER);
@@ -109,7 +93,8 @@ public class ApplicationConfig {
 
     @Bean(name = "START_GAME")
     @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
-    public GameMessage<StringPayload> getStartGameMessage() {
+    @Autowired
+    public GameMessage<StringPayload> getStartGameMessage(StringPayload stringPayload) {
 
         GameMessage<StringPayload> startGameMessage = new GameMessageImpl<>();
         startGameMessage.setType(GameMessage.Type.START_GAME);
@@ -121,7 +106,8 @@ public class ApplicationConfig {
 
     @Bean(name = "GAME_FINISHED")
     @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
-    public GameMessage<GameFinishedPayload> getGameFinishedMessage() {
+    @Autowired
+    public GameMessage<GameFinishedPayload> getGameFinishedMessage(GameFinishedPayload gameFinishedPayload) {
 
         GameMessage<GameFinishedPayload> gameFinishedMessage = new GameMessageImpl<>();
         gameFinishedMessage.setType(GameMessage.Type.GAME_FINISHED);
@@ -132,7 +118,8 @@ public class ApplicationConfig {
 
     @Bean(name = "ANSWER_TIMEOUT")
     @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
-    public GameMessage<AnswerTimeoutPayload> getAnswerTimeoutMessage() {
+    @Autowired
+    public GameMessage<AnswerTimeoutPayload> getAnswerTimeoutMessage(AnswerTimeoutPayload answerTimeoutPayload) {
 
         GameMessage<AnswerTimeoutPayload> answerTimeoutMessage = new GameMessageImpl<>();
         answerTimeoutMessage.setType(GameMessage.Type.ANSWER_TIMEOUT);
@@ -143,7 +130,8 @@ public class ApplicationConfig {
 
     @Bean(name = "PLAYER_LEFT")
     @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
-    public GameMessage<PlayerLeftPayload> getPlayerLeftMessage() {
+    @Autowired
+    public GameMessage<PlayerLeftPayload> getPlayerLeftMessage(PlayerLeftPayload playerLeftPayload) {
 
         GameMessage<PlayerLeftPayload> playerLeftMessage = new GameMessageImpl<>();
         playerLeftMessage.setType(GameMessage.Type.PLAYER_LEFT);

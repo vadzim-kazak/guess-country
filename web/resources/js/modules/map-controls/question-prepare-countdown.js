@@ -12,7 +12,9 @@ define(['jquery', 'modules/knob-tron-style', 'text!../../../templates/question-p
         }
         PrepareCounterControl.prototype._singletonInstance = this;
 
-        var controlDiv = $('<div/>');
+        var controlDiv = $('<div/>', {
+            css: {}
+        });
         controlDiv.addClass('custom-controls-hidden');
 
         var countdownCounter =  $('<input/>', {

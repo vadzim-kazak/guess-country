@@ -55,6 +55,9 @@ public class GameFinishedHandler implements GameMessageHandler<GameFinishedPaylo
                 playersResult.add(playerResult);
             });
 
+            // Sort player result in DESC order by scores
+            playersResult.sort((first, second) -> second.getScores() - first.getScores());
+
             game.getPlayers().stream().forEach(player -> {
                 playersResult.stream().forEach(playerResult -> {
                     if (playerResult.getId().equalsIgnoreCase(player.getWebSocketSession().getId())) {

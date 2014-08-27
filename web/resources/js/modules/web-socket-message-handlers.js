@@ -3,8 +3,8 @@
  */
 define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-countdown', 'modules/map-controls/question-placeholder',
     'modules/map-controls/scores', 'modules/map-controls/question-prepare-countdown', 'modules/map-controls/waiting-other-player',
-    'text!../../templates/answer-marker.html', 'Mustache', 'richmarker', 'bootstrap'],
-    function($, map, timeoutCountdown, questionPlaceholder, scores, prepareCountdown, waitingOther, markerContent, Mustache) {
+    'text!../../templates/answer-marker-template.html', 'Mustache', 'modules/map-controls/game-results', 'richmarker', 'bootstrap'],
+    function($, map, timeoutCountdown, questionPlaceholder, scores, prepareCountdown, waitingOther, markerContent, Mustache, gameResults) {
 
     /**
      *
@@ -32,6 +32,8 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
                 handleResultMessage(payload);
             } else if(type == 'WAITING_FOR_OTHER_PLAYER') {
                 handleWaitingOtherPlayerMessage(payload);
+            } else if (type == 'GAME_FINISHED') {
+                handleGameFinishedMessage(payload)
             }
         }
 
@@ -90,6 +92,23 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
          *
          * @param payload
          */
+        var handleGameFinishedMessage = function(payload) {
+
+            // hide custom game controls
+            timeoutCountdown.hide();
+            scores.hide();
+            questionPlaceholder.hide();
+
+            // hide marker
+            marker.setMap(null);
+
+            gameResults.showResults(payload);
+        }
+
+        /**
+         *
+         * @param payload
+         */
         var handleAnswerResult = function(payload) {
 
             var answerPosition =  new google.maps.LatLng(payload.latLng.latitude, payload.latLng.longitude);
@@ -133,12 +152,11 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
         /**
          *
          */
-        function hideHUD() {
+        var hideHUD = function() {
 
             timeoutCountdown.hide();
             //scores.hide();
             questionPlaceholder.hide();
-
         }
 
     }

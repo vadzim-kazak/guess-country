@@ -136,7 +136,7 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
         function hideHUD() {
 
             timeoutCountdown.hide();
-            scores.hide();
+            //scores.hide();
             questionPlaceholder.hide();
 
         }

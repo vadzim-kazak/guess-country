@@ -45,13 +45,13 @@ public class AnswerGameMessageHandler implements GameMessageHandler<AnswerPayloa
         AnswerPayload answerPayload = message.getPayload();
         Player answerOwner = answerPayload.getPlayer();
 
-        if (answerCounter.canAnswer(answerOwner, game)) {
-
-            answerCounter.countAnswer(answerOwner, game);
+        if (answerCounter.canAnswer(answerOwner, game) && game.isRoundInProgress()) {
 
             LocalizedQuestionAnswer questionAnswer = game.getQuestionAnswer();
             boolean isAnswerCorrect = questionAnswer.checkAnswer(answerPayload.getAnswer(), answerOwner.getLocale());
             logger.debug("Player {} provided {} answer", answerOwner.getId(), isAnswerCorrect);
+
+            answerCounter.countAnswer(answerOwner, game, isAnswerCorrect);
 
             if (isAnswerCorrect) {
                 // Increment scores counter

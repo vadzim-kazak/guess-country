@@ -17,11 +17,11 @@ public interface AnswerCounter {
     public boolean canAnswer(Player player, Game game);
 
     /**
-     *
      * @param player
      * @param game
+     * @param isRightAnswer
      */
-    public void countAnswer(Player player, Game game);
+    public void countAnswer(Player player, Game game, Boolean isRightAnswer);
 
     /**
      *

@@ -31,6 +31,9 @@ public class GameImpl implements Game {
     private List<Player> players = new ArrayList<>();
 
     /** **/
+    private boolean isRoundInProgress;
+
+    /** **/
     @Autowired
     private List<LocalizedQuestionAnswer> questionAnswers;
 
@@ -56,12 +59,24 @@ public class GameImpl implements Game {
     }
 
     @Override
+    public void handleMessage(String message, Player player) {
+
+        GameMessage gameMessage = gameMessageFactory.buildClientMessage(message, player);
+
+        synchronized (this) {
+            messageHandlerProvider.handleMessage(gameMessage, this);
+        }
+    }
+
+    @Override
     public void start() {
         nextRound();
     }
 
     @Override
     public void nextRound() {
+
+        isRoundInProgress = false;
 
         currentQuestionAnswerNumber++;
         if (currentQuestionAnswerNumber < questionAnswers.size()) {
@@ -109,6 +124,13 @@ public class GameImpl implements Game {
                 }
         );
 
+        isRoundInProgress = true;
+    }
+
+    @Override
+    public boolean isRoundInProgress() {
+
+        return isRoundInProgress;
     }
 
     @Override

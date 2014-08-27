@@ -35,6 +35,19 @@ public interface Game {
 
     /**
      *
+     * @param message
+     * @param player
+     */
+    public void handleMessage(String message, Player player);
+
+    /**
+     *
+     * @return
+     */
+    public boolean isRoundInProgress();
+
+    /**
+     *
      * @param player
      */
     public void addPlayer(Player player);

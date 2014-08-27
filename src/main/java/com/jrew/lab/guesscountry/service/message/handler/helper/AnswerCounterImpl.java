@@ -4,8 +4,7 @@ import com.jrew.lab.guesscountry.model.player.Player;
 import com.jrew.lab.guesscountry.service.game.Game;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Kazak_VV on 12.08.2014.
@@ -14,16 +13,26 @@ import java.util.Map;
 public class AnswerCounterImpl implements AnswerCounter {
 
     /** **/
-    private Map<Game, Map<Player, Integer>> answersRegistry = new HashMap<>();
+    private Map<Game, Map<Player, List<Boolean>>> answersNumberRegistry = new HashMap<>();
 
     @Override
     public boolean canAnswer(Player player, Game game) {
 
-        if (!answersRegistry.containsKey(game)) {
-           answersRegistry.put(game, new HashMap<>());
+        if (!answersNumberRegistry.containsKey(game)) {
+           answersNumberRegistry.put(game, new HashMap<>());
         }
 
-        Map<Player, Integer> roundAnswers = answersRegistry.get(game);
+        Map<Player, List<Boolean>> roundAnswers = answersNumberRegistry.get(game);
+
+//        // Check if other players provided right answer
+//        Optional<Boolean> isRightAnswerPresented = roundAnswers.values().stream().flatMap(answersList -> answersList.stream())
+//                .filter(isRightAnswer -> isRightAnswer == true).findAny();
+//
+//        // If yes prohibit answer attempt to all other players
+//        if (isRightAnswerPresented.isPresent()) {
+//            return false;
+//        }
+
         if (!roundAnswers.containsKey(player)) {
             return true;
         }
@@ -32,20 +41,20 @@ public class AnswerCounterImpl implements AnswerCounter {
     }
 
     @Override
-    public void countAnswer(Player player, Game game) {
+    public void countAnswer(Player player, Game game, Boolean isRightAnswer) {
 
-        Map<Player, Integer> roundAnswers = answersRegistry.get(game);
+        Map<Player, List<Boolean>> roundAnswers = answersNumberRegistry.get(game);
 
         if (!roundAnswers.containsKey(player)) {
-            roundAnswers.put(player, 1);
+            roundAnswers.put(player, Collections.singletonList(isRightAnswer));
         } else {
-            Integer answerAttempts = roundAnswers.get(player);
-            roundAnswers.put(player, ++answerAttempts);
+            List<Boolean> answers = roundAnswers.get(player);
+            answers.add(isRightAnswer);
         }
     }
 
     @Override
     public void reset(Game game) {
-        answersRegistry.get(game).clear();
+        answersNumberRegistry.get(game).clear();
     }
 }

@@ -15,18 +15,22 @@ define(['jquery', 'modules/knob-tron-style', 'text!../../../templates/waiting-ot
 
             var textColor = "#5876a1";
 
-            var controlDiv = $('<div></div>');
-            controlDiv.addClass('custom-controls-hidden');
+            var controlDiv = $('<div/>', {
+                css: {
+
+                }
+            });
+            controlDiv.hide();
 
             var template = $(htmlTemplate);
             controlDiv.append(template);
 
             this.hide = function() {
-                controlDiv.addClass('custom-controls-hidden');
+                controlDiv.hide();
             }
 
             this.show = function() {
-                controlDiv.removeClass('custom-controls-hidden');
+                controlDiv.show();
             }
 
             this.getControl = function() {

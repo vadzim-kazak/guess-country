@@ -13,9 +13,11 @@ define(['jquery', 'modules/knob-tron-style', 'text!../../../templates/question-p
         PrepareCounterControl.prototype._singletonInstance = this;
 
         var controlDiv = $('<div/>', {
-            css: {}
+            css: {
+
+            }
         });
-        controlDiv.addClass('custom-controls-hidden');
+        controlDiv.hide();
 
         var countdownCounter =  $('<input/>', {
             type: 'text'
@@ -43,16 +45,16 @@ define(['jquery', 'modules/knob-tron-style', 'text!../../../templates/question-p
         }
 
         this.displayValue = function(seconds) {
-            controlDiv.removeClass('custom-controls-hidden');
             countdownCounter.val(seconds).trigger('change');
+            controlDiv.show();
         }
 
         this.hide = function() {
-            controlDiv.addClass('custom-controls-hidden');
+            controlDiv.hide();
         }
 
         this.isVisible = function() {
-            return !controlDiv.hasClass('custom-controls-hidden');
+            return controlDiv.is(':visible');
         }
     }
 

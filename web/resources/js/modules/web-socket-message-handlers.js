@@ -57,6 +57,9 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
                 // 3) Display prepare to question countdown
                 prepareCountdown.displayValue(payload.seconds);
 
+                //4)
+                google.maps.event.trigger(map, 'resize')
+
             } else if (payload.type == 'QUESTION_TIMEOUT') {
                 prepareCountdown.hide();
                 timeoutCountdown.displayValue(payload.seconds);
@@ -70,6 +73,8 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
         var handleQuestionMessage = function(payload) {
             questionPlaceholder.showQuestion(payload.message);
             scores.show();
+
+            google.maps.event.trigger(map, 'resize')
         }
 
         /**
@@ -103,6 +108,8 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
             marker.setMap(null);
 
             gameResults.showResults(payload);
+
+            google.maps.event.trigger(map, 'resize')
         }
 
         /**

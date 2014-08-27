@@ -13,11 +13,10 @@ define(['jquery', 'text!../../../templates/game-results-template.html', 'Mustach
 
         var controlDiv = $('<div/>', {
             css: {
-
+                'z-index': 3
             }
         });
-        controlDiv.addClass('custom-controls-hidden');
-
+        controlDiv.hide();
 
         this.hide = function() {
             controlDiv.addClass('custom-controls-hidden');
@@ -60,8 +59,8 @@ define(['jquery', 'text!../../../templates/game-results-template.html', 'Mustach
 
             controlDiv.empty();
             controlDiv.append(Mustache.render(template, templateData));
-            controlDiv.removeClass('custom-controls-hidden');
 
+            controlDiv.show();
         }
 
     }

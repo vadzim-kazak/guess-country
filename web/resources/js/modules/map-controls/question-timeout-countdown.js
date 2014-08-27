@@ -12,8 +12,9 @@ define(['jquery', 'modules/knob-tron-style', 'knob'], function($, tronDrawFuncti
         TimeoutCounterControl.prototype._singletonInstance = this;
 
         var usualColor = "#5876a1";
-        var warningColor = "#ff0000";
+        var warningColor = "#ff5757";
         var sideSize = 75;
+        var warningColorThreshold = 5;
 
         var controlDiv = $('<div/>', {
             css: {
@@ -32,6 +33,7 @@ define(['jquery', 'modules/knob-tron-style', 'knob'], function($, tronDrawFuncti
             'width': sideSize,
             'height': sideSize,
             'fgColor': usualColor,
+            'inputColor': usualColor,
             'readOnly':true,
             'skin': 'tron',
             'draw' : tronDrawFunction
@@ -43,7 +45,16 @@ define(['jquery', 'modules/knob-tron-style', 'knob'], function($, tronDrawFuncti
 
         this.displayValue = function(seconds) {
             controlDiv.removeClass('custom-controls-hidden');
-            countdownCounter.val(seconds).trigger('change');
+
+            var color = usualColor;
+            if (seconds <= warningColorThreshold) {
+                color = warningColor;
+            }
+
+            countdownCounter.trigger('configure',
+                                    {'fgColor': color,
+                                     'inputColor': color})
+                            .val(seconds).trigger('change');
         }
 
         this.hide = function() {

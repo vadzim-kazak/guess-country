@@ -3,8 +3,8 @@
  */
 define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-countdown', 'modules/map-controls/question-placeholder',
     'modules/map-controls/scores', 'modules/map-controls/question-prepare-countdown', 'modules/map-controls/waiting-other-player',
-    'text!../../templates/right-answer-marker.html', 'text!../../templates/wrong-answer-marker.html', 'richmarker', 'bootstrap'],
-    function($, map, timeoutCountdown, questionPlaceholder, scores, prepareCountdown, waitingOther, rightMarkerContent, wrongMarkerContent) {
+    'text!../../templates/answer-marker.html', 'Mustache', 'richmarker', 'bootstrap'],
+    function($, map, timeoutCountdown, questionPlaceholder, scores, prepareCountdown, waitingOther, markerContent, Mustache) {
 
     /**
      *
@@ -94,11 +94,19 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
 
             var answerPosition =  new google.maps.LatLng(payload.latLng.latitude, payload.latLng.longitude);
 
-            var markerContent;
+            var imagePath;
             if (payload.rightAnswer) {
-                markerContent = rightMarkerContent;
+                if(payload.answerOwner) {
+                    imagePath = 'resources/img/right.png';
+                } else {
+                    imagePath = 'resources/img/right-other-player.png';
+                }
             } else {
-                markerContent = wrongMarkerContent;
+                if (payload.answerOwner) {
+                    imagePath = 'resources/img/wrong.png';
+                } else {
+                    imagePath = 'resources/img/wrong-other-player.png';
+                }
             }
 
             map.panTo(answerPosition);
@@ -114,7 +122,7 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
                 draggable: false,
                 flat: true,
                 anchor: RichMarkerPosition.MIDDLE,
-                content: markerContent
+                content: Mustache.render(markerContent, {imagePath: imagePath})
             });
 
             if (payload.answerOwner && payload.rightAnswer) {

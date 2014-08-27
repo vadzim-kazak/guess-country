@@ -21,8 +21,8 @@ define(['jquery','google-maps-loader', 'modules/google-maps-style', 'modules/map
 
         map.controls[google.maps.ControlPosition.CENTER].push(waitingOther.getControl());
         map.controls[google.maps.ControlPosition.CENTER].push(prepareCountdown.getControl());
-        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(timeoutCountdown.getControl());
-        map.controls[google.maps.ControlPosition.RIGHT_TOP].push(scores.getControl());
+        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(scores.getControl());
+        map.controls[google.maps.ControlPosition.RIGHT_TOP].push(timeoutCountdown.getControl());
         map.controls[google.maps.ControlPosition.TOP_CENTER].push(questionPlaceholder.getControl());
 
         google.maps.event.addListener(map, 'click', function(event) {

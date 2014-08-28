@@ -1,7 +1,9 @@
 package com.jrew.lab.guesscountry.controller;
 
 import com.jrew.lab.guesscountry.model.player.Player;
+import com.jrew.lab.guesscountry.model.settings.GameSettings;
 import com.jrew.lab.guesscountry.util.HttpSessionManager;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +43,17 @@ public class WebHttpController {
     }
 
     @RequestMapping(value = "play", method = RequestMethod.POST)
-    public String play(@RequestParam("playerName") String playerName) {
+    public String play(@RequestParam("playerName") String playerName,
+                       @RequestParam("gameMode") String gameMode) {
 
 
         Player player = applicationContext.getBean(Player.class);
         logger.debug("New player instance has been created.");
+
+        if (StringUtils.isNotBlank(gameMode)) {
+            GameSettings gameSettings = player.getGameSettings();
+            gameSettings.setGameMode(GameSettings.GameMode.valueOf(gameMode));
+        }
 
         player.setName(playerName);
         httpSessionManager.setPlayer(httpSession, player);

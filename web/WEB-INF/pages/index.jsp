@@ -69,13 +69,13 @@
                                 <div class="col-lg-10">
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="gameMode" value="Single" checked="">
+                                            <input type="radio" name="gameMode" value="SINGLE" checked="">
                                             Single
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="gameMode" value="Duel">
+                                            <input type="radio" name="gameMode" value="DUEL">
                                             Duel
                                         </label>
                                     </div>

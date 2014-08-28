@@ -29,49 +29,49 @@ public class QuestionAnswerConfig {
         return new CountryLocalizedQuestionAnswer(qaStorage);
     }
 
-//    // Question 2
-//    @Bean
-//    public QuestionAnswer question2_en() {
-//        return new CountryQuestionAnswer("Russia", "ru");
-//    }
-//
-//    @Bean
-//    public CountryLocalizedQuestionAnswer question2_localized() {
-//
-//        Map<String, QuestionAnswer> qaStorage = new HashMap<>();
-//        qaStorage.put("en", question2_en());
-//        return new CountryLocalizedQuestionAnswer(qaStorage);
-//    }
-//
-//
-//    // Question 3
-//    @Bean
-//    public QuestionAnswer question3_en() {
-//        return new CountryQuestionAnswer("Ukraine", "ua");
-//    }
-//
-//    @Bean
-//    public CountryLocalizedQuestionAnswer question3_localized() {
-//
-//        Map<String, QuestionAnswer> qaStorage = new HashMap<>();
-//        qaStorage.put("en", question3_en());
-//        return new CountryLocalizedQuestionAnswer(qaStorage);
-//    }
-//
-//
-//    // Question 4
-//    @Bean
-//    public QuestionAnswer question4_en() {
-//        return new CountryQuestionAnswer("Georgia", "ge");
-//    }
-//
-//    @Bean
-//    public CountryLocalizedQuestionAnswer question4_localized() {
-//
-//        Map<String, QuestionAnswer> qaStorage = new HashMap<>();
-//        qaStorage.put("en", question4_en());
-//        return new CountryLocalizedQuestionAnswer(qaStorage);
-//    }
+    // Question 2
+    @Bean
+    public QuestionAnswer question2_en() {
+        return new CountryQuestionAnswer("Russia", "ru");
+    }
+
+    @Bean
+    public CountryLocalizedQuestionAnswer question2_localized() {
+
+        Map<String, QuestionAnswer> qaStorage = new HashMap<>();
+        qaStorage.put("en", question2_en());
+        return new CountryLocalizedQuestionAnswer(qaStorage);
+    }
+
+
+    // Question 3
+    @Bean
+    public QuestionAnswer question3_en() {
+        return new CountryQuestionAnswer("Ukraine", "ua");
+    }
+
+    @Bean
+    public CountryLocalizedQuestionAnswer question3_localized() {
+
+        Map<String, QuestionAnswer> qaStorage = new HashMap<>();
+        qaStorage.put("en", question3_en());
+        return new CountryLocalizedQuestionAnswer(qaStorage);
+    }
+
+
+    // Question 4
+    @Bean
+    public QuestionAnswer question4_en() {
+        return new CountryQuestionAnswer("Georgia", "ge");
+    }
+
+    @Bean
+    public CountryLocalizedQuestionAnswer question4_localized() {
+
+        Map<String, QuestionAnswer> qaStorage = new HashMap<>();
+        qaStorage.put("en", question4_en());
+        return new CountryLocalizedQuestionAnswer(qaStorage);
+    }
 //
 //    // Question 5
 //    @Bean

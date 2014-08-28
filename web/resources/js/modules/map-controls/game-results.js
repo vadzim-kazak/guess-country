@@ -30,7 +30,6 @@ define(['jquery', 'text!../../../templates/game-results-template.html', 'Mustach
 
             console.log(JSON.stringify(payload));
 
-            var idx = 1;
             var templateData = {
 
                 status : (function () {
@@ -50,9 +49,12 @@ define(['jquery', 'text!../../../templates/game-results-template.html', 'Mustach
                     }
                 }),
 
-                index: function() {
-                    return idx++;
-                },
+                duel : (function() {
+                   if (payload.playersResult.length > 1) {
+                    return true;
+                   }
+                   return false;
+                }),
 
                 players: payload.playersResult
             }

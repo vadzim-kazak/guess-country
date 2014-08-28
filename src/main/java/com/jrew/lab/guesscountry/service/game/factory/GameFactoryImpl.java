@@ -26,11 +26,11 @@ public class GameFactoryImpl implements GameFactory {
     @Override
     public void buildGame(Player player, Consumer<GameReadyEvent> gameReadyHandler) {
 
+        this.gameReadyHandler = gameReadyHandler;
+
         GameSettings gameSettings = player.getGameSettings();
         GameSettingsImpl.GameMode gameMode = gameSettings.getGameMode();
         builders.get(gameMode.toString()).buildGame(player);
-
-        this.gameReadyHandler = gameReadyHandler;
     }
 
     @Override

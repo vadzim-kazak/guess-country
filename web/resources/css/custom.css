@@ -19,29 +19,29 @@
 }
 
 .waiting-others-label {
-    color: #5876a1;
+    color: #029acf;
     font-size: 300%;
 }
 
 .result-game-label {
-    color: #5876a1;
+    color: #029acf;
     font-size: 300%;
 }
 
 .result-status-label {
-    color: #5876a1;
+    color: #029acf;
     font-size: 250%;
 }
 
 .table.results-table{
     border-color: transparent;
-    color: #5876a1;
+    color: #029acf;
     border-collapse: separate;
     border-spacing: 0 2px;
 }
 
 .table.results-table > thead > tr > th {
-    color: #5876a1;
+    color: #029acf;
 }
 
 .table.results-table > thead > tr > th {

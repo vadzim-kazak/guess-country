@@ -12,9 +12,7 @@ define(['jquery', 'text!../../../templates/game-results-template.html', 'Mustach
         GameResultsControl.prototype._singletonInstance = this;
 
         var controlDiv = $('<div/>', {
-            css: {
-                'z-index': 3
-            }
+            css: {}
         });
         controlDiv.hide();
 

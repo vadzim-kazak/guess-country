@@ -11,7 +11,7 @@ define(['jquery', 'modules/knob-tron-style', 'knob'], function($, tronDrawFuncti
         }
         TimeoutCounterControl.prototype._singletonInstance = this;
 
-        var usualColor = "#5876a1";
+        var usualColor = "#029acf";
         var warningColor = "#ff5757";
         var sideSize = 75;
         var warningColorThreshold = 5;

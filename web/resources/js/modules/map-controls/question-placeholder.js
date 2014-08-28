@@ -12,7 +12,7 @@ define(['jquery'], function($) {
         }
         QuestionPlaceholderControl.prototype._singletonInstance = this;
 
-        var textColor = "#5876a1";
+        var textColor = "#029acf";
 
         var controlDiv = $('<div></div>');
         controlDiv.addClass('custom-controls-hidden');

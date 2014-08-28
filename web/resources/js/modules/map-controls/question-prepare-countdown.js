@@ -24,7 +24,7 @@ define(['jquery', 'modules/knob-tron-style', 'text!../../../templates/question-p
         });
 
         var circleSize = 250;
-        var textColor = '#5876a1';
+        var textColor = '#029acf';
 
         var template = $(htmlTemplate);
         controlDiv.append(template);
@@ -35,6 +35,7 @@ define(['jquery', 'modules/knob-tron-style', 'text!../../../templates/question-p
             'width': circleSize,
             'height': circleSize,
             'fgColor': textColor,
+            'inputColor': textColor,
             'readOnly':true,
             'skin': 'tron',
             'draw' : tronDrawFunction

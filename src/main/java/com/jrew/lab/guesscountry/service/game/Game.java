@@ -76,4 +76,10 @@ public interface Game {
      */
     public void finish();
 
+    /**
+     *
+     * @param questionAnswers
+     */
+    public void setQuestionAnswers(List<LocalizedQuestionAnswer> questionAnswers);
+
 }

@@ -10,6 +10,7 @@ import com.jrew.lab.guesscountry.service.message.handler.MessageHandlerProvider;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -55,7 +56,11 @@ public class GameImpl implements Game {
     @PostConstruct
     private void init() {
         id = UUID.randomUUID().toString();
-        Collections.shuffle(questionAnswers);
+    }
+
+
+    private int getQuestionsNumber(int questionsNumber) {
+        return questionsNumber;
     }
 
     @Override
@@ -169,6 +174,14 @@ public class GameImpl implements Game {
     @Override
     public String getId() {
         return id;
+    }
+
+    /**
+     *
+     * @param questionAnswers
+     */
+    public void setQuestionAnswers(List<LocalizedQuestionAnswer> questionAnswers) {
+        this.questionAnswers = questionAnswers;
     }
 
     @Override

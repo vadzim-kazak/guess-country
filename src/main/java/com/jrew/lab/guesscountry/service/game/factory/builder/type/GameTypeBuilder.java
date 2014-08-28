@@ -11,7 +11,8 @@ public interface GameTypeBuilder {
     /**
      *
      *
-     * @param gameSettings@return
+     * @param gameSettings
+     * @return
      */
     public Game createGame(GameSettings gameSettings);
 

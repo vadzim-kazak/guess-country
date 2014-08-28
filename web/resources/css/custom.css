@@ -14,18 +14,6 @@
     margin-bottom: 0;
 }
 
-.right-answer {
-    background: lawngreen;
-    border: 2px solid #fff;
-    padding: 3px;
-}
-
-.wrong-answer {
-    background: red;
-    border: 2px solid #fff;
-    padding: 3px;
-}
-
 .custom-controls-hidden {
     visibility : hidden;
 }
@@ -42,6 +30,38 @@
 
 .result-status-label {
     color: #5876a1;
-    font-size: 200%;
+    font-size: 250%;
+}
+
+.table.results-table{
+    border-color: transparent;
+    color: #5876a1;
+    border-collapse: separate;
+    border-spacing: 0 2px;
+}
+
+.table.results-table > thead > tr > th {
+    color: #5876a1;
+}
+
+.table.results-table > thead > tr > th {
+    border-bottom: none;
+}
+
+.table.results-table > tbody > tr {
+    background-color: rgba(217, 237, 247, 0.5);
+}
+
+.row-centered {
+    text-align:center;
+}
+
+.margin-top {
     margin-top: 15px;
+}
+
+.table.results-table > thead > tr > td,
+.table.results-table > tbody > tr > td
+{
+    border-top: none;
 }

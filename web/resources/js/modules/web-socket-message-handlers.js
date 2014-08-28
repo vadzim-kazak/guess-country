@@ -91,6 +91,7 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
          */
         var handleWaitingOtherPlayerMessage = function(payload) {
             waitingOther.show();
+            google.maps.event.trigger(map, 'resize')
         }
 
         /**

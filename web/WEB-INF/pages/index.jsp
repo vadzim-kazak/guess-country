@@ -12,7 +12,6 @@
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css" media="screen">
     <script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/module/bootstrap.min.js"></script>
 
     <style type="text/css">
 
@@ -86,7 +85,7 @@
                             <!-- Play button -->
                             <div class="form-group">
                                 <div class="col-lg-10 col-lg-offset-2">
-                                    <button type="submit" class="btn btn-success">Play</button>
+                                    <button type="submit" class="btn btn-info">Play</button>
                                 </div>
                             </div>
 

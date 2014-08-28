@@ -35,7 +35,6 @@ public class GameImpl implements Game {
     private boolean isRoundInProgress;
 
     /** **/
-    @Autowired
     private List<LocalizedQuestionAnswer> questionAnswers;
 
     /** **/

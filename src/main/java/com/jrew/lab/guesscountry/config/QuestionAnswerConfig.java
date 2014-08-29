@@ -26,7 +26,6 @@ public class QuestionAnswerConfig {
 
         List<CountryDomainPair> countries = new ArrayList<>();
 
-        countries.add(new CountryDomainPair("Ascension Island","ac"));
         countries.add(new CountryDomainPair("Andorra", "ad"));
         countries.add(new CountryDomainPair("United Arab Emirates","ae"));
         countries.add(new CountryDomainPair("Afghanistan", "af"));
@@ -77,7 +76,6 @@ public class QuestionAnswerConfig {
         countries.add(new CountryDomainPair("Ecuador","ec"));
         countries.add(new CountryDomainPair("Estonia","ee"));
         countries.add(new CountryDomainPair("Egypt","eg"));
-        countries.add(new CountryDomainPair("Western Sahara","eh"));
         countries.add(new CountryDomainPair("Eritrea","er"));
         countries.add(new CountryDomainPair("Spain","es"));
         countries.add(new CountryDomainPair("Ethiopia","et"));

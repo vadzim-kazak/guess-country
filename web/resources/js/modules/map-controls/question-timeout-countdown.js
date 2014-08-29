@@ -42,9 +42,9 @@ define(['jquery', 'modules/knob-tron-style', 'knob'], function($, knobStyle) {
         this.displayValue = function(seconds) {
             controlDiv.removeClass('custom-controls-hidden');
 
-            var color = usualColor;
+            var color = knobStyle.usualColor;
             if (seconds <= warningColorThreshold) {
-                color = warningColor;
+                color = knobStyle.warningColor;
             }
 
             countdownCounter.trigger('configure',

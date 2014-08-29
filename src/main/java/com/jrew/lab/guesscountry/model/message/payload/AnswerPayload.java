@@ -21,9 +21,6 @@ public class AnswerPayload {
     /** **/
     private String answer;
 
-    /** **/
-    private LatLng latLng;
-
     /**
      *
      * @return
@@ -56,19 +53,4 @@ public class AnswerPayload {
         this.answer = answer;
     }
 
-    /**
-     *
-     * @return
-     */
-    public LatLng getLatLng() {
-        return latLng;
-    }
-
-    /**
-     *
-     * @param latLng
-     */
-    public void setLatLng(LatLng latLng) {
-        this.latLng = latLng;
-    }
 }

@@ -1,12 +1,12 @@
 package com.jrew.lab.guesscountry.service.game.factory.builder.type;
 
-import com.jrew.lab.guesscountry.config.QuestionAnswerConfig;
 import com.jrew.lab.guesscountry.model.questionanswer.CountryLocalizedQuestionAnswer;
 import com.jrew.lab.guesscountry.model.questionanswer.CountryQuestionAnswer;
 import com.jrew.lab.guesscountry.model.questionanswer.LocalizedQuestionAnswer;
 import com.jrew.lab.guesscountry.model.questionanswer.QuestionAnswer;
 import com.jrew.lab.guesscountry.model.settings.GameSettings;
 import com.jrew.lab.guesscountry.service.game.Game;
+import com.jrew.lab.guesscountry.service.questionanswer.CountriesDictionary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import java.util.*;
 
 /**
@@ -31,9 +30,8 @@ public class CountryTypeGameBuilder implements GameTypeBuilder {
     @Autowired
     private ApplicationContext applicationContext;
 
-    /** **/
-    @Resource
-    private List<QuestionAnswerConfig.CountryDomainPair> countryDomainPairs;
+    @Autowired
+    CountriesDictionary countriesDictionary;
 
     /** **/
     private List<LocalizedQuestionAnswer> questionAnswers = new ArrayList<>();
@@ -44,7 +42,7 @@ public class CountryTypeGameBuilder implements GameTypeBuilder {
     @PostConstruct
     private void init() {
 
-        countryDomainPairs.stream().forEach(countryDomainPair -> {
+        countriesDictionary.getCountriesInfo().stream().forEach(countryDomainPair -> {
 
             CountryQuestionAnswer countryQuestionAnswer = new CountryQuestionAnswer(countryDomainPair.getCountry(),
                     countryDomainPair.getDomain());

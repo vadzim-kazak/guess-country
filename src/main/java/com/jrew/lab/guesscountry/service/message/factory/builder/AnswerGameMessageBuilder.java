@@ -24,11 +24,6 @@ public class AnswerGameMessageBuilder implements GameMessageBuilder<AnswerPayloa
         /** **/
         public static final String ANSWER_KEY = "answer";
 
-        /** **/
-        public static final String LATITUDE_KEY = "lat";
-
-        /** **/
-        public static final String LONGITUDE_KEY = "lng";
     }
 
     @Autowired
@@ -42,11 +37,6 @@ public class AnswerGameMessageBuilder implements GameMessageBuilder<AnswerPayloa
         AnswerPayload answerPayload = gameMessage.getPayload();
         answerPayload.setPlayer(player);
         answerPayload.setAnswer(payload.get(PayloadKeys.ANSWER_KEY).textValue());
-
-        LatLng latLng = new LatLng(payload.get(PayloadKeys.LATITUDE_KEY).doubleValue(),
-                payload.get(PayloadKeys.LONGITUDE_KEY).doubleValue());
-
-        answerPayload.setLatLng(latLng);
 
         return gameMessage;
     }

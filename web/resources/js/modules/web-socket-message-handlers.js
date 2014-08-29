@@ -34,6 +34,8 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
                 handleWaitingOtherPlayerMessage(payload);
             } else if (type == 'GAME_FINISHED') {
                 handleGameFinishedMessage(payload)
+            } else if (type == 'ANSWER_TIMEOUT') {
+                handleAnswerTimeout(payload);
             }
         }
 
@@ -155,6 +157,12 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
             if (payload.answerOwner && payload.rightAnswer) {
                 scores.updateScores(payload.scores);
             }
+        }
+
+        var handleAnswerTimeout = function(payload) {
+
+            var answerPosition =  new google.maps.LatLng(payload.center.latitude, payload.center.longitude);
+            map.panTo(answerPosition);
         }
 
         /**

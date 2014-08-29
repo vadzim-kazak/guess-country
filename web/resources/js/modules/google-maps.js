@@ -56,8 +56,6 @@ define(['jquery','google-maps-loader', 'modules/google-maps-style', 'modules/map
 
                     var message = {
                         type: "answer",
-                        lat: countryCenter.lat,
-                        lng: countryCenter.lng,
                         answer: country
                     }
 

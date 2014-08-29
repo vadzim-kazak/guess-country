@@ -1,5 +1,6 @@
 package com.jrew.lab.guesscountry.model.message.payload;
 
+import com.javadocmd.simplelatlng.LatLng;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,9 @@ public class AnswerTimeoutPayload {
 
     /** **/
     private String message;
+
+    /** **/
+    private LatLng center;
 
     /**
      *
@@ -47,5 +51,21 @@ public class AnswerTimeoutPayload {
      */
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public LatLng getCenter() {
+        return center;
+    }
+
+    /**
+     *
+     * @param center
+     */
+    public void setCenter(LatLng center) {
+        this.center = center;
     }
 }

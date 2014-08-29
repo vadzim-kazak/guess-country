@@ -1,5 +1,6 @@
 package com.jrew.lab.guesscountry.service.message.handler;
 
+import com.jrew.lab.guesscountry.model.questionanswer.CountryInfo;
 import com.jrew.lab.guesscountry.model.questionanswer.LocalizedQuestionAnswer;
 import com.jrew.lab.guesscountry.model.message.GameMessage;
 import com.jrew.lab.guesscountry.model.message.payload.AnswerPayload;
@@ -8,6 +9,7 @@ import com.jrew.lab.guesscountry.model.player.Player;
 import com.jrew.lab.guesscountry.service.game.Game;
 import com.jrew.lab.guesscountry.service.message.factory.GameMessageFactory;
 import com.jrew.lab.guesscountry.service.message.handler.helper.AnswerCounter;
+import com.jrew.lab.guesscountry.service.questionanswer.CountriesDictionary;
 import com.jrew.lab.guesscountry.service.socket.WebSocketSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +41,9 @@ public class AnswerGameMessageHandler implements GameMessageHandler<AnswerPayloa
     @Autowired
     private AnswerCounter answerCounter;
 
+    @Autowired
+    CountriesDictionary countriesDictionary;
+
     @Override
     public void handleMessage(GameMessage<AnswerPayload> message, Game game) {
 
@@ -49,7 +54,6 @@ public class AnswerGameMessageHandler implements GameMessageHandler<AnswerPayloa
 
             LocalizedQuestionAnswer questionAnswer = game.getQuestionAnswer();
             boolean isAnswerCorrect = questionAnswer.checkAnswer(answerPayload.getAnswer(), answerOwner.getLocale());
-            logger.debug("Player {} provided {} answer", answerOwner.getId(), isAnswerCorrect);
 
             answerCounter.countAnswer(answerOwner, game, isAnswerCorrect);
 
@@ -103,7 +107,10 @@ public class AnswerGameMessageHandler implements GameMessageHandler<AnswerPayloa
         ResultPayload resultPayload = resultMessage.getPayload();
         resultPayload.setAnswer(answerPayload.getAnswer());
         resultPayload.setPlayerName(player.getName());
-        resultPayload.setLatLng(answerPayload.getLatLng());
+
+        Optional<CountryInfo> countryInfoOptional = countriesDictionary.getCountryInfo(answerPayload.getAnswer());
+        countryInfoOptional.ifPresent(countryInfo -> resultPayload.setLatLng(countryInfo.getCenter()));
+
         resultPayload.setScores(answerPayload.getPlayer().getScores());
 
         return resultMessage;

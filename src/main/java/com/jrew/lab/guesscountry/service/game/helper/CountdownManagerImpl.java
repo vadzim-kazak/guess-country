@@ -2,6 +2,7 @@ package com.jrew.lab.guesscountry.service.game.helper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -24,19 +25,26 @@ public class CountdownManagerImpl implements CountdownManager {
     /** **/
     private boolean continueAnswerCountdown;
 
+    /** **/
+    @Value(value = "${game.question.prepare.countdown}")
+    private int prepareCountdown;
+
+    /** **/
+    @Value(value = "${game.question.timeout.countdown}")
+    private int timeoutCountdown;
+
     @Override
     public void startQuestionCountdown(IntConsumer onTickAction, Runnable onFinishAction) {
 
         final int BEFORE_COUNTDOWN_PAUSE = 1;
-        final int COUNTDOWN_DURATION = 3;
 
         Runnable countdownRunnable = () -> {
 
-            int countdownCounter = BEFORE_COUNTDOWN_PAUSE + COUNTDOWN_DURATION;
+            int countdownCounter = BEFORE_COUNTDOWN_PAUSE + prepareCountdown;
 
             while (countdownCounter >= 0) {
 
-                if (countdownCounter <= COUNTDOWN_DURATION) {
+                if (countdownCounter <= prepareCountdown) {
                     onTickAction.accept(countdownCounter);
                 }
 
@@ -58,13 +66,11 @@ public class CountdownManagerImpl implements CountdownManager {
     @Override
     public void startAnswerCountdown(IntConsumer onTickAction, Runnable onFinishAction) {
 
-        final int GET_ANSWER_DURATION = 20;
-
         continueAnswerCountdown = true;
 
         Runnable countdownRunnable = () -> {
 
-            int countdownCounter = GET_ANSWER_DURATION;
+            int countdownCounter = timeoutCountdown;
 
             while (countdownCounter >= 0 && continueAnswerCountdown) {
 

@@ -21,24 +21,6 @@ import java.util.Map;
 @Configuration
 public class QuestionAnswerConfig {
 
-//
-//
-//
-//
-//    // Question 1
-//    @Bean
-//    public QuestionAnswer question1_en() {
-//        return new CountryQuestionAnswer("Belarus", "by");
-//    }
-//
-//    @Bean
-//    public CountryLocalizedQuestionAnswer question1_localized() {
-//
-//        Map<String, QuestionAnswer> qaStorage = new HashMap<>();
-//        qaStorage.put("en", question1_en());
-//        return new CountryLocalizedQuestionAnswer(qaStorage);
-//    }
-
     @Bean(name="countryDomainPairs")
     public List<CountryDomainPair> getCountryDomainPairs() {
 

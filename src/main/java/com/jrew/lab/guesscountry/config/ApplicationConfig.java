@@ -8,15 +8,23 @@ import com.jrew.lab.guesscountry.model.player.PlayerImpl;
 import com.jrew.lab.guesscountry.model.settings.GameSettings;
 import com.jrew.lab.guesscountry.model.settings.GameSettingsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.*;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 /**
  * Created by Kazak_VV on 30.07.2014.
  */
 @Configuration
 @ComponentScan(basePackages = "com.jrew.lab.guesscountry")
+@PropertySource("classpath:config.properties")
 public class ApplicationConfig {
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
 
     @Bean
     @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)

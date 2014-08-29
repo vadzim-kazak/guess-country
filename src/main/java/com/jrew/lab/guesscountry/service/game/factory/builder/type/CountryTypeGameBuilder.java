@@ -10,7 +10,7 @@ import com.jrew.lab.guesscountry.service.game.Game;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -38,9 +38,8 @@ public class CountryTypeGameBuilder implements GameTypeBuilder {
     /** **/
     private List<LocalizedQuestionAnswer> questionAnswers = new ArrayList<>();
 
-    /** **/
-    //@Value("#{configProperties['game.questions.number']}")
-    private static final int QUESTIONS_NUMBER = 30;
+    @Value(value = "${game.questions.number}")
+    private int questionsNumber = 30;
 
     @PostConstruct
     private void init() {
@@ -62,8 +61,8 @@ public class CountryTypeGameBuilder implements GameTypeBuilder {
         Game game = applicationContext.getBean(Game.class);
 
         Collections.shuffle(questionAnswers);
-        if (questionAnswers.size() > QUESTIONS_NUMBER) {
-            game.setQuestionAnswers(questionAnswers.subList(0, QUESTIONS_NUMBER - 1));
+        if (questionAnswers.size() > questionsNumber) {
+            game.setQuestionAnswers(questionAnswers.subList(0, questionsNumber - 1));
         } else {
             game.setQuestionAnswers(questionAnswers);
         }

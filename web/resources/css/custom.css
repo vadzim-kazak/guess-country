@@ -19,27 +19,32 @@
 }
 
 .waiting-others-label {
-    color: #029acf;
     font-size: 300%;
 }
 
 .result-game-label {
-    color: #029acf;
     font-size: 300%;
 }
 
 .result-status-label {
-    color: #029acf;
     font-size: 250%;
 }
 
 .table.results-table{
     border-color: transparent;
-    color: #029acf;
     border-collapse: separate;
     border-spacing: 0 2px;
 }
 
+.question-placeholder {
+    font-size: 250%;
+}
+
+.scores-placeholder {
+    font-size: 150%;
+}
+
+.hud-color,
 .table.results-table > thead > tr > th {
     color: #029acf;
 }

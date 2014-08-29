@@ -17,11 +17,13 @@ define(['jquery'], function($) {
         var controlDiv = $('<div></div>');
         controlDiv.addClass('custom-controls-hidden');
 
+
         var questionPlaceholder =  $('<div/>', {
             id: 'questionPlaceholder'
         });
 
-        questionPlaceholder.css({ 'color': textColor, 'font-size': '250%' });
+        questionPlaceholder.addClass('question-placeholder');
+        questionPlaceholder.addClass('hud-color');
 
         controlDiv.append(questionPlaceholder);
 

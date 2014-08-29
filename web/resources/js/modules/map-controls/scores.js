@@ -11,8 +11,6 @@ define(['jquery'], function($) {
         }
         ScoresControl.prototype._singletonInstance = this;
 
-        var textColor = "#029acf";
-
         var controlDiv = $('<div/>', {
             css: {
                 marginTop: '10px',
@@ -21,13 +19,12 @@ define(['jquery'], function($) {
         });
         controlDiv.addClass('custom-controls-hidden');
 
+
         var scoresContainer =  $('<div/>', {
-            css: {
-                'color': textColor,
-                'font-size': '150%'
-            },
             text: 'Scores: 0'
         });
+        scoresContainer.addClass('hud-color');
+        scoresContainer.addClass('scores-placeholder');
 
         controlDiv.append(scoresContainer);
 

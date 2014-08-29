@@ -1,7 +1,7 @@
 /**
  * Created by Kazak_VV on 25.08.2014.
  */
-define(['jquery', 'modules/knob-tron-style', 'knob'], function($, tronDrawFunction) {
+define(['jquery', 'modules/knob-tron-style', 'knob'], function($, knobStyle) {
 
     var TimeoutCounterControl = function() {
 
@@ -11,9 +11,6 @@ define(['jquery', 'modules/knob-tron-style', 'knob'], function($, tronDrawFuncti
         }
         TimeoutCounterControl.prototype._singletonInstance = this;
 
-        var usualColor = "#029acf";
-        var warningColor = "#ff5757";
-        var sideSize = 75;
         var warningColorThreshold = 5;
 
         var controlDiv = $('<div/>', {
@@ -30,13 +27,12 @@ define(['jquery', 'modules/knob-tron-style', 'knob'], function($, tronDrawFuncti
         controlDiv.append(countdownCounter);
 
         countdownCounter.knob({
-            'width': sideSize,
-            'height': sideSize,
-            'fgColor': usualColor,
-            'inputColor': usualColor,
+            'width': knobStyle.timeoutKnobSize,
+            'height': knobStyle.timeoutKnobSize,
+            'fgColor': knobStyle.usualColor,
+            'inputColor': knobStyle.usualColor,
             'readOnly':true,
-            'skin': 'tron',
-            'draw' : tronDrawFunction
+            'draw' : knobStyle.tronDrawFunction
         });
 
         this.getControl = function() {

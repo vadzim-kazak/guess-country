@@ -2,7 +2,7 @@
  * Created by Kazak_VV on 25.08.2014.
  */
 define(['jquery', 'modules/knob-tron-style', 'text!../../../templates/question-prepare-template.html', 'knob'],
-    function($, tronDrawFunction, htmlTemplate) {
+    function($, knobStyle, htmlTemplate) {
 
     var PrepareCounterControl = function() {
 
@@ -12,19 +12,12 @@ define(['jquery', 'modules/knob-tron-style', 'text!../../../templates/question-p
         }
         PrepareCounterControl.prototype._singletonInstance = this;
 
-        var controlDiv = $('<div/>', {
-            css: {
-
-            }
-        });
+        var controlDiv = $('<div/>', {});
         controlDiv.hide();
 
         var countdownCounter =  $('<input/>', {
             type: 'text'
         });
-
-        var circleSize = 250;
-        var textColor = '#029acf';
 
         var template = $(htmlTemplate);
         controlDiv.append(template);
@@ -32,13 +25,12 @@ define(['jquery', 'modules/knob-tron-style', 'text!../../../templates/question-p
         template.find('#knobContainer').append(countdownCounter);
 
         countdownCounter.knob({
-            'width': circleSize,
-            'height': circleSize,
-            'fgColor': textColor,
-            'inputColor': textColor,
+            'width': knobStyle.prepareKnobSize,
+            'height': knobStyle.prepareKnobSize,
+            'fgColor': knobStyle.usualColor,
+            'inputColor': knobStyle.usualColor,
             'readOnly':true,
-            'skin': 'tron',
-            'draw' : tronDrawFunction
+            'draw' : knobStyle.tronDrawFunction
         });
 
         this.getControl = function() {

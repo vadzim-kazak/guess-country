@@ -157,6 +157,10 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
             if (payload.answerOwner && payload.rightAnswer) {
                 scores.updateScores(payload.scores);
             }
+
+            if(payload.rightAnswer) {
+                timeoutCountdown.hide();
+            }
         }
 
         var handleAnswerTimeout = function(payload) {

@@ -76,6 +76,9 @@ public class GameImpl implements Game {
 
     @Override
     public void nextRound() {
+        isRoundInProgress = false;
+        countdownManager.stopAnswerCountdown();
+
         countdownManager.idleBeforeQuestionCountdown(() -> checkNextRound());
     }
 
@@ -84,12 +87,11 @@ public class GameImpl implements Game {
      */
     private void checkNextRound() {
 
-        isRoundInProgress = false;
+
 
         currentQuestionAnswerNumber++;
         if (currentQuestionAnswerNumber < questionAnswers.size()) {
 
-            countdownManager.stopAnswerCountdown();
 
             GameMessage<CountdownPayload> gameMessage = gameMessageFactory.buildServerMessage(GameMessage.Type.COUNTDOWN);
             CountdownPayload payload = gameMessage.getPayload();

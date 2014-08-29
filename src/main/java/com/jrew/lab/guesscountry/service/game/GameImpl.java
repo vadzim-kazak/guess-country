@@ -57,11 +57,6 @@ public class GameImpl implements Game {
         id = UUID.randomUUID().toString();
     }
 
-
-    private int getQuestionsNumber(int questionsNumber) {
-        return questionsNumber;
-    }
-
     @Override
     public void handleMessage(String message, Player player) {
 

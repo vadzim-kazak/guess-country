@@ -39,7 +39,7 @@ public class CountryTypeGameBuilder implements GameTypeBuilder {
     private List<LocalizedQuestionAnswer> questionAnswers = new ArrayList<>();
 
     @Value(value = "${game.questions.number}")
-    private int questionsNumber = 30;
+    private int questionsNumber;
 
     @PostConstruct
     private void init() {
@@ -62,7 +62,8 @@ public class CountryTypeGameBuilder implements GameTypeBuilder {
 
         Collections.shuffle(questionAnswers);
         if (questionAnswers.size() > questionsNumber) {
-            game.setQuestionAnswers(questionAnswers.subList(0, questionsNumber - 1));
+            List<LocalizedQuestionAnswer> questionAnswersPart = questionAnswers.subList(0, questionsNumber);
+            game.setQuestionAnswers(new ArrayList<>(questionAnswersPart));
         } else {
             game.setQuestionAnswers(questionAnswers);
         }

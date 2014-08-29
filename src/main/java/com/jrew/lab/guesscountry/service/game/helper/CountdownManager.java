@@ -25,4 +25,10 @@ public interface CountdownManager {
      *
      */
     public void stopAnswerCountdown();
+
+    /**
+     *
+     * @param onFinishAction
+     */
+    public void idleBeforeQuestionCountdown(Runnable onFinishAction);
 }

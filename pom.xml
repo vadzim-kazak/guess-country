@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.jrew.lab</groupId>
-    <artifactId>guess-country</artifactId>
+    <artifactId>guess-name</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
@@ -14,7 +14,7 @@
         <websocket.host>localhost</websocket.host>
         <websocket.port>8080</websocket.port>
         <websocket.path>websocket</websocket.path>
-        <app.context.path>guesscountry/</app.context.path>
+        <app.context.path>/</app.context.path>
     </properties>
 
     <dependencies>

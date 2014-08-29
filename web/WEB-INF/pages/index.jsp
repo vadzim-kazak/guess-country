@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Guess country</title>
+    <title>Guess name</title>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css" media="screen">
     <script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>

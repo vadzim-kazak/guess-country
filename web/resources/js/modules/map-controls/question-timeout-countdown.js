@@ -11,8 +11,6 @@ define(['jquery', 'modules/knob-tron-style', 'knob'], function($, knobStyle) {
         }
         TimeoutCounterControl.prototype._singletonInstance = this;
 
-        var warningColorThreshold = 5;
-
         var controlDiv = $('<div/>', {
             css: {
                 marginRight: '15px'
@@ -42,9 +40,10 @@ define(['jquery', 'modules/knob-tron-style', 'knob'], function($, knobStyle) {
         this.displayValue = function(seconds) {
             controlDiv.removeClass('custom-controls-hidden');
 
+            var warningColorThreshold = 10;
             var color = knobStyle.usualColor;
-            if (seconds <= warningColorThreshold) {
-                color = knobStyle.warningColor;
+            if (seconds < warningColorThreshold) {
+                color = knobStyle.warningColor[seconds];
             }
 
             countdownCounter.trigger('configure',

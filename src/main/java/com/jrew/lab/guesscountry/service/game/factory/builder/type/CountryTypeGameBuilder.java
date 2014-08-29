@@ -1,8 +1,6 @@
 package com.jrew.lab.guesscountry.service.game.factory.builder.type;
 
-import com.jrew.lab.guesscountry.model.questionanswer.CountryLocalizedQuestionAnswer;
 import com.jrew.lab.guesscountry.model.questionanswer.CountryQuestionAnswer;
-import com.jrew.lab.guesscountry.model.questionanswer.LocalizedQuestionAnswer;
 import com.jrew.lab.guesscountry.model.questionanswer.QuestionAnswer;
 import com.jrew.lab.guesscountry.model.settings.GameSettings;
 import com.jrew.lab.guesscountry.service.game.Game;
@@ -15,7 +13,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Kazak_VV on 31.07.2014.
@@ -34,7 +34,7 @@ public class CountryTypeGameBuilder implements GameTypeBuilder {
     CountriesDictionary countriesDictionary;
 
     /** **/
-    private List<LocalizedQuestionAnswer> questionAnswers = new ArrayList<>();
+    private List<QuestionAnswer> questionAnswers = new ArrayList<>();
 
     @Value(value = "${game.questions.number}")
     private int questionsNumber;
@@ -42,14 +42,13 @@ public class CountryTypeGameBuilder implements GameTypeBuilder {
     @PostConstruct
     private void init() {
 
-        countriesDictionary.getCountriesInfo().stream().forEach(countryDomainPair -> {
+        countriesDictionary.getCountriesInfo().stream().forEach(countryInfo -> {
 
-            CountryQuestionAnswer countryQuestionAnswer = new CountryQuestionAnswer(countryDomainPair.getCountry(),
-                    countryDomainPair.getDomain());
+            CountryQuestionAnswer countryQuestionAnswer = new CountryQuestionAnswer(countryInfo.getName(),
+                    countryInfo.getDomain());
+            countryQuestionAnswer.setLatLng(countryInfo.getCenter());
 
-            Map<String, QuestionAnswer> qaStorage = new HashMap<>();
-            qaStorage.put("en", countryQuestionAnswer);
-            questionAnswers.add(new CountryLocalizedQuestionAnswer(qaStorage));
+            questionAnswers.add(countryQuestionAnswer);
         });
     }
 
@@ -60,7 +59,7 @@ public class CountryTypeGameBuilder implements GameTypeBuilder {
 
         Collections.shuffle(questionAnswers);
         if (questionAnswers.size() > questionsNumber) {
-            List<LocalizedQuestionAnswer> questionAnswersPart = questionAnswers.subList(0, questionsNumber);
+            List<QuestionAnswer> questionAnswersPart = questionAnswers.subList(0, questionsNumber);
             game.setQuestionAnswers(new ArrayList<>(questionAnswersPart));
         } else {
             game.setQuestionAnswers(questionAnswers);

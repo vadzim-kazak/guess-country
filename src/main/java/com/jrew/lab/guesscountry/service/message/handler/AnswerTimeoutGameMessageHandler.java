@@ -2,7 +2,8 @@ package com.jrew.lab.guesscountry.service.message.handler;
 
 import com.jrew.lab.guesscountry.model.message.GameMessage;
 import com.jrew.lab.guesscountry.model.message.payload.AnswerTimeoutPayload;
-import com.jrew.lab.guesscountry.model.questionanswer.CountryInfo;
+import com.jrew.lab.guesscountry.model.country.CountryInfo;
+import com.jrew.lab.guesscountry.model.questionanswer.QuestionAnswer;
 import com.jrew.lab.guesscountry.service.game.Game;
 import com.jrew.lab.guesscountry.service.questionanswer.CountriesDictionary;
 import com.jrew.lab.guesscountry.service.socket.WebSocketSender;
@@ -22,26 +23,15 @@ public class AnswerTimeoutGameMessageHandler implements GameMessageHandler<Answe
     @Autowired
     private WebSocketSender webSocketSender;
 
-    @Autowired
-    CountriesDictionary countriesDictionary;
-
     @Override
     public void handleMessage(GameMessage<AnswerTimeoutPayload> message, Game game) {
 
         AnswerTimeoutPayload messagePayload = message.getPayload();
 
         game.getPlayers().stream().forEach(player -> {
-
-            Optional<String> optionalQuestion = game.getQuestionAnswer().getQuestion(player.getLocale());
-            optionalQuestion.ifPresent(question -> {
-
-                Optional<CountryInfo> countryInfoOptional = countriesDictionary.getCountryInfo(question);
-                countryInfoOptional.ifPresent(countryInfo -> {
-                    messagePayload.setAnswer(question);
-                    messagePayload.setCenter(countryInfo.getCenter());
-                    webSocketSender.sendMessage(message, player.getWebSocketSession());
-                });
-            });
+            QuestionAnswer questionAnswer = game.getQuestionAnswer();
+            messagePayload.setQuestionAnswer(questionAnswer);
+            webSocketSender.sendMessage(message, player.getWebSocketSession());
         });
 
     }

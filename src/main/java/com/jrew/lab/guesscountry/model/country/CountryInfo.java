@@ -1,4 +1,4 @@
-package com.jrew.lab.guesscountry.model.questionanswer;
+package com.jrew.lab.guesscountry.model.country;
 
 import com.javadocmd.simplelatlng.LatLng;
 
@@ -8,7 +8,7 @@ import com.javadocmd.simplelatlng.LatLng;
 public class CountryInfo {
 
     /** **/
-    private String country;
+    private String name;
 
     /** **/
     private String domain;
@@ -18,22 +18,22 @@ public class CountryInfo {
 
     /**
      *
-     * @param country
+     * @param name
      * @param domain
      */
-    public CountryInfo(String country, String domain) {
-        this.country = country;
+    public CountryInfo(String name, String domain) {
+        this.name = name;
         this.domain = domain;
     }
 
     /**
      *
-     * @param country
+     * @param name
      * @param domain
      * @param center
      */
-    public CountryInfo(String country, String domain, LatLng center) {
-        this.country = country;
+    public CountryInfo(String name, String domain, LatLng center) {
+        this.name = name;
         this.domain = domain;
         this.center = center;
     }
@@ -42,16 +42,16 @@ public class CountryInfo {
      *
      * @return
      */
-    public String getCountry() {
-        return country;
+    public String getName() {
+        return name;
     }
 
     /**
      *
-     * @param country
+     * @param name
      */
-    public void setCountry(String country) {
-        this.country = country;
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.jrew.lab.guesscountry.model.questionanswer;
 
+import com.javadocmd.simplelatlng.LatLng;
+
 import java.util.function.Predicate;
 
 /**
@@ -12,6 +14,9 @@ public class CountryQuestionAnswer implements QuestionAnswer {
 
     /** **/
     private String countryCode;
+
+    /** **/
+    private LatLng latLng;
 
     /** **/
     private Predicate<String> checkAnswerMethod = answer -> countryCode.equalsIgnoreCase(answer);
@@ -39,6 +44,22 @@ public class CountryQuestionAnswer implements QuestionAnswer {
     @Override
     public String getAnswer() {
         return countryCode;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public LatLng getLatLng() {
+        return latLng;
+    }
+
+    /**
+     *
+     * @param latLng
+     */
+    public void setLatLng(LatLng latLng) {
+        this.latLng = latLng;
     }
 
     /**

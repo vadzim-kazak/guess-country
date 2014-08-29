@@ -3,20 +3,22 @@ package com.jrew.lab.guesscountry.service.game;
 import com.jrew.lab.guesscountry.model.message.GameMessage;
 import com.jrew.lab.guesscountry.model.message.payload.CountdownPayload;
 import com.jrew.lab.guesscountry.model.player.Player;
-import com.jrew.lab.guesscountry.model.questionanswer.LocalizedQuestionAnswer;
+import com.jrew.lab.guesscountry.model.questionanswer.QuestionAnswer;
 import com.jrew.lab.guesscountry.service.game.helper.CountdownManager;
 import com.jrew.lab.guesscountry.service.message.factory.GameMessageFactory;
 import com.jrew.lab.guesscountry.service.message.handler.MessageHandlerProvider;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Created by Kazak_VV on 01.08.2014.
@@ -35,7 +37,7 @@ public class GameImpl implements Game {
     private boolean isRoundInProgress;
 
     /** **/
-    private List<LocalizedQuestionAnswer> questionAnswers;
+    private List<QuestionAnswer> questionAnswers;
 
     /** **/
     @Autowired
@@ -69,11 +71,18 @@ public class GameImpl implements Game {
 
     @Override
     public void start() {
-        nextRound();
+        checkNextRound();
     }
 
     @Override
     public void nextRound() {
+        countdownManager.idleBeforeQuestionCountdown(() -> checkNextRound());
+    }
+
+    /**
+     *
+     */
+    private void checkNextRound() {
 
         isRoundInProgress = false;
 
@@ -86,11 +95,11 @@ public class GameImpl implements Game {
             CountdownPayload payload = gameMessage.getPayload();
 
             countdownManager.startQuestionCountdown(counter -> {
-                    payload.setSeconds(counter);
-                    payload.setType(CountdownPayload.CountdownType.PREPARE_TO_QUESTION);
-                    messageHandlerProvider.handleMessage(gameMessage, this);
-                },
-                () -> proceedNextRound()
+                        payload.setSeconds(counter);
+                        payload.setType(CountdownPayload.CountdownType.PREPARE_TO_QUESTION);
+                        messageHandlerProvider.handleMessage(gameMessage, this);
+                    },
+                    () -> proceedNextRound()
             );
 
         } else {
@@ -133,7 +142,7 @@ public class GameImpl implements Game {
     }
 
     @Override
-    public LocalizedQuestionAnswer getQuestionAnswer() {
+    public QuestionAnswer getQuestionAnswer() {
         return questionAnswers.get(currentQuestionAnswerNumber);
     }
 
@@ -174,7 +183,7 @@ public class GameImpl implements Game {
      *
      * @param questionAnswers
      */
-    public void setQuestionAnswers(List<LocalizedQuestionAnswer> questionAnswers) {
+    public void setQuestionAnswers(List<QuestionAnswer> questionAnswers) {
         this.questionAnswers = questionAnswers;
     }
 

@@ -26,28 +26,27 @@ public class CountdownManagerImpl implements CountdownManager {
     private boolean continueAnswerCountdown;
 
     /** **/
-    @Value(value = "${game.question.prepare.countdown}")
+    @Value(value = "${question.prepare.countdown}")
     private int prepareCountdown;
 
     /** **/
-    @Value(value = "${game.question.timeout.countdown}")
+    @Value(value = "${question.timeout.countdown}")
     private int timeoutCountdown;
+
+    /** **/
+    @Value(value = "${question.before.prepare.countdown.pause}")
+    private int beforeQuestionCountdownPause;
 
     @Override
     public void startQuestionCountdown(IntConsumer onTickAction, Runnable onFinishAction) {
 
-        final int BEFORE_COUNTDOWN_PAUSE = 1;
-
         Runnable countdownRunnable = () -> {
 
-            int countdownCounter = BEFORE_COUNTDOWN_PAUSE + prepareCountdown;
+            int countdownCounter = prepareCountdown;
 
             while (countdownCounter >= 0) {
 
-                if (countdownCounter <= prepareCountdown) {
-                    onTickAction.accept(countdownCounter);
-                }
-
+                onTickAction.accept(countdownCounter);
                 countdownCounter--;
 
                 try {
@@ -96,5 +95,28 @@ public class CountdownManagerImpl implements CountdownManager {
     @Override
     public void stopAnswerCountdown() {
         continueAnswerCountdown = false;
+    }
+
+    @Override
+    public void idleBeforeQuestionCountdown(Runnable onFinishAction) {
+
+        Runnable countdownRunnable = () -> {
+
+            int countdownCounter = beforeQuestionCountdownPause;
+            while (countdownCounter >= 0) {
+
+                try {
+                    Thread.currentThread().sleep(SECOND_DURATION);
+                } catch (InterruptedException exception) {
+                    logger.error(exception.getMessage(), exception);
+                }
+
+                countdownCounter--;
+            }
+
+            onFinishAction.run();
+        };
+
+        new Thread(countdownRunnable).start();
     }
 }

@@ -1,11 +1,11 @@
 package com.jrew.lab.guesscountry.service.message.handler;
 
-import com.jrew.lab.guesscountry.model.questionanswer.CountryInfo;
-import com.jrew.lab.guesscountry.model.questionanswer.LocalizedQuestionAnswer;
 import com.jrew.lab.guesscountry.model.message.GameMessage;
 import com.jrew.lab.guesscountry.model.message.payload.AnswerPayload;
 import com.jrew.lab.guesscountry.model.message.payload.ResultPayload;
 import com.jrew.lab.guesscountry.model.player.Player;
+import com.jrew.lab.guesscountry.model.country.CountryInfo;
+import com.jrew.lab.guesscountry.model.questionanswer.QuestionAnswer;
 import com.jrew.lab.guesscountry.service.game.Game;
 import com.jrew.lab.guesscountry.service.message.factory.GameMessageFactory;
 import com.jrew.lab.guesscountry.service.message.handler.helper.AnswerCounter;
@@ -52,8 +52,8 @@ public class AnswerGameMessageHandler implements GameMessageHandler<AnswerPayloa
 
         if (answerCounter.canAnswer(answerOwner, game) && game.isRoundInProgress()) {
 
-            LocalizedQuestionAnswer questionAnswer = game.getQuestionAnswer();
-            boolean isAnswerCorrect = questionAnswer.checkAnswer(answerPayload.getAnswer(), answerOwner.getLocale());
+            QuestionAnswer questionAnswer = game.getQuestionAnswer();
+            boolean isAnswerCorrect = questionAnswer.checkAnswer(answerPayload.getAnswer());
 
             answerCounter.countAnswer(answerOwner, game, isAnswerCorrect);
 

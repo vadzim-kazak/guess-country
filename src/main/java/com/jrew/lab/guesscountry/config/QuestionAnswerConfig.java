@@ -1,7 +1,7 @@
 package com.jrew.lab.guesscountry.config;
 
 import com.javadocmd.simplelatlng.LatLng;
-import com.jrew.lab.guesscountry.model.questionanswer.CountryInfo;
+import com.jrew.lab.guesscountry.model.country.CountryInfo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

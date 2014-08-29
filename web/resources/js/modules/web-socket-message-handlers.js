@@ -161,8 +161,26 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
 
         var handleAnswerTimeout = function(payload) {
 
-            var answerPosition =  new google.maps.LatLng(payload.center.latitude, payload.center.longitude);
+            var countryCenter = payload.questionAnswer.latLng;
+            var answerPosition =  new google.maps.LatLng(countryCenter.latitude, countryCenter.longitude);
+
+            //Hide answer marker
+            if (typeof marker !== 'undefined') {
+                marker.setMap(null);
+            }
+
             map.panTo(answerPosition);
+
+            marker = new RichMarker({
+                position: answerPosition,
+                map: map,
+                draggable: false,
+                flat: true,
+                anchor: RichMarkerPosition.BOTTOM,
+                content: Mustache.render(markerContent, {imagePath: 'resources/img/map-location.png'})
+            });
+
+            timeoutCountdown.hide();
         }
 
         /**

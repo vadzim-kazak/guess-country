@@ -1,10 +1,9 @@
 package com.jrew.lab.guesscountry.service.game;
 
 import com.jrew.lab.guesscountry.model.player.Player;
-import com.jrew.lab.guesscountry.model.questionanswer.LocalizedQuestionAnswer;
+import com.jrew.lab.guesscountry.model.questionanswer.QuestionAnswer;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Kazak_VV on 31.07.2014.
@@ -31,7 +30,7 @@ public interface Game {
      *
      * @return
      */
-    public LocalizedQuestionAnswer getQuestionAnswer();
+    public QuestionAnswer getQuestionAnswer();
 
     /**
      *
@@ -80,6 +79,6 @@ public interface Game {
      *
      * @param questionAnswers
      */
-    public void setQuestionAnswers(List<LocalizedQuestionAnswer> questionAnswers);
+    public void setQuestionAnswers(List<QuestionAnswer> questionAnswers);
 
 }

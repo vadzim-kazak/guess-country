@@ -1,6 +1,6 @@
 package com.jrew.lab.guesscountry.service.questionanswer;
 
-import com.jrew.lab.guesscountry.model.questionanswer.CountryInfo;
+import com.jrew.lab.guesscountry.model.country.CountryInfo;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -26,7 +26,7 @@ public class CountriesDictionaryImpl implements CountriesDictionary {
     public Optional<CountryInfo> getCountryInfo(String value) {
 
         Optional<CountryInfo> countryInfoOptional = countriesInfo.stream().filter(countryInfo -> {
-            if (countryInfo.getCountry().equalsIgnoreCase(value) ||
+            if (countryInfo.getName().equalsIgnoreCase(value) ||
                     countryInfo.getDomain().equalsIgnoreCase(value)) {
                 return true;
             }

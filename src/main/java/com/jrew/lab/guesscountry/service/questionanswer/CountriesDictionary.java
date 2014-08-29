@@ -1,6 +1,6 @@
 package com.jrew.lab.guesscountry.service.questionanswer;
 
-import com.jrew.lab.guesscountry.model.questionanswer.CountryInfo;
+import com.jrew.lab.guesscountry.model.country.CountryInfo;
 
 import java.util.List;
 import java.util.Optional;

@@ -6,7 +6,16 @@ define([], function() {
     return knobStyle = {
 
         usualColor : '#029acf',
-        warningColor: '#ff5757',
+        warningColor: ['#ff5757',
+                       '#eb5e60',
+                       '#cf636c',
+                       '#ba6a77',
+                       '#a67182',
+                       '#917388',
+                       '#7f7b94',
+                       '#687f9c',
+                       '#5485a8',
+                       '#3e8cb3'],
         prepareKnobSize: 250,
         timeoutKnobSize: 75,
         tronDrawFunction: function () {

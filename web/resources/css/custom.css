@@ -36,7 +36,7 @@
     border-spacing: 0 2px;
 }
 
-.question-placeholder {
+.info-area-text-placeholder {
     font-size: 250%;
 }
 
@@ -44,6 +44,15 @@
     font-size: 150%;
 }
 
+.right-answer {
+    color: #48d484;
+}
+
+.wrong-answer {
+    color: #ff5757;
+}
+
+.question-color,
 .hud-color,
 .table.results-table > thead > tr > th {
     color: #029acf;

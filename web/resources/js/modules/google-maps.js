@@ -2,9 +2,9 @@
  * Created by Kazak_VV on 21.08.2014.
  */
 define(['jquery','google-maps-loader', 'modules/google-maps-style', 'modules/map-controls/question-timeout-countdown',
-        'modules/map-controls/question-placeholder', 'modules/map-controls/scores', 'modules/map-controls/question-prepare-countdown',
+        'modules/map-controls/info-area', 'modules/map-controls/scores', 'modules/map-controls/question-prepare-countdown',
         'modules/map-controls/waiting-other-player', 'modules/map-controls/game-results'],
-    function($, GoogleMapsLoader, mapStyle, timeoutCountdown, questionPlaceholder, scores, prepareCountdown, waitingOther, gameResults) {
+    function($, GoogleMapsLoader, mapStyle, timeoutCountdown, infoArea, scores, prepareCountdown, waitingOther, gameResults) {
 
         var mapOptions = {
             center: new google.maps.LatLng(50, 20),
@@ -24,7 +24,7 @@ define(['jquery','google-maps-loader', 'modules/google-maps-style', 'modules/map
         map.controls[google.maps.ControlPosition.CENTER].push(gameResults.getControl());
         map.controls[google.maps.ControlPosition.TOP_RIGHT].push(scores.getControl());
         map.controls[google.maps.ControlPosition.RIGHT_TOP].push(timeoutCountdown.getControl());
-        map.controls[google.maps.ControlPosition.TOP_CENTER].push(questionPlaceholder.getControl());
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(infoArea.getControl());
 
         google.maps.event.addListener(map, 'click', function(event) {
             handleMapClickEvent(map, event);
@@ -51,15 +51,18 @@ define(['jquery','google-maps-loader', 'modules/google-maps-style', 'modules/map
 
                 $.get(fullUrl, function(data) {
 
-                    var country = data.results[0].address_components[0].short_name;
-                    var countryCenter = data.results[0].geometry.location;
+                    var geoData = data.results[0];
+                    if (geoData) {
+                        var country = geoData.address_components[0].short_name;
+                        var countryCenter = data.results[0].geometry.location;
 
-                    var message = {
-                        type: "answer",
-                        answer: country
+                        var message = {
+                            type: "answer",
+                            answer: country
+                        }
+
+                        webSocketStorage.getWebSocket().send(JSON.stringify(message));
                     }
-
-                    webSocketStorage.getWebSocket().send(JSON.stringify(message));
                 });
             }
 

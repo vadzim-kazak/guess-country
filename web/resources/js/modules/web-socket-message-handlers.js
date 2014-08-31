@@ -1,10 +1,10 @@
 /**
  * Created by Kazak_VV on 21.08.2014.
  */
-define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-countdown', 'modules/map-controls/question-placeholder',
+define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-countdown', 'modules/map-controls/info-area',
     'modules/map-controls/scores', 'modules/map-controls/question-prepare-countdown', 'modules/map-controls/waiting-other-player',
     'text!../../templates/answer-marker-template.html', 'Mustache', 'modules/map-controls/game-results', 'richmarker', 'bootstrap'],
-    function($, map, timeoutCountdown, questionPlaceholder, scores, prepareCountdown, waitingOther, markerContent, Mustache, gameResults) {
+    function($, map, timeoutCountdown, infoArea, scores, prepareCountdown, waitingOther, markerContent, Mustache, gameResults) {
 
     /**
      *
@@ -73,7 +73,7 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
          * @param payload
          */
         var handleQuestionMessage = function(payload) {
-            questionPlaceholder.showQuestion(payload.message);
+            infoArea.showQuestion(payload.message);
             scores.show();
 
             google.maps.event.trigger(map, 'resize')
@@ -105,7 +105,7 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
             // hide custom game controls
             timeoutCountdown.hide();
             scores.hide();
-            questionPlaceholder.hide();
+            infoArea.hide();
 
             // hide marker
             marker.setMap(null);
@@ -138,8 +138,6 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
                 }
             }
 
-            map.panTo(answerPosition);
-
             //Hide answer marker
             if (typeof marker !== 'undefined') {
                 marker.setMap(null);
@@ -154,13 +152,23 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
                 content: Mustache.render(markerContent, {imagePath: imagePath})
             });
 
-            if (payload.answerOwner && payload.rightAnswer) {
-                scores.updateScores(payload.scores);
+            if (payload.answerOwner) {
+
+                if (payload.rightAnswer) {
+                    scores.updateScores(payload.scores);
+                    infoArea.confirmAnswer(payload.answer);
+                } else {
+                    infoArea.showWrongAnswer(payload.answer);
+                }
             }
 
             if(payload.rightAnswer) {
                 timeoutCountdown.hide();
             }
+
+            google.maps.event.trigger(map, 'resize')
+
+            map.panTo(answerPosition);
         }
 
         var handleAnswerTimeout = function(payload) {
@@ -194,7 +202,7 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
 
             timeoutCountdown.hide();
             //scores.hide();
-            questionPlaceholder.hide();
+            infoArea.hide();
         }
 
     }

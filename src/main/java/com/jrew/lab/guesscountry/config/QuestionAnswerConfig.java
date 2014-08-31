@@ -176,6 +176,7 @@ public class QuestionAnswerConfig {
         countriesInfo.add(new CountryInfo("Tajikistan", "tj", new LatLng(38.861034, 71.276093)));
         countriesInfo.add(new CountryInfo("Turkmenistan", "tm", new LatLng(38.969719, 59.556278)));
         countriesInfo.add(new CountryInfo("Tunisia", "tn", new LatLng(33.886917, 9.537499)));
+        countriesInfo.add(new CountryInfo("Turkey", "tr", new LatLng(38.963745, 35.243322)));
         countriesInfo.add(new CountryInfo("Trinidad and Tobago", "tt", new LatLng(10.691803, -61.222502999999996)));
         countriesInfo.add(new CountryInfo("Taiwan", "tw", new LatLng(23.69781, 120.960515)));
         countriesInfo.add(new CountryInfo("Tanzania", "tz", new LatLng(-6.369028, 34.888822)));

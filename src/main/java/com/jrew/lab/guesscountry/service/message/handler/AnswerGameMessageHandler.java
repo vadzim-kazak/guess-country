@@ -105,11 +105,13 @@ public class AnswerGameMessageHandler implements GameMessageHandler<AnswerPayloa
 
         GameMessage<ResultPayload> resultMessage = gameMessageFactory.buildServerMessage(GameMessage.Type.RESULT);
         ResultPayload resultPayload = resultMessage.getPayload();
-        resultPayload.setAnswer(answerPayload.getAnswer());
         resultPayload.setPlayerName(player.getName());
 
         Optional<CountryInfo> countryInfoOptional = countriesDictionary.getCountryInfo(answerPayload.getAnswer());
-        countryInfoOptional.ifPresent(countryInfo -> resultPayload.setLatLng(countryInfo.getCenter()));
+        countryInfoOptional.ifPresent(countryInfo -> {
+            resultPayload.setLatLng(countryInfo.getCenter());
+            resultPayload.setAnswer(countryInfo.getName());
+        });
 
         resultPayload.setScores(answerPayload.getPlayer().getScores());
 

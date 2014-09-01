@@ -14,6 +14,7 @@
         <websocket.port>8080</websocket.port>
         <websocket.path>websocket</websocket.path>
         <app.context.path>/</app.context.path>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -104,7 +105,6 @@
         </dependency>
 
     </dependencies>
-
 
     <build>
         <plugins>

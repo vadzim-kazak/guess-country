@@ -8,7 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title></title>
+
+    <title>Guess country game</title>
+    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/resources/img/favicon.png" />
 
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css" media="screen">

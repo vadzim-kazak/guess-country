@@ -8,7 +8,7 @@ import com.jrew.lab.guesscountry.model.country.CountryInfo;
 import com.jrew.lab.guesscountry.model.questionanswer.QuestionAnswer;
 import com.jrew.lab.guesscountry.service.game.Game;
 import com.jrew.lab.guesscountry.service.message.factory.GameMessageFactory;
-import com.jrew.lab.guesscountry.service.message.handler.helper.AnswerCounter;
+import com.jrew.lab.guesscountry.service.message.handler.helper.AnswerRegistry;
 import com.jrew.lab.guesscountry.service.questionanswer.CountriesDictionary;
 import com.jrew.lab.guesscountry.service.socket.WebSocketSender;
 import org.slf4j.Logger;
@@ -39,7 +39,7 @@ public class AnswerGameMessageHandler implements GameMessageHandler<AnswerPayloa
 
     /** **/
     @Autowired
-    private AnswerCounter answerCounter;
+    private AnswerRegistry answerRegistry;
 
     @Autowired
     CountriesDictionary countriesDictionary;
@@ -51,12 +51,12 @@ public class AnswerGameMessageHandler implements GameMessageHandler<AnswerPayloa
         if (isValidAnswer(answerPayload)) {
 
             Player answerOwner = answerPayload.getPlayer();
-            if (answerCounter.canAnswer(answerOwner, game) && game.isRoundInProgress()) {
+            if (answerRegistry.canAnswer(answerOwner, game) && game.isRoundInProgress()) {
 
                 QuestionAnswer questionAnswer = game.getQuestionAnswer();
                 boolean isAnswerCorrect = questionAnswer.checkAnswer(answerPayload.getAnswer());
 
-                answerCounter.countAnswer(answerOwner, game, isAnswerCorrect);
+                answerRegistry.registerAnswer(answerOwner, game, isAnswerCorrect);
 
                 if (isAnswerCorrect) {
                     // Increment scores counter
@@ -81,14 +81,14 @@ public class AnswerGameMessageHandler implements GameMessageHandler<AnswerPayloa
                 }, resultMessage);
 
                 if(isAnswerCorrect) {
-                    answerCounter.reset(game);
+                    answerRegistry.reset(game);
                     game.nextRound();
                 } else {
 
                     Optional<Player> playerOptional = game.getPlayers().stream()
-                            .filter(player -> answerCounter.canAnswer(player, game)).findAny();
+                            .filter(player -> answerRegistry.canAnswer(player, game)).findAny();
                     if (!playerOptional.isPresent()) {
-                        answerCounter.reset(game);
+                        answerRegistry.reset(game);
                         game.nextRound();
                     }
                 }

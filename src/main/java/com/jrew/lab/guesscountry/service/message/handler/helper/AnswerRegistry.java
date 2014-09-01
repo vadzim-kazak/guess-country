@@ -6,7 +6,7 @@ import com.jrew.lab.guesscountry.service.game.Game;
 /**
  * Created by Kazak_VV on 12.08.2014.
  */
-public interface AnswerCounter {
+public interface AnswerRegistry {
 
     /**
      *
@@ -21,7 +21,7 @@ public interface AnswerCounter {
      * @param game
      * @param isRightAnswer
      */
-    public void countAnswer(Player player, Game game, Boolean isRightAnswer);
+    public void registerAnswer(Player player, Game game, Boolean isRightAnswer);
 
     /**
      *

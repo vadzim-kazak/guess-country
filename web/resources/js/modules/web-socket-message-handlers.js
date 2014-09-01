@@ -153,7 +153,6 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
             });
 
             if (payload.answerOwner) {
-
                 if (payload.rightAnswer) {
                     scores.updateScores(payload.scores);
                     infoArea.confirmAnswer(payload.answer);
@@ -162,12 +161,11 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
                 }
             }
 
-            if(payload.rightAnswer) {
+            if(payload.rightAnswer || payload.answerOwner) {
                 timeoutCountdown.hide();
             }
 
             google.maps.event.trigger(map, 'resize')
-
             map.panTo(answerPosition);
         }
 

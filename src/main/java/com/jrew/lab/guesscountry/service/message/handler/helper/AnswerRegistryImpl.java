@@ -10,7 +10,7 @@ import java.util.*;
  * Created by Kazak_VV on 12.08.2014.
  */
 @Component
-public class AnswerCounterImpl implements AnswerCounter {
+public class AnswerRegistryImpl implements AnswerRegistry {
 
     /** **/
     private Map<Game, Map<Player, List<Boolean>>> answersNumberRegistry = new HashMap<>();
@@ -41,7 +41,7 @@ public class AnswerCounterImpl implements AnswerCounter {
     }
 
     @Override
-    public void countAnswer(Player player, Game game, Boolean isRightAnswer) {
+    public void registerAnswer(Player player, Game game, Boolean isRightAnswer) {
 
         Map<Player, List<Boolean>> roundAnswers = answersNumberRegistry.get(game);
 

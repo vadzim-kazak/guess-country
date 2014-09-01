@@ -5,13 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.jrew.lab</groupId>
-    <artifactId>guess-name</artifactId>
+    <artifactId>guess-country</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <properties>
         <spring.version>4.0.6.RELEASE</spring.version>
-        <websocket.host>localhost</websocket.host>
         <websocket.port>8080</websocket.port>
         <websocket.path>websocket</websocket.path>
         <app.context.path>/</app.context.path>
@@ -135,6 +134,7 @@
                             <filtering>true</filtering>
                         </resource>
                     </webResources>
+                    <warName>ROOT</warName>
                     <warSourceDirectory>web</warSourceDirectory>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>

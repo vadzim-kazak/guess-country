@@ -48,50 +48,67 @@ public class AnswerGameMessageHandler implements GameMessageHandler<AnswerPayloa
     public void handleMessage(GameMessage<AnswerPayload> message, Game game) {
 
         AnswerPayload answerPayload = message.getPayload();
-        Player answerOwner = answerPayload.getPlayer();
+        if (isValidAnswer(answerPayload)) {
 
-        if (answerCounter.canAnswer(answerOwner, game) && game.isRoundInProgress()) {
+            Player answerOwner = answerPayload.getPlayer();
+            if (answerCounter.canAnswer(answerOwner, game) && game.isRoundInProgress()) {
 
-            QuestionAnswer questionAnswer = game.getQuestionAnswer();
-            boolean isAnswerCorrect = questionAnswer.checkAnswer(answerPayload.getAnswer());
+                QuestionAnswer questionAnswer = game.getQuestionAnswer();
+                boolean isAnswerCorrect = questionAnswer.checkAnswer(answerPayload.getAnswer());
 
-            answerCounter.countAnswer(answerOwner, game, isAnswerCorrect);
+                answerCounter.countAnswer(answerOwner, game, isAnswerCorrect);
 
-            if (isAnswerCorrect) {
-                // Increment scores counter
-                answerOwner.setScores(answerOwner.getScores() + 1);
-            }
+                if (isAnswerCorrect) {
+                    // Increment scores counter
+                    answerOwner.setScores(answerOwner.getScores() + 1);
+                }
 
-            GameMessage<ResultPayload> resultMessage = createResultMessage(answerPayload);
+                GameMessage<ResultPayload> resultMessage = createResultMessage(answerPayload);
 
-            sendResultMessageToPlayers(gameMessage -> {
+                sendResultMessageToPlayers(gameMessage -> {
 
-                gameMessage.getPayload().setRightAnswer(isAnswerCorrect);
-                game.getPlayers().stream().forEach(player -> {
-                    if (!player.equals(answerOwner)) {
-                        gameMessage.getPayload().setAnswerOwner(false);
-                    } else {
-                        gameMessage.getPayload().setAnswerOwner(true);
-                    }
+                    gameMessage.getPayload().setRightAnswer(isAnswerCorrect);
+                    game.getPlayers().stream().forEach(player -> {
+                        if (!player.equals(answerOwner)) {
+                            gameMessage.getPayload().setAnswerOwner(false);
+                        } else {
+                            gameMessage.getPayload().setAnswerOwner(true);
+                        }
 
-                    webSocketSender.sendMessage(gameMessage, player.getWebSocketSession());
-                });
+                        webSocketSender.sendMessage(gameMessage, player.getWebSocketSession());
+                    });
 
-            }, resultMessage);
+                }, resultMessage);
 
-            if(isAnswerCorrect) {
-                answerCounter.reset(game);
-                game.nextRound();
-            } else {
-
-                Optional<Player> playerOptional = game.getPlayers().stream()
-                                                      .filter(player -> answerCounter.canAnswer(player, game)).findAny();
-                if (!playerOptional.isPresent()) {
+                if(isAnswerCorrect) {
                     answerCounter.reset(game);
                     game.nextRound();
+                } else {
+
+                    Optional<Player> playerOptional = game.getPlayers().stream()
+                            .filter(player -> answerCounter.canAnswer(player, game)).findAny();
+                    if (!playerOptional.isPresent()) {
+                        answerCounter.reset(game);
+                        game.nextRound();
+                    }
                 }
             }
         }
+    }
+
+    /**
+     *
+     * @param answerPayload
+     * @return
+     */
+    private boolean isValidAnswer( AnswerPayload answerPayload) {
+
+        Optional<CountryInfo> countryInfoOptional = countriesDictionary.getCountryInfo(answerPayload.getAnswer());
+        if (countryInfoOptional.isPresent()) {
+            return true;
+        };
+
+        return false;
     }
 
     /**

@@ -87,8 +87,6 @@ public class GameImpl implements Game {
      */
     private void checkNextRound() {
 
-
-
         currentQuestionAnswerNumber++;
         if (currentQuestionAnswerNumber < questionAnswers.size()) {
 

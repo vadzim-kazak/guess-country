@@ -5,6 +5,7 @@ import com.jrew.lab.guesscountry.model.message.payload.AnswerTimeoutPayload;
 import com.jrew.lab.guesscountry.model.country.CountryInfo;
 import com.jrew.lab.guesscountry.model.questionanswer.QuestionAnswer;
 import com.jrew.lab.guesscountry.service.game.Game;
+import com.jrew.lab.guesscountry.service.message.handler.helper.AnswerCounter;
 import com.jrew.lab.guesscountry.service.questionanswer.CountriesDictionary;
 import com.jrew.lab.guesscountry.service.socket.WebSocketSender;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,10 @@ public class AnswerTimeoutGameMessageHandler implements GameMessageHandler<Answe
     @Autowired
     private WebSocketSender webSocketSender;
 
+    /** **/
+    @Autowired
+    private AnswerCounter answerCounter;
+
     @Override
     public void handleMessage(GameMessage<AnswerTimeoutPayload> message, Game game) {
 
@@ -31,8 +36,12 @@ public class AnswerTimeoutGameMessageHandler implements GameMessageHandler<Answe
         game.getPlayers().stream().forEach(player -> {
             QuestionAnswer questionAnswer = game.getQuestionAnswer();
             messagePayload.setQuestionAnswer(questionAnswer);
-            webSocketSender.sendMessage(message, player.getWebSocketSession());
+
+            if (answerCounter.canAnswer(player, game)) {
+                webSocketSender.sendMessage(message, player.getWebSocketSession());
+            }
         });
 
+        answerCounter.reset(game);
     }
 }

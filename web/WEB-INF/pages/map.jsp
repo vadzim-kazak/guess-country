@@ -13,6 +13,7 @@
     <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/resources/img/favicon.png" />
 
 
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/pace.css" media="screen">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css" media="screen">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/custom.css" media="screen">
 

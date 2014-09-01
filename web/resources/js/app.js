@@ -10,7 +10,8 @@ require.config({
         'richmarker': 'modules/richmarker.min',
         'bootstrap': 'modules/bootstrap.min',
         'knob': 'plugin/jquery.knob.min',
-        'Mustache': 'plugin/mustache'
+        'Mustache': 'plugin/mustache',
+        'Pace': 'modules/pace.min'
     },
     shim: {
         'google-maps-loader': {
@@ -29,12 +30,20 @@ require.config({
     }
 });
 
-require( ['jquery', 'modules/web-socket-storage'],
+require(['Pace'], function(Pace) {
 
-    function($) {
+        Pace.start({ajax: false, // disabled
+                    document: false, // disabled
+                    eventLag: false // disabled
+                   });
+        require( ['jquery', 'modules/web-socket-storage'],
 
-        $(document).ready(function() {
+            function($) {
+                Pace.stop();
+                $(document).ready(function() {
 
-        });
+                });
+            }
+        );
     }
 );

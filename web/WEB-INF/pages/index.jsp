@@ -76,7 +76,7 @@
             <div class="col-lg-9 col-md-11">
                 <div class="page-header clear-bottom">
                     <h1>Guess Country</h1>
-                    <p class="lead">A small map related game.</p>
+                    <p class="lead">Improve your geography knowledge by playing this game.</p>
                 </div>
             </div>
         </div>

@@ -3,8 +3,9 @@
  */
 define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-countdown', 'modules/map-controls/info-area',
     'modules/map-controls/scores', 'modules/map-controls/question-prepare-countdown', 'modules/map-controls/waiting-other-player',
-    'text!../../templates/answer-marker-template.html', 'Mustache', 'modules/map-controls/game-results', 'richmarker', 'bootstrap'],
-    function($, map, timeoutCountdown, infoArea, scores, prepareCountdown, waitingOther, markerContent, Mustache, gameResults) {
+    'text!../../templates/answer-marker-template.html', 'Mustache', 'modules/map-controls/game-results', 'modules/map-controls/player-left',
+        'richmarker', 'bootstrap'],
+    function($, map, timeoutCountdown, infoArea, scores, prepareCountdown, waitingOther, markerContent, Mustache, gameResults, playerLeft) {
 
     /**
      *
@@ -36,6 +37,8 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
                 handleGameFinishedMessage(payload)
             } else if (type == 'ANSWER_TIMEOUT') {
                 handleAnswerTimeout(payload);
+            } else if (type == 'PLAYER_LEFT') {
+                handlePlayerLeft(payload);
             }
         }
 
@@ -76,7 +79,7 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
             infoArea.showQuestion(payload.message);
             scores.show();
 
-            google.maps.event.trigger(map, 'resize')
+            google.maps.event.trigger(map, 'resize');
         }
 
         /**
@@ -93,7 +96,7 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
          */
         var handleWaitingOtherPlayerMessage = function(payload) {
             waitingOther.show();
-            google.maps.event.trigger(map, 'resize')
+            google.maps.event.trigger(map, 'resize');
         }
 
         /**
@@ -112,7 +115,7 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
 
             gameResults.showResults(payload);
 
-            google.maps.event.trigger(map, 'resize')
+            google.maps.event.trigger(map, 'resize');
         }
 
         /**
@@ -165,7 +168,7 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
                 timeoutCountdown.hide();
             }
 
-            google.maps.event.trigger(map, 'resize')
+            google.maps.event.trigger(map, 'resize');
             map.panTo(answerPosition);
         }
 
@@ -191,6 +194,11 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
             });
 
             timeoutCountdown.hide();
+        }
+
+        var handlePlayerLeft = function(payload) {
+            playerLeft.show();
+            google.maps.event.trigger(map, 'resize');
         }
 
         /**

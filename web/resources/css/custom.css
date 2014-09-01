@@ -48,7 +48,8 @@
     color: #48d484;
 }
 
-.wrong-answer {
+.wrong-answer,
+.player-left {
     color: #ff5757;
 }
 

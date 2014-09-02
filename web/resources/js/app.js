@@ -27,7 +27,8 @@ require.config({
         'knob': {
             deps: ['jquery']
         }
-    }
+    },
+    waitSeconds: 20
 });
 
 require(['Pace'], function(Pace) {

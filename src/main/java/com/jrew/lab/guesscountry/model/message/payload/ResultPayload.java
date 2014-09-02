@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class ResultPayload {
 
     /** **/
-    private String playerName;
+    private String playerId;
 
     /** **/
     private String answer;
@@ -34,16 +34,16 @@ public class ResultPayload {
      *
      * @return
      */
-    public String getPlayerName() {
-        return playerName;
+    public String getPlayerId() {
+        return playerId;
     }
 
     /**
      *
-     * @param playerName
+     * @param playerId
      */
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
+    public void setPlayerId(String playerId) {
+        this.playerId = playerId;
     }
 
     /**

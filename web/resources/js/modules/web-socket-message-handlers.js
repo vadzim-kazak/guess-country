@@ -2,11 +2,11 @@
  * Created by Kazak_VV on 21.08.2014.
  */
 define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-countdown', 'modules/map-controls/info-area',
-    'modules/map-controls/scores', 'modules/map-controls/question-prepare-countdown', 'modules/map-controls/waiting-other-player',
+    'modules/map-controls/scores', 'modules/map-controls/question-prepare-countdown', 'modules/map-controls/map-middle-info-area',
     'text!../../templates/answer-marker-template.html', 'Mustache', 'modules/map-controls/game-results', 'modules/map-controls/player-left',
-    'modules/map-controls/web-sockets-issue-control', 'modules/map-controls/question-number', 'richmarker', 'bootstrap'],
-    function($, map, timeoutCountdown, infoArea, scores, prepareCountdown, waitingOther, markerContent, Mustache, gameResults, playerLeft,
-             webSocketsIssue, questionNumber) {
+    'modules/map-controls/question-number', 'richmarker', 'bootstrap'],
+    function($, map, timeoutCountdown, infoArea, scores, prepareCountdown, middleInfoArea, markerContent, Mustache, gameResults, playerLeft,
+             questionNumber) {
 
     /**
      *
@@ -19,7 +19,7 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
          *
          */
         this.handleWebsocketNotSupported = function() {
-            webSocketsIssue.show();
+            middleInfoArea.showWebSocketUnsupported();
             google.maps.event.trigger(map, 'resize');
         }
 
@@ -48,7 +48,11 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
                 handleAnswerTimeout(payload);
             } else if (type == 'PLAYER_LEFT') {
                 handlePlayerLeft(payload);
+            } else if (type == 'START_GAME') {
+                handleStartGame(payload);
             }
+
+            google.maps.event.trigger(map, 'resize');
         }
 
         /**
@@ -56,7 +60,7 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
          * @param payload
          */
         var handleCountdownMessage = function(payload) {
-            waitingOther.hide();
+            middleInfoArea.hide();
 
             if (payload.type == 'PREPARE_TO_QUESTION') {
 
@@ -88,8 +92,6 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
             infoArea.showQuestion(payload);
             questionNumber.show(payload);
             scores.show();
-
-            google.maps.event.trigger(map, 'resize');
         }
 
         /**
@@ -105,8 +107,7 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
          * @param payload
          */
         var handleWaitingOtherPlayerMessage = function(payload) {
-            waitingOther.show();
-            google.maps.event.trigger(map, 'resize');
+            middleInfoArea.showWaitingForOtherPlayer();
         }
 
         /**
@@ -124,8 +125,6 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
             marker.setMap(null);
 
             gameResults.showResults(payload);
-
-            google.maps.event.trigger(map, 'resize');
         }
 
         /**
@@ -167,9 +166,10 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
                 content: Mustache.render(markerContent, {imagePath: imagePath})
             });
 
+            scores.updateScores(payload);
+
             if (payload.answerOwner) {
                 if (payload.rightAnswer) {
-                    scores.updateScores(payload.scores);
                     infoArea.confirmAnswer(payload.answer);
                 } else {
                     infoArea.showWrongAnswer(payload.answer);
@@ -210,7 +210,11 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
 
         var handlePlayerLeft = function(payload) {
             playerLeft.show();
-            google.maps.event.trigger(map, 'resize');
+        }
+
+        var handleStartGame = function(payload) {
+            middleInfoArea.showStartGame(payload);
+            scores.init(payload);
         }
 
         /**

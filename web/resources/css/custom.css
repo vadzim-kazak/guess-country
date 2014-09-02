@@ -20,6 +20,12 @@
 
 .map-middle-message-label {
     font-size: 300%;
+    text-align: center;
+}
+
+.map-middle-players-label {
+    font-size: 250%;
+    text-align: center;
 }
 
 .result-game-label {
@@ -43,6 +49,7 @@
 .scores-placeholder,
 .question-number{
     font-size: 150%;
+    text-align: right;
 }
 
 .right-answer {

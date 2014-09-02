@@ -3,9 +3,9 @@
  */
 define(['jquery','google-maps-loader', 'modules/google-maps-style', 'modules/map-controls/question-timeout-countdown',
         'modules/map-controls/info-area', 'modules/map-controls/scores', 'modules/map-controls/question-prepare-countdown',
-        'modules/map-controls/waiting-other-player', 'modules/map-controls/game-results', 'modules/map-controls/player-left',
-        'modules/map-controls/web-sockets-issue-control', 'modules/map-controls/question-number'],
-    function($, GoogleMapsLoader, mapStyle, timeoutCountdown, infoArea, scores, prepareCountdown, waitingOther, gameResults, playerLeft, webSocketsIssue, questionNumber) {
+        'modules/map-controls/map-middle-info-area', 'modules/map-controls/game-results', 'modules/map-controls/player-left',
+        'modules/map-controls/question-number'],
+    function($, GoogleMapsLoader, mapStyle, timeoutCountdown, infoArea, scores, prepareCountdown, middleInfoArea, gameResults, playerLeft, questionNumber) {
 
         var mapOptions = {
             center: new google.maps.LatLng(50, 20),
@@ -20,10 +20,9 @@ define(['jquery','google-maps-loader', 'modules/google-maps-style', 'modules/map
 
         var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
-        map.controls[google.maps.ControlPosition.CENTER].push(waitingOther.getControl());
+        map.controls[google.maps.ControlPosition.CENTER].push(middleInfoArea.getControl());
         map.controls[google.maps.ControlPosition.CENTER].push(prepareCountdown.getControl());
         map.controls[google.maps.ControlPosition.CENTER].push(gameResults.getControl());
-        map.controls[google.maps.ControlPosition.CENTER].push(webSocketsIssue.getControl());
         map.controls[google.maps.ControlPosition.TOP_RIGHT].push(questionNumber.getControl());
         map.controls[google.maps.ControlPosition.RIGHT_TOP].push(scores.getControl());
         map.controls[google.maps.ControlPosition.RIGHT_TOP].push(timeoutCountdown.getControl());

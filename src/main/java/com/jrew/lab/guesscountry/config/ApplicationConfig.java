@@ -8,7 +8,6 @@ import com.jrew.lab.guesscountry.model.player.PlayerImpl;
 import com.jrew.lab.guesscountry.model.settings.GameSettings;
 import com.jrew.lab.guesscountry.model.settings.GameSettingsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -99,15 +98,13 @@ public class ApplicationConfig {
     @Bean(name = "START_GAME")
     @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
     @Autowired
-    public GameMessage<StringPayload> getStartGameMessage(StringPayload stringPayload) {
+    public GameMessage<StartGamePayload> getStartGameMessage(StartGamePayload startGamePayload) {
 
-        GameMessage<StringPayload> startGameMessage = new GameMessageImpl<>();
+        GameMessage<StartGamePayload> startGameMessage = new GameMessageImpl<>();
         startGameMessage.setType(GameMessage.Type.START_GAME);
-        stringPayload.setMessage("Starting game...");
-        startGameMessage.setPayload(stringPayload);
+        startGameMessage.setPayload(startGamePayload);
         return startGameMessage;
     }
-
 
     @Bean(name = "GAME_FINISHED")
     @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)

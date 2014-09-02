@@ -72,7 +72,9 @@ public class GameImpl implements Game {
 
     @Override
     public void start() {
-        checkNextRound();
+
+        messageHandlerProvider.handleMessage(GameMessage.Type.START_GAME, this);
+        nextRound();
     }
 
     @Override

@@ -46,119 +46,119 @@
 </head>
 <body>
 
-    <script type="text/javascript">
-        VK.init({apiId: 4532823, onlyWidgets: true});
-    </script>
+<script type="text/javascript">
+    VK.init({apiId: 4532823, onlyWidgets: true});
+</script>
 
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
-    <!-- Navbar -->
+<!-- Navbar -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="navbar navbar-default">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
     <div class="row">
-        <div class="col-lg-12">
-            <div class="navbar navbar-default">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#"></a>
-                </div>
+        <div class="col-lg-9 col-md-11">
+            <div class="page-header clear-bottom">
+                <h1>Guess Country</h1>
+                <p class="lead">Improve your geography knowledge by playing this game.</p>
             </div>
         </div>
     </div>
 
-    <div class="container">
+    <div class="row">
+        <div class="col-lg-9 col-md-11">
 
-        <div class="row">
-            <div class="col-lg-9 col-md-11">
-                <div class="page-header clear-bottom">
-                    <h1>Guess Country</h1>
-                    <p class="lead">Improve your geography knowledge by playing this game.</p>
-                </div>
-            </div>
-        </div>
+            <div class="well bs-component">
 
-        <div class="row">
-            <div class="col-lg-9 col-md-11">
+                <form action="${pageContext.request.contextPath}/play" method="post" class="form-horizontal">
+                    <fieldset>
+                        <legend>Game settings</legend>
 
-                <div class="well bs-component">
+                        <!-- Player name -->
+                        <div class="form-group">
+                            <label for="playerName" class="col-lg-2 control-label">Your name:</label>
+                            <div class="col-lg-10">
+                                <input type="text" maxlength="20" class="form-control" id="playerName" name="playerName" placeholder="Please enter your name here...">
+                            </div>
+                        </div>
 
-                    <form action="${pageContext.request.contextPath}/play" method="post" class="form-horizontal">
-                        <fieldset>
-                            <legend>Game settings</legend>
-
-                            <!-- Player name -->
-                            <div class="form-group">
-                                <label for="playerName" class="col-lg-2 control-label">Your name:</label>
-                                <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="playerName" name="playerName" placeholder="Please enter your name here...">
+                        <!-- Game type -->
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Game mode:</label>
+                            <div class="col-lg-10">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="gameMode" value="SINGLE" checked="">
+                                        Single
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="gameMode" value="DUEL">
+                                        Duel
+                                    </label>
                                 </div>
                             </div>
+                        </div>
 
-                            <!-- Game type -->
-                            <div class="form-group">
-                                <label class="col-lg-2 control-label">Game mode:</label>
-                                <div class="col-lg-10">
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="gameMode" value="SINGLE" checked="">
-                                            Single
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="gameMode" value="DUEL">
-                                            Duel
-                                        </label>
-                                    </div>
-                                </div>
+                        <!-- Play button -->
+                        <div class="form-group">
+                            <div class="col-lg-10 col-lg-offset-2">
+                                <button type="submit" class="btn btn-info">Play</button>
                             </div>
+                        </div>
 
-                            <!-- Play button -->
-                            <div class="form-group">
-                                <div class="col-lg-10 col-lg-offset-2">
-                                    <button type="submit" class="btn btn-info">Play</button>
-                                </div>
-                            </div>
+                    </fieldset>
+                </form>
 
-                        </fieldset>
-                    </form>
-
-                </div>
             </div>
         </div>
-
-        <div class="row social-likes">
-            <!-- Facebook like button -->
-            <div class="col-lg-1 col-xs-3">
-                <div class="fb-like"
-                     data-colorscheme="dark"
-                     data-href="http://guess-country.com"
-                     data-layout="button_count"
-                     data-action="like"
-                     data-show-faces="true"
-                     data-share="false">
-                </div>
-            </div>
-            <div class="col-lg-1 col-xs-3">
-                <!-- Google plus like button -->
-                <!-- Place this tag where you want the +1 button to render. -->
-                <div class="g-plusone" data-size="medium"></div>
-            </div>
-            <div class="col-lg-1 col-xs-3">
-                <!-- VK like button -->
-                <!-- Put this div tag to the place, where the Like block will be -->
-                <div id="vk_like"></div>
-                <script type="text/javascript">
-                    VK.Widgets.Like("vk_like", {type: "mini"});
-                </script>
-            </div>
-        </div>
-
     </div>
+
+    <div class="row social-likes">
+        <!-- Facebook like button -->
+        <div class="col-lg-1 col-xs-3">
+            <div class="fb-like"
+                 data-colorscheme="dark"
+                 data-href="http://guess-country.com"
+                 data-layout="button_count"
+                 data-action="like"
+                 data-show-faces="true"
+                 data-share="false">
+            </div>
+        </div>
+        <div class="col-lg-1 col-xs-3">
+            <!-- Google plus like button -->
+            <!-- Place this tag where you want the +1 button to render. -->
+            <div class="g-plusone" data-size="medium"></div>
+        </div>
+        <div class="col-lg-1 col-xs-3">
+            <!-- VK like button -->
+            <!-- Put this div tag to the place, where the Like block will be -->
+            <div id="vk_like"></div>
+            <script type="text/javascript">
+                VK.Widgets.Like("vk_like", {type: "mini"});
+            </script>
+        </div>
+    </div>
+
+</div>
 
 </body>
 </html>

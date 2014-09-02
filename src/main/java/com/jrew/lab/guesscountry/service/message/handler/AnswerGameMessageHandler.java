@@ -122,7 +122,7 @@ public class AnswerGameMessageHandler implements GameMessageHandler<AnswerPayloa
 
         GameMessage<ResultPayload> resultMessage = gameMessageFactory.buildServerMessage(GameMessage.Type.RESULT);
         ResultPayload resultPayload = resultMessage.getPayload();
-        resultPayload.setPlayerName(player.getName());
+        resultPayload.setPlayerId(player.getId());
 
         Optional<CountryInfo> countryInfoOptional = countriesDictionary.getCountryInfo(answerPayload.getAnswer());
         countryInfoOptional.ifPresent(countryInfo -> {

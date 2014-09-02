@@ -55,6 +55,10 @@ public class WebHttpController {
             gameSettings.setGameMode(GameSettings.GameMode.valueOf(gameMode));
         }
 
+        if (StringUtils.isBlank(playerName)) {
+            playerName = "Anonym";
+        }
+
         player.setName(playerName);
         httpSessionManager.setPlayer(httpSession, player);
 

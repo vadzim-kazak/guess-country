@@ -55,9 +55,6 @@ public class GameServerImpl implements GameServer {
            logger.debug("Game ready event has been received by game server...");
            Game game = (Game) gameReadyEvent.getSource();
            activeGames.add(game);
-
-           messageHandlerProvider.handleMessage(GameMessage.Type.START_GAME, game);
-
            game.start();
        });
     }

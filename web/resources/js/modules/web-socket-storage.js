@@ -29,8 +29,12 @@ define(['jquery', 'modules/web-socket-message-handlers'], function($, messageHan
                     console.log('Socket has been opened...');
                 }
 
-                socket.onclose = function(){
+                socket.onclose = function(closeEvent){
                     console.log('Socket has been closed...');
+                    if (!closeEvent.wasClean) {
+                        messageHandlersProvider.handleWebsocketNotSupported();
+                        console.log('Try to use other browser');
+                    }
                 }
 
                 socket.onmessage = function (event){
@@ -38,9 +42,15 @@ define(['jquery', 'modules/web-socket-message-handlers'], function($, messageHan
                 }
 
             } else {
+                messageHandlersProvider.handleWebsocketNotSupported();
                 console.log('Websocket not supported');
             }
         });
+
+        this.hasWebSocketSupport = function() {
+            return hasWebSocketSupport;
+        }
+
     }
 
     return new WebSocketStorage();

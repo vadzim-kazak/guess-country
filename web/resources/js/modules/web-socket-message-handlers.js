@@ -4,8 +4,9 @@
 define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-countdown', 'modules/map-controls/info-area',
     'modules/map-controls/scores', 'modules/map-controls/question-prepare-countdown', 'modules/map-controls/waiting-other-player',
     'text!../../templates/answer-marker-template.html', 'Mustache', 'modules/map-controls/game-results', 'modules/map-controls/player-left',
-        'richmarker', 'bootstrap'],
-    function($, map, timeoutCountdown, infoArea, scores, prepareCountdown, waitingOther, markerContent, Mustache, gameResults, playerLeft) {
+    'modules/map-controls/web-sockets-issue-control', 'richmarker', 'bootstrap'],
+    function($, map, timeoutCountdown, infoArea, scores, prepareCountdown, waitingOther, markerContent, Mustache, gameResults, playerLeft,
+             webSocketsIssue) {
 
     /**
      *
@@ -13,6 +14,14 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
     var MessageHandlersProvider = function() {
 
         var marker;
+
+        /**
+         *
+         */
+        this.handleWebsocketNotSupported = function() {
+            webSocketsIssue.show();
+            google.maps.event.trigger(map, 'resize');
+        }
 
         /**
          *
@@ -63,7 +72,7 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
                 prepareCountdown.displayValue(payload.seconds);
 
                 //4)
-                google.maps.event.trigger(map, 'resize')
+                google.maps.event.trigger(map, 'resize');
 
             } else if (payload.type == 'QUESTION_TIMEOUT') {
                 prepareCountdown.hide();

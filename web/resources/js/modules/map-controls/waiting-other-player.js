@@ -13,13 +13,7 @@ define(['jquery', 'modules/knob-tron-style', 'text!../../../templates/waiting-ot
             }
             WaitingOtherControl.prototype._singletonInstance = this;
 
-            var textColor = "#029acf";
-
-            var controlDiv = $('<div/>', {
-                css: {
-
-                }
-            });
+            var controlDiv = $('<div/>', {});
             controlDiv.hide();
 
             var template = $(htmlTemplate);

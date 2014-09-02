@@ -22,7 +22,7 @@ define(['jquery', 'text!../../../templates/info-area-template.html'], function($
         this.showQuestion = function (payload) {
             controlDiv.show();
 
-            textArea.text(payload.question + ' ?');
+            textArea.text(payload.question + '?');
             textArea.removeClass();
             textArea.addClass('info-area-text-placeholder question-color');
         }

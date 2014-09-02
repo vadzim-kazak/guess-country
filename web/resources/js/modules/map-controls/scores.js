@@ -13,7 +13,6 @@ define(['jquery'], function($) {
 
         var controlDiv = $('<div/>', {
             css: {
-                marginTop: '10px',
                 marginRight: '15px'
             }
         });

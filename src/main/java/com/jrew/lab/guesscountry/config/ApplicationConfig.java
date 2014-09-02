@@ -43,11 +43,11 @@ public class ApplicationConfig {
     @Bean(name = "QUESTION")
     @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
     @Autowired
-    public GameMessage<StringPayload> getQuestionGameMessage(StringPayload stringPayload) {
+    public GameMessage<QuestionPayload> getQuestionGameMessage(QuestionPayload questionPayload) {
 
-        GameMessage<StringPayload> questionGameMessage = new GameMessageImpl<>();
+        GameMessage<QuestionPayload> questionGameMessage = new GameMessageImpl<>();
         questionGameMessage.setType(GameMessage.Type.QUESTION);
-        questionGameMessage.setPayload(stringPayload);
+        questionGameMessage.setPayload(questionPayload);
         return questionGameMessage;
     }
 

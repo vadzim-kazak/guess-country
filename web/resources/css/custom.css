@@ -40,7 +40,8 @@
     font-size: 250%;
 }
 
-.scores-placeholder {
+.scores-placeholder,
+.question-number{
     font-size: 150%;
 }
 

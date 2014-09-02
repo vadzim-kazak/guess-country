@@ -4,9 +4,9 @@
 define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-countdown', 'modules/map-controls/info-area',
     'modules/map-controls/scores', 'modules/map-controls/question-prepare-countdown', 'modules/map-controls/waiting-other-player',
     'text!../../templates/answer-marker-template.html', 'Mustache', 'modules/map-controls/game-results', 'modules/map-controls/player-left',
-    'modules/map-controls/web-sockets-issue-control', 'richmarker', 'bootstrap'],
+    'modules/map-controls/web-sockets-issue-control', 'modules/map-controls/question-number', 'richmarker', 'bootstrap'],
     function($, map, timeoutCountdown, infoArea, scores, prepareCountdown, waitingOther, markerContent, Mustache, gameResults, playerLeft,
-             webSocketsIssue) {
+             webSocketsIssue, questionNumber) {
 
     /**
      *
@@ -85,7 +85,8 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
          * @param payload
          */
         var handleQuestionMessage = function(payload) {
-            infoArea.showQuestion(payload.message);
+            infoArea.showQuestion(payload);
+            questionNumber.show(payload);
             scores.show();
 
             google.maps.event.trigger(map, 'resize');
@@ -132,6 +133,8 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
          * @param payload
          */
         var handleAnswerResult = function(payload) {
+
+            //questionNumber.hide();
 
             var answerPosition =  new google.maps.LatLng(payload.latLng.latitude, payload.latLng.longitude);
 
@@ -218,6 +221,7 @@ define(['jquery', 'modules/google-maps', 'modules/map-controls/question-timeout-
             timeoutCountdown.hide();
             //scores.hide();
             infoArea.hide();
+            //questionNumber.hide();
         }
 
     }

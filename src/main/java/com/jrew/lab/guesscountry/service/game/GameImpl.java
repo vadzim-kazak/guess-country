@@ -2,6 +2,7 @@ package com.jrew.lab.guesscountry.service.game;
 
 import com.jrew.lab.guesscountry.model.message.GameMessage;
 import com.jrew.lab.guesscountry.model.message.payload.CountdownPayload;
+import com.jrew.lab.guesscountry.model.message.payload.QuestionPayload;
 import com.jrew.lab.guesscountry.model.player.Player;
 import com.jrew.lab.guesscountry.model.questionanswer.QuestionAnswer;
 import com.jrew.lab.guesscountry.service.game.helper.CountdownManager;
@@ -114,7 +115,15 @@ public class GameImpl implements Game {
      */
     private void proceedNextRound() {
 
-        messageHandlerProvider.handleMessage(GameMessage.Type.QUESTION, this);
+        GameMessage<QuestionPayload> questionGameMessage = gameMessageFactory.buildServerMessage(GameMessage.Type.QUESTION);
+
+        QuestionPayload questionPayload = questionGameMessage.getPayload();
+        questionPayload.setCurrentQuestionNumber(currentQuestionAnswerNumber + 1);
+        questionPayload.setQuestionsNumber(questionAnswers.size());
+        QuestionAnswer questionAnswer = questionAnswers.get(currentQuestionAnswerNumber);
+        questionPayload.setQuestion(questionAnswer.getQuestion());
+
+        messageHandlerProvider.handleMessage(questionGameMessage, this);
 
         GameMessage<CountdownPayload> countdownMessage = gameMessageFactory.buildServerMessage(GameMessage.Type.COUNTDOWN);
         CountdownPayload payload = countdownMessage.getPayload();

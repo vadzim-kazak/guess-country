@@ -19,10 +19,10 @@ define(['jquery', 'text!../../../templates/info-area-template.html'], function($
 
         var textArea = controlDiv.find('#textArea');
 
-        this.showQuestion = function (question) {
+        this.showQuestion = function (payload) {
             controlDiv.show();
 
-            textArea.text('<?> ' + question);
+            textArea.text(payload.question + ' ?');
             textArea.removeClass();
             textArea.addClass('info-area-text-placeholder question-color');
         }
